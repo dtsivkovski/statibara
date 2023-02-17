@@ -6,11 +6,11 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: "dtsivkovski's blog"
-description: Daniel Tsivkovski
+title: "Statibara"
+description: A website for statistics tools
 github_username: dtsivkovski
 # you can comment the below line out if your repo name is not different than your baseurl
-github_repo: "csa23"
+github_repo: "statibara"
 
 # OPTIONAL: override baseurl and url if using a custom domain
 # Note: leave out the trailing / from this value. 
@@ -34,7 +34,7 @@ url: "https://dtsivkovski.github.io" # the base hostname & protocol for your sit
 #
 # 3. You must replace the parameter `baseurl` in _action_files/settings.ini with the same value as you set here but WITHOUT QUOTES.
 #
-baseurl: "/csa23" # the subpath of your site, e.g. "/blog".
+baseurl: "/statibara" # the subpath of your site, e.g. "/blog".
 
 # Github and twitter are optional:
 minima:
@@ -53,7 +53,7 @@ show_description: true
 show_image: true
 
 # Set this to true to turn on annotations with hypothes.is (https://web.hypothes.is/)
-annotations: true
+annotations: false
 
 # Set this to true to display tags on each post
 show_tags: true
