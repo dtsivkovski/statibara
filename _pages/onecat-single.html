@@ -1,0 +1,136 @@
+---
+title: "One Categorical Variable - Single Group"
+layout: default
+exclude: true
+permalink: /onecat-single/
+---
+
+<div style="white-space: pre-wrap">
+<img src="{{baseurl}}/statibara/images/croppedcapy.png" width="70" height="70">
+<h2 style="display: inline-block">One Categorical Variable - Single Group</h2>
+</div>
+
+
+<br/>
+
+
+<form>
+      <label for="categoryCount">Number of Categories:</label>
+      <input type="number" id="categoryCount" name="categoryCount">
+      <input class="button" type="button" value="Create Table" onclick="createTable()">
+</form>
+<div id="tableContainer"></div>
+<canvas id="barGraph" width="2" height="2"></canvas>
+<br/>
+<input class="button" type="button" value="Generate Bar Graph" onclick="generateBarGraph()">
+<script>
+    function createTable() {
+    // Get the number of categories from the input field
+    const categoryCount = parseInt(document.getElementById("categoryCount").value);
+    // Create a table element
+    const table = document.createElement("table");
+    table.innerHTML = "<tr><th>Category</th><th>Frequency</th></tr>";
+    // Add rows to the table
+    for (let i = 0; i < categoryCount; i++) {
+        const row = document.createElement("tr");
+        const categoryCell = document.createElement("td");
+        const categoryInput = document.createElement("input");
+        categoryInput.type = "text";
+        categoryCell.appendChild(categoryInput);
+
+        const frequencyCell = document.createElement("td");
+        const frequencyInput = document.createElement("input");
+        frequencyInput.type = "number";
+        frequencyCell.appendChild(frequencyInput);
+
+        row.appendChild(categoryCell);
+        row.appendChild(frequencyCell);
+        table.appendChild(row);
+    }
+
+    // Add the table to the page
+    const tableContainer = document.getElementById("tableContainer");
+    tableContainer.innerHTML = "";
+    tableContainer.appendChild(table);
+
+    // Generate the bar graph
+    generateBarGraph();
+    }
+
+    function generateBarGraph() {
+        // Get the data from the table
+        const table = document.querySelector("table");
+        const rows = table.querySelectorAll("tr");
+        const data = [];
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll("td");
+            const category = cells[0].querySelector("input").value;
+            const frequency = parseInt(cells[1].querySelector("input").value);
+            data.push({ category, frequency });
+        }
+
+        // Set up the canvas
+        const canvas = document.getElementById("barGraph");
+        const ctx = canvas.getContext("2d");
+        ctx.canvas.width = window.innerWidth * 0.85;
+        ctx.canvas.height = window.innerHeight * 0.5;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Set up axis dimensions
+        const axisWidth = canvas.width - 80;
+        const axisHeight = canvas.height - 80;
+        const axisLeft = 50;
+        const axisTop = 20;
+        const axisRight = axisLeft + axisWidth;
+        const axisBottom = axisTop + axisHeight;
+        const maxFrequency = Math.max(...data.map((d) => d.frequency));
+        const frequencyStep = Math.ceil(maxFrequency / 10);
+        const yLabels = [];
+        for (let i = 0; i <= maxFrequency; i += frequencyStep) {
+        yLabels.push(i);
+        }
+
+        // Draw x and y axes
+        ctx.beginPath();
+        ctx.moveTo(axisLeft, axisBottom);
+        ctx.lineTo(axisRight, axisBottom);
+        ctx.moveTo(axisLeft, axisBottom);
+        ctx.lineTo(axisLeft, axisTop);
+        ctx.stroke();
+
+        // Draw y axis labels
+        ctx.textAlign = "right";
+        for (let i = 0; i < yLabels.length; i++) {
+        const y = axisBottom - (axisHeight * yLabels[i]) / maxFrequency;
+        ctx.fillText(yLabels[i], axisLeft - 5, y + 3);
+        ctx.beginPath();
+        ctx.moveTo(axisLeft - 5, y);
+        ctx.lineTo(axisLeft, y);
+        ctx.stroke();
+        }
+
+        // Draw x and y axis labels
+        ctx.textAlign = "center";
+        ctx.fillText("Frequency", canvas.width / 2, canvas.height - 5);
+        ctx.translate(20, canvas.height / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText("Category", 0, 0);
+        ctx.rotate(Math.PI / 2);
+        ctx.translate(-20, -canvas.height / 2);
+
+        // Draw the bars
+        const barWidth = 50;
+        const barSpacing = 20;
+        const barHeightScale = axisHeight / maxFrequency;
+        let x = axisLeft;
+        for (const { category, frequency } of data) {
+        const barHeight = frequency * barHeightScale;
+        ctx.fillStyle = "#004cff";
+        ctx.fillRect(x, axisBottom - barHeight, barWidth, barHeight);
+
+        ctx.fillStyle = "#004cff";
+        ctx.fillText(category, x + barWidth / 2, axisBottom + 20);
+        x += barWidth + barSpacing;
+        }
+    }
+</script>

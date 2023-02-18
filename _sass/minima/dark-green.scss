@@ -6,7 +6,7 @@ $dark-grey : #062827;
 $overlay: mix($dark-grey, white, 95%);
 $overlay-light: mix($dark-grey, white, 86%);
 
-html, body, input, textarea, select, button {   
+html, body, textarea, select {   
   color: $high-emph !important;
   background-color: $dark-grey !important;
 }
@@ -18,6 +18,26 @@ a {
 a:hover {
     color:$high-emph !important;
 }
+
+button, .button {
+    background-image: linear-gradient(to right, white, white);
+    border: 1px solid black;
+    border-radius: 6px;
+    color: black;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: normal;
+    font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.card {
+    background-color: white;
+    border-color: $overlay-light;
+}
+
 
 .site-title, .site-title:visited, .site-nav, .page-link {
     color: $high-emph !important;
