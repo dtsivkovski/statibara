@@ -25,36 +25,36 @@ permalink: /onecat-single/
 <input class="button" type="button" value="Generate Bar Graph" onclick="generateBarGraph()">
 <script>
     function createTable() {
-    // Get the number of categories from the input field
-    const categoryCount = parseInt(document.getElementById("categoryCount").value);
-    // Create a table element
-    const table = document.createElement("table");
-    table.innerHTML = "<tr><th>Category</th><th>Frequency</th></tr>";
-    // Add rows to the table
-    for (let i = 0; i < categoryCount; i++) {
-        const row = document.createElement("tr");
-        const categoryCell = document.createElement("td");
-        const categoryInput = document.createElement("input");
-        categoryInput.type = "text";
-        categoryCell.appendChild(categoryInput);
+        // Get the number of categories from the input field
+        const categoryCount = parseInt(document.getElementById("categoryCount").value);
+        // Create a table element
+        const table = document.createElement("table");
+        table.innerHTML = "<tr><th>Category</th><th>Frequency</th></tr>";
+        // Add rows to the table
+        for (let i = 0; i < categoryCount; i++) {
+            const row = document.createElement("tr");
+            const categoryCell = document.createElement("td");
+            const categoryInput = document.createElement("input");
+            categoryInput.type = "text";
+            categoryCell.appendChild(categoryInput);
 
-        const frequencyCell = document.createElement("td");
-        const frequencyInput = document.createElement("input");
-        frequencyInput.type = "number";
-        frequencyCell.appendChild(frequencyInput);
+            const frequencyCell = document.createElement("td");
+            const frequencyInput = document.createElement("input");
+            frequencyInput.type = "number";
+            frequencyCell.appendChild(frequencyInput);
 
-        row.appendChild(categoryCell);
-        row.appendChild(frequencyCell);
-        table.appendChild(row);
-    }
+            row.appendChild(categoryCell);
+            row.appendChild(frequencyCell);
+            table.appendChild(row);
+        }
 
-    // Add the table to the page
-    const tableContainer = document.getElementById("tableContainer");
-    tableContainer.innerHTML = "";
-    tableContainer.appendChild(table);
+        // Add the table to the page
+        const tableContainer = document.getElementById("tableContainer");
+        tableContainer.innerHTML = "";
+        tableContainer.appendChild(table);
 
-    // Generate the bar graph
-    generateBarGraph();
+        // Generate the bar graph
+        generateBarGraph();
     }
 
     function generateBarGraph() {
@@ -88,7 +88,7 @@ permalink: /onecat-single/
         const frequencyStep = Math.ceil(maxFrequency / 10);
         const yLabels = [];
         for (let i = 0; i <= maxFrequency; i += frequencyStep) {
-        yLabels.push(i);
+            yLabels.push(i);
         }
 
         // Draw x and y axes
@@ -101,17 +101,19 @@ permalink: /onecat-single/
 
         // Draw y axis labels
         ctx.textAlign = "right";
+        ctx.font = "15px Arial";
         for (let i = 0; i < yLabels.length; i++) {
-        const y = axisBottom - (axisHeight * yLabels[i]) / maxFrequency;
-        ctx.fillText(yLabels[i], axisLeft - 5, y + 3);
-        ctx.beginPath();
-        ctx.moveTo(axisLeft - 5, y);
-        ctx.lineTo(axisLeft, y);
-        ctx.stroke();
+            const y = axisBottom - (axisHeight * yLabels[i]) / maxFrequency;
+            ctx.fillText(yLabels[i], axisLeft - 5, y + 3);
+            ctx.beginPath();
+            ctx.moveTo(axisLeft - 5, y);
+            ctx.lineTo(axisLeft, y);
+            ctx.stroke();
         }
 
         // Draw x and y axis labels
         ctx.textAlign = "center";
+        ctx.font = "20px Arial";
         ctx.fillText("Frequency", canvas.width / 2, canvas.height - 5);
         ctx.translate(20, canvas.height / 2);
         ctx.rotate(-Math.PI / 2);
@@ -125,13 +127,13 @@ permalink: /onecat-single/
         const barHeightScale = axisHeight / maxFrequency;
         let x = axisLeft;
         for (const { category, frequency } of data) {
-        const barHeight = frequency * barHeightScale;
-        ctx.fillStyle = "#004cff";
-        ctx.fillRect(x, axisBottom - barHeight, barWidth, barHeight);
+            const barHeight = frequency * barHeightScale;
+            ctx.fillStyle = "#004cff";
+            ctx.fillRect(x, axisBottom - barHeight, barWidth, barHeight);
 
-        ctx.fillStyle = "#004cff";
-        ctx.fillText(category, x + barWidth / 2, axisBottom + 20);
-        x += barWidth + barSpacing;
+            ctx.fillStyle = "#004cff";
+            ctx.fillText(category, x + barWidth / 2, axisBottom + 20);
+            x += barWidth + barSpacing;
         }
     }
 </script>
