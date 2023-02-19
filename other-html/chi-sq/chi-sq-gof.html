@@ -1,0 +1,252 @@
+---
+layout: default
+search_exclude: true
+permalink: /x2/gof/
+---
+
+<!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<style>
+
+    .tableinputclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+    }
+    
+    .tableinputclear:focus {
+        background-color: #062827;
+        outline: none;
+        color: white;
+        border: 0px solid;
+    }
+    
+    ::placeholder {
+        font-style: italic;
+        color: #a1a1a1;
+    }
+
+    .stepcard {
+        background-color: #062827;
+        color: white;
+        border: 1px solid white;
+        width: 99%;
+        border-radius: 8px;
+        padding: 1em;
+        padding-top: 0;
+        margin-bottom: 1em;
+    }
+    
+    
+</style>
+
+<div style="white-space: pre-wrap">
+    <img src="{{baseurl}}/statibara/images/croppedcapy.png" width="70" height="70">
+</div>
+
+<h2> Chi Squared Test - Goodness of Fit </h2>
+
+<br/>
+
+<form>
+    <table>
+        <tr>
+            <td>
+                <input class="tableinputclear" type="number" id="categoryCount" name="categoryCount" placeholder="# of Categories">
+            </td>
+        </tr>
+    </table>
+    <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+</form>   
+    <br/>
+
+<div id="tableContainer"></div>
+
+<input class="button" type="button" value="Start Test" onclick="calculate()">
+
+<div id="resultsContainer">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - Chi squared test for goodness of fit</h3>
+        <p id="random"></p>
+        <p id="10percent"></p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="calculate" style="height:50px; width: 100%"></p>
+</div>
+
+<script>
+    function createTable() {
+        // Get the number of categories from the input field
+        const categoryCount = parseInt(document.getElementById("categoryCount").value);
+        if (categoryCount < 2) {
+            alert("Please enter a number greater than 1");
+            return;
+        }
+        // Create a table element
+        const table = document.createElement("table");
+        table.id = "valueTable";
+        table.innerHTML = "<tr><th>Observed</th><th>Expected</th></tr>";
+        // Add rows to the table
+        for (let i = 0; i < categoryCount; i++) {
+            const row = document.createElement("tr");
+            const categoryCell = document.createElement("td");
+            const categoryInput = document.createElement("input");
+            categoryInput.type = "number";
+            categoryInput.placeholder = "Observed #" + (i + 1);
+            categoryInput.classList.add("tableinputclear");
+            categoryCell.appendChild(categoryInput);
+
+            const frequencyCell = document.createElement("td");
+            const frequencyInput = document.createElement("input");
+            frequencyInput.type = "number";
+            frequencyInput.placeholder = "Expected #" + (i + 1);
+            frequencyInput.classList.add("tableinputclear");
+            frequencyCell.appendChild(frequencyInput);
+
+            row.appendChild(categoryCell);
+            row.appendChild(frequencyCell);
+            table.appendChild(row);
+        }
+
+        // Create a table for null and alternative hypotheses
+        const hypothesisTable = document.createElement("table");
+        hypothesisTable.id = "hypothesisTable";
+        hypothesisTable.innerHTML = "<tr><th>Hypotheses and Alpha Value</th></tr>";
+        const nullHypoRow = document.createElement("tr");
+            const nullHypothesisCell = document.createElement("td");
+            const nullHypothesisInput = document.createElement("input");
+            nullHypothesisInput.type = "text";
+            // set id to "nullHypothesis" for later use
+            nullHypothesisInput.id = "nullHypothesis";
+            nullHypothesisInput.placeholder = "Null Hypothesis";
+            nullHypothesisInput.classList.add("tableinputclear");
+            nullHypothesisCell.appendChild(nullHypothesisInput);
+            nullHypoRow.appendChild(nullHypothesisCell);
+        const alternativeHypoRow = document.createElement("tr");
+            const alternativeHypothesisCell = document.createElement("td");
+            const alternativeHypothesisInput = document.createElement("input");
+            alternativeHypothesisInput.type = "text";
+            // set id to "alternativeHypothesis" for later use
+            alternativeHypothesisInput.id = "alternativeHypothesis";
+            alternativeHypothesisInput.placeholder = "Alternative Hypothesis";
+            alternativeHypothesisInput.classList.add("tableinputclear");
+            alternativeHypothesisCell.appendChild(alternativeHypothesisInput);
+            alternativeHypoRow.appendChild(alternativeHypothesisCell);
+        const alphaValRow = document.createElement("tr");
+            const alphaValCell = document.createElement("td");
+            const alphaValInput = document.createElement("input");
+            alphaValInput.type = "text";
+            // set id to "alphaVal" for later use
+            alphaValInput.id = "alphaVal";
+            alphaValInput.placeholder = "Alpha Value";
+            alphaValInput.classList.add("tableinputclear");
+            alphaValCell.appendChild(alphaValInput);
+            alphaValRow.appendChild(alphaValCell);
+        hypothesisTable.appendChild(nullHypoRow);
+        hypothesisTable.appendChild(alternativeHypoRow);
+        hypothesisTable.appendChild(alphaValRow);
+
+
+
+        // Add the table to the page
+        const tableContainer = document.getElementById("tableContainer");
+        tableContainer.innerHTML = "";
+        tableContainer.appendChild(table);
+        tableContainer.appendChild(hypothesisTable);
+
+        // generate
+    }
+
+    function calculate() {
+        const table = document.querySelector("#valueTable");
+        const rows = table.querySelectorAll("tr");
+        const data = [];
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll("td");
+            const observed = cells[0].querySelector("input").value;
+            const expected = parseInt(cells[1].querySelector("input").value);
+            data.push({ observed, expected });
+        }
+
+        // get hypotheses and put them in state box
+        const nullHypothesis = document.getElementById("nullHypothesis").value;
+            document.getElementById("stateHo").innerHTML = "H<sub>o</sub>: " + nullHypothesis;
+        const alternativeHypothesis = document.getElementById("alternativeHypothesis").value;
+            document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: " + alternativeHypothesis;
+        
+        // get alpha value and check if it is between 0 and 1
+        const alphaVal = parseFloat(document.getElementById("alphaVal").value);
+        if (alphaVal >= 1 || alphaVal <= 0) {
+            alert("Alpha value must be between 0 and 1!");
+            return;
+        }
+
+        // input conditions
+        document.getElementById("random").innerHTML = "<u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?";
+        document.getElementById("10percent").innerHTML = "<u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?";
+        var largeCounts = true;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].expected < 5) {
+                largeCounts = false;
+            }
+        }
+        if (largeCounts) {
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Smallest expected value is greater than 5.";
+        } else {
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Not all expected values are greater than 5.";
+            return;
+        }
+
+        // calculate chi squared
+        var chiSquared = 0;
+        var components = [];
+        for (let i = 0; i < data.length; i++) {
+            var tempComponent = Math.pow(data[i].observed - data[i].expected, 2) / data[i].expected;
+            components.push(tempComponent);
+            chiSquared += tempComponent;
+        }
+
+        // get observed and expected values for equations
+        var o1 = data[0].observed; var e1 = data[0].expected;
+        var o2 = data[1].observed; var e2 = data[1].expected;
+        var oL = data[data.length - 1].observed; var eL = data[data.length - 1].expected;
+
+        // var equation = "\\chi^2 = \\frac{(o_1-e_1)^2}{e_1}+\\frac{(o_2-e_2)^2}{e_2}+\\cdots+\\frac{(o_k-e_k)^2}{e_k}";
+        var equation = '<div>X^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '}</div>';
+        equation = '\\frac{1}{\\sqrt{x^2 + 1}}';
+        console.log("Equation: " + equation); // Debugging statement
+
+    // Use MathJax to typeset the equation
+    MathJax.typesetClear([document.getElementById("calculate")]);
+    MathJax.typesetPromise([document.getElementById("calculate")], equation).then(function () {
+        console.log("MathJax typeset successful!"); // Debugging statement
+    }).catch(function (err) {
+        console.log("MathJax typeset error: " + err.message); // Debugging statement
+    });
+
+    // Clear the contents of the "calculate" div before inserting the new equation
+    jQuery("#calculate").empty();
+
+    // Insert the typeset equation into the div with id "calculate"
+    jQuery("#calculate").append(equation);
+
+    }
+
+
+</script>
