@@ -5,6 +5,30 @@ exclude: true
 permalink: /onecat-single/
 ---
 
+<style>
+
+.tableinputclear {
+    background-color: #062827;
+    color: white;
+    border: 0px;
+    width: 99%;
+}
+
+.tableinputclear:focus {
+    background-color: #062827;
+    outline: none;
+    color: white;
+    border: 0px solid;
+}
+
+::placeholder {
+    font-style: italic;
+    color: #a1a1a1;
+}
+
+
+</style>
+
 <div style="white-space: pre-wrap">
 <img src="{{baseurl}}/statibara/images/croppedcapy.png" width="70" height="70">
 <h2 style="display: inline-block">One Categorical Variable - Single Group</h2>
@@ -15,9 +39,15 @@ permalink: /onecat-single/
 
 
 <form>
-      <label for="categoryCount">Number of Categories:</label>
-      <input type="number" id="categoryCount" name="categoryCount">
-      <input class="button" type="button" value="Create Table" onclick="createTable()">
+    <table>
+        <tr>
+        <td>
+            <input class="tableinputclear" type="number" id="categoryCount" name="categoryCount" placeholder="# of Categories">
+        </td>
+        </tr>
+    </table>
+    <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+    <br/>
 </form>
 <div id="tableContainer"></div>
 <canvas id="barGraph" width="2" height="2"></canvas>
@@ -29,6 +59,7 @@ permalink: /onecat-single/
         const categoryCount = parseInt(document.getElementById("categoryCount").value);
         // Create a table element
         const table = document.createElement("table");
+        table.id = "valueTable";
         table.innerHTML = "<tr><th>Category</th><th>Frequency</th></tr>";
         // Add rows to the table
         for (let i = 0; i < categoryCount; i++) {
@@ -36,11 +67,15 @@ permalink: /onecat-single/
             const categoryCell = document.createElement("td");
             const categoryInput = document.createElement("input");
             categoryInput.type = "text";
+            categoryInput.placeholder = "Category " + (i + 1);
+            categoryInput.classList.add("tableinputclear");
             categoryCell.appendChild(categoryInput);
 
             const frequencyCell = document.createElement("td");
             const frequencyInput = document.createElement("input");
             frequencyInput.type = "number";
+            frequencyInput.placeholder = "Frequency";
+            frequencyInput.classList.add("tableinputclear");
             frequencyCell.appendChild(frequencyInput);
 
             row.appendChild(categoryCell);
@@ -54,12 +89,12 @@ permalink: /onecat-single/
         tableContainer.appendChild(table);
 
         // Generate the bar graph
-        generateBarGraph();
+        // generateBarGraph();
     }
 
     function generateBarGraph() {
-        // Get the data from the table
-        const table = document.querySelector("table");
+        // get the data from the table
+        const table = document.querySelector("#valueTable");
         const rows = table.querySelectorAll("tr");
         const data = [];
         for (let i = 1; i < rows.length; i++) {
@@ -69,7 +104,9 @@ permalink: /onecat-single/
             data.push({ category, frequency });
         }
 
-        // Set up the canvas
+        console.log(data);
+
+        // set up the canvas
         const canvas = document.getElementById("barGraph");
         const ctx = canvas.getContext("2d");
         ctx.canvas.width = window.innerWidth * 0.85;
@@ -77,21 +114,76 @@ permalink: /onecat-single/
         ctx.canvas.height = window.innerHeight * 0.5;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Set up axis dimensions
-        const axisWidth = canvas.width - 80;
-        const axisHeight = canvas.height - 80;
-        const axisLeft = 50;
-        const axisTop = 20;
-        const axisRight = axisLeft + axisWidth;
-        const axisBottom = axisTop + axisHeight;
-        const maxFrequency = Math.max(...data.map((d) => d.frequency));
-        const frequencyStep = Math.ceil(maxFrequency / 10);
-        const yLabels = [];
+        // set up the axes
+        var axisWidth = canvas.width - 80;
+        var axisHeight = canvas.height - 80;
+        var axisLeft = 50;
+        var axisTop = 20;
+        var axisRight = axisLeft + axisWidth;
+        var axisBottom = axisTop + axisHeight;
+        var maxFrequency = Math.max(...data.map((d) => d.frequency));
+        var frequencyStep = Math.ceil(maxFrequency / 10);
+        var yLabels = [];
         for (let i = 0; i <= maxFrequency; i += frequencyStep) {
             yLabels.push(i);
+            console.log(yLabels);
         }
 
-        // Draw x and y axes
+        //function for axes setup again
+        function setaxes() {
+            axisWidth = canvas.width - 80;
+            axisHeight = canvas.height - 80;
+            axisRight = axisLeft + axisWidth;
+            axisBottom = axisTop + axisHeight;
+            maxFrequency = Math.max(...data.map((d) => d.frequency));
+            frequencyStep = Math.ceil(maxFrequency / 10);
+            yLabels = [];
+            for (let i = 0; i <= maxFrequency; i += frequencyStep) {
+                yLabels.push(i);
+                console.log(yLabels);
+            }
+        }
+
+        
+        // establish bar width
+        var barWidth = 20;
+        const barSpacing = 20;
+        const barHeightScale = axisHeight / maxFrequency;
+        // test bar width for category text length
+        ctx.font = "20px Arial";
+        for (const { category, frequency } of data) {
+            const barHeight = frequency * barHeightScale;
+            ctx.font = "20px Arial";
+            var tempBarWidth = ctx.measureText(category).width + 10;
+            if (tempBarWidth > barWidth) barWidth = tempBarWidth;
+
+            ctx.font = "15px Arial";
+            var tempBarWidth = ctx.measureText(frequency).width + 10;
+            if (tempBarWidth > barWidth) barWidth = tempBarWidth;
+        }
+        // test if frequency labels on y axis will fit on canvas, resize canvas if not
+        ctx.font = "15px Arial";
+        for (const label of yLabels) {
+            const labelWidth = ctx.measureText(label).width;
+            if (axisLeft - labelWidth - 25 < 0) {
+                ctx.canvas.width = ctx.canvas.width + labelWidth + 10;
+                ctx.canvas.height = window.innerHeight * 0.5;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                setaxes();
+                axisLeft = labelWidth + 25 + 5;
+            }
+        }
+
+        // test if bars will fit on canvas, resize canvas if not 
+        if (barWidth * data.length + barSpacing * (data.length - 1) > axisWidth) {
+            ctx.canvas.width = barWidth * data.length + barSpacing * (data.length - 1) + 100;
+            ctx.canvas.height = window.innerHeight * 0.5;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            setaxes();
+        }
+
+
+        // draw x and y axes
         ctx.beginPath();
         ctx.moveTo(axisLeft, axisBottom);
         ctx.lineTo(axisRight, axisBottom);
@@ -99,7 +191,7 @@ permalink: /onecat-single/
         ctx.lineTo(axisLeft, axisTop);
         ctx.stroke();
 
-        // Draw y axis labels
+        // draw y axis labels
         ctx.textAlign = "right";
         ctx.font = "15px Arial";
         for (let i = 0; i < yLabels.length; i++) {
@@ -111,28 +203,33 @@ permalink: /onecat-single/
             ctx.stroke();
         }
 
-        // Draw x and y axis labels
+        // draw x and y axis labels
         ctx.textAlign = "center";
         ctx.font = "20px Arial";
-        ctx.fillText("Frequency", canvas.width / 2, canvas.height - 5);
+        ctx.fillText("Category", canvas.width / 2, canvas.height - 5);
         ctx.translate(20, canvas.height / 2);
         ctx.rotate(-Math.PI / 2);
-        ctx.fillText("Category", 0, 0);
+        ctx.fillText("Frequency", 0, 0);
         ctx.rotate(Math.PI / 2);
         ctx.translate(-20, -canvas.height / 2);
 
-        // Draw the bars
-        const barWidth = 50;
-        const barSpacing = 20;
-        const barHeightScale = axisHeight / maxFrequency;
-        let x = axisLeft;
+        // draw the bars
+        let x = axisLeft + barSpacing / 2;
         for (const { category, frequency } of data) {
+            // draw bar
             const barHeight = frequency * barHeightScale;
             ctx.fillStyle = "#004cff";
             ctx.fillRect(x, axisBottom - barHeight, barWidth, barHeight);
 
+            // text for each bar
+            ctx.font = "20px Arial";
             ctx.fillStyle = "#004cff";
             ctx.fillText(category, x + barWidth / 2, axisBottom + 20);
+
+            // draw frequency text
+            ctx.fillStyle = "black";
+            ctx.font = "15px Arial";
+            ctx.fillText(frequency, x + barWidth / 2, axisBottom - barHeight - 5);
             x += barWidth + barSpacing;
         }
     }
