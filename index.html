@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: base
 search_exclude: true
 image: images/logo.png
 ---

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: base
 search_exclude: true
 permalink: /x2/gof/
 ---
@@ -75,7 +75,7 @@ permalink: /x2/gof/
 
 <input class="button" type="button" value="Run Test" onclick="calculate()">
 
-<div id="resultsContainer" style="display: none">
+<div id="resultsContainer">
     <h2>Results</h2>
     <div id="stateSteps" class="stepcard">
         <h3>State</h3>
@@ -91,7 +91,8 @@ permalink: /x2/gof/
     </div>
     <div id="calculateSteps" class="stepcard">
         <h3>Calculate</h3>
-        <p id="calculateOutput" style="height:50px; max-height: 50px; overflow: auto; width: 100%"></p>
+        <p id="formula" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p>
+        <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p>
         <p id="dfVal"></p>
         <p id="pVal"></p>
         <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a chi-squared curve, label it, and shade in the appropriate p-value.</i></p>
@@ -256,29 +257,34 @@ permalink: /x2/gof/
 
         // Set equation based on length of data (category numbers)
         if (data.length < 2) {
-            var equation = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E} = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '} = ' + chiSquared + '$$';
+            var equation = '$$\\chi^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '} = ' + chiSquared + '$$';
         }
         else if (data.length < 3) {
             var o2 = data[1].observed; var e2 = data[1].expected;
-            var equation = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E} = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '} = ' + chiSquared + '$$';
+            var equation = '$$\\chi^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '} = ' + chiSquared + '$$';
         }
         else if (data.length < 4) {
             var o2 = data[1].observed; var e2 = data[1].expected;
             var o3 = data[2].observed; var e3 = data[2].expected;
-            var equation = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E} = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\frac{(' + o3 + '-' + e3 + ')^2}{' + e3 + '} = ' + chiSquared + '$$';
+            var equation = '$$\\chi^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\frac{(' + o3 + '-' + e3 + ')^2}{' + e3 + '} = ' + chiSquared + '$$';
         }
         else {
             // adds dots if more than 3 variables
             var o2 = data[1].observed; var e2 = data[1].expected;
             var oL = data[data.length - 1].observed; var eL = data[data.length - 1].expected;
-            var equation = '$$X^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '} = ' + chiSquared + '$$';
+            var equation = '$$chi^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '} = ' + chiSquared + '$$';
         }
+
+        // set formula
+        var formula = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E}$$';
         
         
         // Take equation and typeset it
         console.log("Equation: " + equation); // Debugging statement
         document.getElementById("calculateOutput").innerHTML = equation;
+        document.getElementById("formula").innerHTML = formula;
         MathJax.typesetPromise([document.getElementById("calculateOutput")], equation).then(function () {}).catch(function (err) {});
+        MathJax.typesetPromise([document.getElementById("formula")], formula).then(function () {}).catch(function (err) {});
 
         // Set df and p-value
         var df = data.length - 1;
