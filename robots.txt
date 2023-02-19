@@ -1,1 +1,1 @@
-Sitemap: https://dtsivkovski.github.io/statibara/sitemap.xml
+Sitemap: https://statibara.com/sitemap.xml

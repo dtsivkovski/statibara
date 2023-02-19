@@ -36,7 +36,7 @@
       "page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
-          "url": "https://dtsivkovski.github.io/statibara/robots.txt",
+          "url": "https://statibara.com/robots.txt",
           "relUrl": "/robots.txt",
           "date": ""
       }

@@ -495,6 +495,8 @@ button, .button { background-image: linear-gradient(to right, white, white); bor
 
 .site-title, .site-title:visited { color: rgba(255, 255, 255, 0.87) !important; font-family: 'Merriweather', serif; }
 
+.site-title::before { content: url("/statibara/images/croppedcapysmall.png"); display: inline-block; position: relative; width: 37px; height: 37px; top: 5px; }
+
 .site-nav, .page-link { color: rgba(255, 255, 255, 0.87) !important; background-color: #062827; border-color: #294645; }
 
 * { scrollbar-color: #062827 #294645; }
