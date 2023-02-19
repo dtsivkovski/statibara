@@ -59,6 +59,12 @@ categories: Bar Graph
     function createTable() {
         // Get the number of categories from the input field
         const categoryCount = parseInt(document.getElementById("categoryCount").value);
+        // test if input is valid
+        if (isNaN(categoryCount) || categoryCount < 1) {
+            alert("Please enter a valid number of categories (greater than 0)");
+            return;
+        }
+
         // Create a table element
         const table = document.createElement("table");
         table.id = "valueTable";

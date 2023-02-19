@@ -117,7 +117,7 @@ categories: Chi-Squared Tests
     function createTable() {
         // Get the number of categories from the input field
         const categoryCount = parseInt(document.getElementById("categoryCount").value);
-        if (categoryCount < 2) {
+        if (categoryCount < 2 || isNaN(categoryCount)) {
             alert("Please enter a number greater than 1");
             return;
         }
@@ -128,22 +128,22 @@ categories: Chi-Squared Tests
         // Add rows to the table
         for (let i = 0; i < categoryCount; i++) {
             const row = document.createElement("tr");
-            const categoryCell = document.createElement("td");
-            const categoryInput = document.createElement("input");
-            categoryInput.type = "number";
-            categoryInput.placeholder = "Observed #" + (i + 1);
-            categoryInput.classList.add("tableinputclear");
-            categoryCell.appendChild(categoryInput);
+            const observedCell = document.createElement("td");
+            const observedInput = document.createElement("input");
+            observedInput.type = "number";
+            observedInput.placeholder = "Observed #" + (i + 1);
+            observedInput.classList.add("tableinputclear");
+            observedCell.appendChild(observedInput);
 
-            const frequencyCell = document.createElement("td");
-            const frequencyInput = document.createElement("input");
-            frequencyInput.type = "number";
-            frequencyInput.placeholder = "Expected #" + (i + 1);
-            frequencyInput.classList.add("tableinputclear");
-            frequencyCell.appendChild(frequencyInput);
+            const expectedCell = document.createElement("td");
+            const expectedInput = document.createElement("input");
+            expectedInput.type = "text";
+            expectedInput.placeholder = "Expected #" + (i + 1);
+            expectedInput.classList.add("tableinputclear");
+            expectedCell.appendChild(expectedInput);
 
-            row.appendChild(categoryCell);
-            row.appendChild(frequencyCell);
+            row.appendChild(observedCell);
+            row.appendChild(expectedCell);
             table.appendChild(row);
         }
 
@@ -203,7 +203,11 @@ categories: Chi-Squared Tests
         for (let i = 1; i < rows.length; i++) {
             const cells = rows[i].querySelectorAll("td");
             const observed = cells[0].querySelector("input").value;
-            const expected = parseInt(cells[1].querySelector("input").value);
+            if (isNaN(observed) || cells[1].querySelector("input").value == "") {
+                alert("Please enter all observed and expected values!");
+                return;
+            }
+            const expected = parseFloat(cells[1].querySelector("input").value).toFixed(2);
             data.push({ observed, expected });
         }
 
@@ -219,10 +223,15 @@ categories: Chi-Squared Tests
         
         // get alpha value and check if it is between 0 and 1
         const alphaVal = parseFloat(document.getElementById("alphaVal").value);
-        if (alphaVal >= 1 || alphaVal <= 0) {
+        if (document.getElementById("alphaVal") == "") {
+            alert("Please enter a valid alpha value!");
+            return;
+        }
+        else if (alphaVal >= 1 || alphaVal <= 0) {
             alert("Alpha value must be between 0 and 1!");
             return;
         }
+        
         document.getElementById("stateAlpha").innerHTML = "α = " + alphaVal;
 
         // input conditions

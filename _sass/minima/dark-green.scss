@@ -21,7 +21,8 @@ a:hover {
 
 
 button, .button {
-    background-image: linear-gradient(to right, white, white);
+    // background-image: linear-gradient(to right, #d46c04 20%, white , #07aacc 80%);
+    background-color: white;
     border: 1px solid black;
     border-radius: 6px;
     color: black;
@@ -32,6 +33,11 @@ button, .button {
     width: 100%;
     font-weight: normal;
     font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    transition: background-color 0.25s ease-in-out 100ms
+}
+
+button:hover, .button:hover {
+    background-color: #64d2e8;
 }
 
 .card {
