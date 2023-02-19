@@ -39,12 +39,15 @@ button, .button {
     border-color: $overlay-light;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
 
-.site-title, .site-title:visited, .site-nav, .page-link {
+.site-title, .site-title:visited {
     color: $high-emph !important;
+    font-family: 'Merriweather', serif;
 }
 
-.site-nav {
+.site-nav, .page-link {
+    color: $high-emph !important;
     background-color: $dark-grey;
     border-color: $overlay-light;
 }
