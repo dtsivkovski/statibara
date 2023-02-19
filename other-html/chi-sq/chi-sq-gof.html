@@ -10,6 +10,9 @@ permalink: /x2/gof/
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -70,14 +73,15 @@ permalink: /x2/gof/
 
 <div id="tableContainer"></div>
 
-<input class="button" type="button" value="Start Test" onclick="calculate()">
+<input class="button" type="button" value="Run Test" onclick="calculate()">
 
-<div id="resultsContainer">
+<div id="resultsContainer" style="display: none">
     <h2>Results</h2>
     <div id="stateSteps" class="stepcard">
         <h3>State</h3>
         <p id="stateHo"></p>
         <p id="stateHa"></p>
+        <p id="stateAlpha"></p>
     </div>
     <div id="planSteps" class="stepcard">
         <h3>Plan - Chi squared test for goodness of fit</h3>
@@ -87,7 +91,21 @@ permalink: /x2/gof/
     </div>
     <div id="calculateSteps" class="stepcard">
         <h3>Calculate</h3>
-        <p id="calculate" style="height:50px; width: 100%"></p>
+        <p id="calculateOutput" style="height:50px; width: 100%"></p>
+        <p id="dfVal"></p>
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a chi-squared curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is based on the hypotheses that were put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+    <div id="followUpSteps" class="stepcard">
+        <h3>Follow Up</h3>
+        <p id="followUpOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i>For the follow up, also try to keep it in context whenever possible.</i></p>
+    </div>
 </div>
 
 <script>
@@ -184,6 +202,10 @@ permalink: /x2/gof/
             data.push({ observed, expected });
         }
 
+        // unhide results container
+        document.getElementById("resultsContainer").style.display = "block";
+        document.getElementById("followUpSteps").style.display = "none";
+
         // get hypotheses and put them in state box
         const nullHypothesis = document.getElementById("nullHypothesis").value;
             document.getElementById("stateHo").innerHTML = "H<sub>o</sub>: " + nullHypothesis;
@@ -196,6 +218,7 @@ permalink: /x2/gof/
             alert("Alpha value must be between 0 and 1!");
             return;
         }
+        document.getElementById("stateAlpha").innerHTML = "α = " + alphaVal;
 
         // input conditions
         document.getElementById("random").innerHTML = "<u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?";
@@ -208,8 +231,13 @@ permalink: /x2/gof/
         }
         if (largeCounts) {
             document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Smallest expected value is greater than 5.";
+            document.getElementById("calculateSteps").style.display = "block";
+            document.getElementById("concludeSteps").style.display = "block";
         } else {
-            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Not all expected values are greater than 5.";
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: <b>Not all expected values are greater than 5. Will not proceed with the test.</b>";
+            document.getElementById("calculateSteps").style.display = "none";
+            document.getElementById("concludeSteps").style.display = "none";
+            document.getElementById("followUpSteps").style.display = "none";
             return;
         }
 
@@ -221,32 +249,66 @@ permalink: /x2/gof/
             components.push(tempComponent);
             chiSquared += tempComponent;
         }
+        chiSquared = chiSquared.toFixed(2);
 
-        // get observed and expected values for equations
+        // Get first observed and expected values for equations
         var o1 = data[0].observed; var e1 = data[0].expected;
-        var o2 = data[1].observed; var e2 = data[1].expected;
-        var oL = data[data.length - 1].observed; var eL = data[data.length - 1].expected;
 
-        // var equation = "\\chi^2 = \\frac{(o_1-e_1)^2}{e_1}+\\frac{(o_2-e_2)^2}{e_2}+\\cdots+\\frac{(o_k-e_k)^2}{e_k}";
-        var equation = '<div>X^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '}</div>';
-        equation = '\\frac{1}{\\sqrt{x^2 + 1}}';
+        // Set equation based on length of data (category numbers)
+        if (data.length < 2) {
+            var equation = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E} = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '} = ' + chiSquared + '$$';
+        }
+        else if (data.length < 3) {
+            var o2 = data[1].observed; var e2 = data[1].expected;
+            var equation = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E} = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '} = ' + chiSquared + '$$';
+        }
+        else if (data.length < 4) {
+            var o2 = data[1].observed; var e2 = data[1].expected;
+            var o3 = data[2].observed; var e3 = data[2].expected;
+            var equation = '$$\\chi^2 = \\sum \\frac{(O - E)^2}{E} = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\frac{(' + o3 + '-' + e3 + ')^2}{' + e3 + '} = ' + chiSquared + '$$';
+        }
+        else {
+            // adds dots if more than 3 variables
+            var o2 = data[1].observed; var e2 = data[1].expected;
+            var oL = data[data.length - 1].observed; var eL = data[data.length - 1].expected;
+            var equation = '$$X^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '} = ' + chiSquared + '$$';
+        }
+        
+        
+        // Take equation and typeset it
         console.log("Equation: " + equation); // Debugging statement
+        document.getElementById("calculateOutput").innerHTML = equation;
+        MathJax.typesetPromise([document.getElementById("calculateOutput")], equation).then(function () {}).catch(function (err) {});
 
-    // Use MathJax to typeset the equation
-    MathJax.typesetClear([document.getElementById("calculate")]);
-    MathJax.typesetPromise([document.getElementById("calculate")], equation).then(function () {
-        console.log("MathJax typeset successful!"); // Debugging statement
-    }).catch(function (err) {
-        console.log("MathJax typeset error: " + err.message); // Debugging statement
-    });
+        // Set df and p-value
+        var df = data.length - 1;
+        var pValue = 1 - jStat.chisquare.cdf(chiSquared, df);
+        pValue = pValue.toFixed(4);
+        document.getElementById("dfVal").innerHTML = "df = k - 1 = " + df;
+        document.getElementById("pVal").innerHTML = "<b>p-value: " + pValue + "</b>";
 
-    // Clear the contents of the "calculate" div before inserting the new equation
-    jQuery("#calculate").empty();
-
-    // Insert the typeset equation into the div with id "calculate"
-    jQuery("#calculate").append(equation);
+        // make conclusion hypothesis by lowercasing the first letter of the alternative hypothesis
+        const concAltHypo = alternativeHypothesis.charAt(0).toLowerCase() + alternativeHypothesis.slice(1);
+        // Set conclusion
+        if (pValue < alphaVal) {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + pValue + " is less than our alpha value " + alphaVal + 
+            ", we reject the null hypothesis as there is convincing evidence that " + concAltHypo;
+            document.getElementById("followUpSteps").style.display = "block";
+            // follow up analysis based on largest component
+            for (const component in components) {
+                if (components[component] == Math.max(...components)) {
+                    document.getElementById("followUpOutput").innerHTML = "The largest component of the chi-squared statistic is " + components[component].toFixed(2) + 
+                    " which corresponds to category #" + (component + 1) + ". The expected value for this category is " + data[component].expected + " while the observed value is " + data[component].observed + ".";
+                }
+            }
+        } else {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + pValue + " is greater than our alpha value " + alphaVal +
+            ", we fail to reject the null hypothesis as there is not convincing evidence that " + concAltHypo;
+        }
+        document.getElementById("concludeOutput").style.color = "#e89734";
 
     }
+    
 
 
 </script>
