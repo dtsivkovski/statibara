@@ -46,6 +46,15 @@ button, .button {
     font-family: 'Merriweather', serif;
 }
 
+.site-title::before {
+	content: url("/statibara/images/croppedcapysmall.png");
+	display: inline-block;
+	position: relative;
+	width: 37px;
+    height: 37px;
+	top: 5px;
+}
+
 .site-nav, .page-link {
     color: $high-emph !important;
     background-color: $dark-grey;

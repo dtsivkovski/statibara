@@ -16,6 +16,7 @@ permalink: /x2/gof/
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
+
 <style>
 
     .tableinputclear {
@@ -51,9 +52,11 @@ permalink: /x2/gof/
     
 </style>
 
-<div style="white-space: pre-wrap">
-    <img src="{{baseurl}}/statibara/images/croppedcapy.png" width="70" height="70">
-</div>
+<center>
+    <div style="border: 2px solid white; border-radius: 35px; background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1))">
+        <img src="{{baseurl}}/statibara/images/croppedcapy.png" width="70" height="70">
+      </div>
+</center>
 
 <h2> Chi Squared Test - Goodness of Fit </h2>
 
@@ -75,7 +78,7 @@ permalink: /x2/gof/
 
 <input class="button" type="button" value="Run Test" onclick="calculate()">
 
-<div id="resultsContainer">
+<div id="resultsContainer" style="display: none">
     <h2>Results</h2>
     <div id="stateSteps" class="stepcard">
         <h3>State</h3>
