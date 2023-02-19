@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap");
 .highlight .c { color: #586e75; font-style: italic; }
 
 .highlight .err { color: #dc322f; }
@@ -492,9 +493,9 @@ button, .button { background-image: linear-gradient(to right, white, white); bor
 
 .card { background-color: white; border-color: #294645; }
 
-.site-title, .site-title:visited, .site-nav, .page-link { color: rgba(255, 255, 255, 0.87) !important; }
+.site-title, .site-title:visited { color: rgba(255, 255, 255, 0.87) !important; font-family: 'Merriweather', serif; }
 
-.site-nav { background-color: #062827; border-color: #294645; }
+.site-nav, .page-link { color: rgba(255, 255, 255, 0.87) !important; background-color: #062827; border-color: #294645; }
 
 * { scrollbar-color: #062827 #294645; }
 
