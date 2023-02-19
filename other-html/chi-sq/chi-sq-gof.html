@@ -272,7 +272,7 @@ permalink: /x2/gof/
             // adds dots if more than 3 variables
             var o2 = data[1].observed; var e2 = data[1].expected;
             var oL = data[data.length - 1].observed; var eL = data[data.length - 1].expected;
-            var equation = '$$chi^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '} = ' + chiSquared + '$$';
+            var equation = '$$\\chi^2 = \\frac{(' + o1 + '-' + e1 + ')^2}{' + e1 + '}+\\frac{(' + o2 + '-' + e2 + ')^2}{' + e2 + '}+\\cdots+\\frac{(' + oL + '-' + eL + ')^2}{' + eL + '} = ' + chiSquared + '$$';
         }
 
         // set formula
@@ -303,8 +303,9 @@ permalink: /x2/gof/
             // follow up analysis based on largest component
             for (const component in components) {
                 if (components[component] == Math.max(...components)) {
+                    const catNum = parseInt(component) + 1;
                     document.getElementById("followUpOutput").innerHTML = "The largest component of the chi-squared statistic is " + components[component].toFixed(2) + 
-                    " which corresponds to category #" + (component + 1) + ". The expected value for this category is " + data[component].expected + " while the observed value is " + data[component].observed + ".";
+                    " which corresponds to category #" + catNum + ". The expected value for this category is " + data[component].expected + " while the observed value is " + data[component].observed + ".";
                 }
             }
         } else {
