@@ -122,9 +122,10 @@ categories: Chi-Squared Tests
         const rowTotals = [];
         const columnTotals = [];
         const grandTotal = 0;
-        const expectedValues = [];
-        const observedValues = [];
-        const chiSquared = 0;
+        var observedValues = [];
+        var expectedValues = [];
+        const compValues = [];
+        var chiSquared = 0;
         const degreesOfFreedom = (rowCount - 1) * (columnCount - 1);
         const pValue = 0;
         const rowLabels = [];
@@ -134,6 +135,7 @@ categories: Chi-Squared Tests
         for (let i = 0; i < rowCount; i++) {
             const row = table.rows[i];
             let rowTotal = 0;
+            var tempArray = [];
             for (let j = 0; j < columnCount; j++) {
                 const cell = row.cells[j];
                 const input = cell.children[0];
@@ -142,7 +144,7 @@ categories: Chi-Squared Tests
                     alert("Please fill in all values");
                     return;
                 }
-                observedValues.push(value);
+                tempArray.push(parseInt(value));
                 rowTotal += parseInt(value);
                 if (i == 0) {
                     columnTotals.push(parseInt(value));
@@ -150,15 +152,36 @@ categories: Chi-Squared Tests
                     columnTotals[j] += parseInt(value);
                 }
             }
+            observedValues.push(tempArray);
             rowTotals.push(rowTotal);
         }
+        console.log(observedValues);
 
         // Get grand total
         for (let i = 0; i < columnTotals.length; i++) {
             grandTotal += columnTotals[i];
         }
 
-        // Push observed values to 2d array
+        // Get expected values
+        for (let i = 0; i < rowCount; i++) {
+            var tempArray = [];
+            for (let j = 0; j < columnCount; j++) {
+                tempArray.push((rowTotals[i] * columnTotals[j]) / grandTotal);
+            }
+            expectedValues.push(tempArray);
+        }
+        console.log(expectedValues);
+
+        // Get comp values
+        for (let i = 0; i < rowCount; i++) {
+            var tempArray = [];
+            for (let j = 0; j < columnCount; j++) {
+                var component = Math.pow(observedValues[i][j] - expectedValues[i][j], 2) / expectedValues[i][j];
+                tempArray.push(component);
+                chiSquared += component;
+            }
+        }
+        console.log(compValues);
 
     }
     
