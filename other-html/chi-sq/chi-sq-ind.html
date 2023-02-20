@@ -1,7 +1,7 @@
 ---
 layout: base
 search_exclude: true
-permalink: /x2/independence/
+permalink: /x2/2-way/
 categories: Chi-Squared Tests
 ---
 
@@ -59,4 +59,132 @@ categories: Chi-Squared Tests
       </div>
 </center>
 
-<h2> Chi Squared Test - Independence </h2>
+<h2> Chi Squared Test - 2-Way Test</h2>
+
+<p>Row and column values are excluding category titles and total rows/columns.</p>
+
+<form>
+    <table>
+        <tr>
+            <td>
+                <input class="tableinputclear" type="number" id="rowCount" name="rowCount" placeholder="# of Rows">
+            </td>
+            <td>
+                <input class="tableinputclear" type="number" id="columnCount" name="columnCount" placeholder="# of Columns">
+        </tr>
+    </table>
+    <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+</form>  
+
+<div id="tableContainer"></div>
+
+<input class="button" type="button" value="Run Test" onclick="calculate()">
+
+<div id="resultsContainer">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - Chi-squared test for independence/homogeneity</h3>
+        <p id="random"></p>
+        <p id="10percent"></p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="formula" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p>
+        <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p>
+        <p id="dfVal"></p>
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a chi-squared curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is based on the hypotheses that were put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+    <div id="followUpSteps" class="stepcard">
+        <h3>Follow Up</h3>
+        <p id="followUpOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i>For the follow up, also try to keep it in context whenever possible.</i></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const table = document.getElementById("valuetable");
+        const rowCount = table.rows.length;
+        const columnCount = table.rows[0].cells.length;
+        const rowTotals = [];
+        const columnTotals = [];
+        const grandTotal = 0;
+        const expectedValues = [];
+        const observedValues = [];
+        const chiSquared = 0;
+        const degreesOfFreedom = (rowCount - 1) * (columnCount - 1);
+        const pValue = 0;
+        const rowLabels = [];
+        const columnLabels = [];
+
+        // Get row and column totals and push to total arrays
+        for (let i = 0; i < rowCount; i++) {
+            const row = table.rows[i];
+            let rowTotal = 0;
+            for (let j = 0; j < columnCount; j++) {
+                const cell = row.cells[j];
+                const input = cell.children[0];
+                const value = input.value;
+                if (value == "") {
+                    alert("Please fill in all values");
+                    return;
+                }
+                observedValues.push(value);
+                rowTotal += parseInt(value);
+                if (i == 0) {
+                    columnTotals.push(parseInt(value));
+                } else {
+                    columnTotals[j] += parseInt(value);
+                }
+            }
+            rowTotals.push(rowTotal);
+        }
+
+        // Get grand total
+        for (let i = 0; i < columnTotals.length; i++) {
+            grandTotal += columnTotals[i];
+        }
+
+        // Push observed values to 2d array
+
+    }
+    
+    function createTable() {
+        const rowCount = document.getElementById("rowCount").value;
+        const columnCount = document.getElementById("columnCount").value;
+        const table = document.createElement("table");
+        table.id = "valuetable";
+
+        for (let i = 0; i < rowCount; i++) {
+            const row = document.createElement("tr");
+            for (let j = 0; j < columnCount; j++) {
+                const cell = document.createElement("td");
+                const input = document.createElement("input");
+                input.type = "number";
+                input.placeholder = "Value";
+                input.className = "tableinputclear";
+                cell.appendChild(input);
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        }
+
+        const tableContainer = document.getElementById("tableContainer");
+        tableContainer.innerHTML = "<h3>Observed Values</h3>";
+        tableContainer.appendChild(table);
+
+    }
+</script>
