@@ -485,13 +485,13 @@ p code { font-size: 19px; }
 
 html, body, textarea, select { color: rgba(255, 255, 255, 0.87) !important; background-color: #062827 !important; }
 
-a { color: #d6aa81 !important; }
+a { color: #64d2e8 !important; }
 
 a:hover { color: rgba(255, 255, 255, 0.87) !important; }
 
-button, .button { background-color: white; border: 1px solid black; border-radius: 6px; color: black; padding: 16px 32px; text-decoration: none; margin: 4px 2px; cursor: pointer; width: 100%; font-weight: normal; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; transition: background-color 0.25s ease-in-out 100ms; }
+button, .button { background-color: white; border: 1px solid black; border-radius: 6px; color: black; padding: 16px 32px; text-decoration: none; margin: 4px 2px; cursor: pointer; width: 100%; font-weight: normal; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; transition: background-color 0.25s ease-in-out 50ms; }
 
-button:hover, .button:hover { background-color: #64d2e8; }
+button:hover, .button:hover { background-color: #f9ac41; }
 
 .card { background-color: white; border-color: #294645; }
 
