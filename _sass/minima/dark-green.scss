@@ -12,7 +12,7 @@ html, body, textarea, select {
 }
 
 a {
-    color: rgb(214, 170, 129) !important;
+    color: #64d2e8 !important;
 }
 
 a:hover {
@@ -33,11 +33,11 @@ button, .button {
     width: 100%;
     font-weight: normal;
     font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    transition: background-color 0.25s ease-in-out 100ms
+    transition: background-color 0.25s ease-in-out 50ms;
 }
 
 button:hover, .button:hover {
-    background-color: #64d2e8;
+    background-color: #f9ac41;
 }
 
 .card {
