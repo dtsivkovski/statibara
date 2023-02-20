@@ -10,14 +10,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Statistics Tools" />
 <meta property="og:description" content="Statistics Tools" />
-<link rel="canonical" href="https://statibara.com/x2/independence/" />
-<meta property="og:url" content="https://statibara.com/x2/independence/" />
+<link rel="canonical" href="https://statibara.com/x2/2-way/" />
+<meta property="og:url" content="https://statibara.com/x2/2-way/" />
 <meta property="og:site_name" content="Statibara" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Statibara" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/x2/independence/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/x2/2-way/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://statibara.com/feed.xml" title="Statibara" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -123,7 +123,135 @@ window.onload = wrap_img;
       </div>
 </center>
 
-<h2> Chi Squared Test - Independence </h2>
+<h2> Chi Squared Test - 2-Way Test</h2>
+
+<p>Row and column values are excluding category titles and total rows/columns.</p>
+
+<form>
+    <table>
+        <tr>
+            <td>
+                <input class="tableinputclear" type="number" id="rowCount" name="rowCount" placeholder="# of Rows">
+            </td>
+            <td>
+                <input class="tableinputclear" type="number" id="columnCount" name="columnCount" placeholder="# of Columns">
+        </tr>
+    </table>
+    <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+</form>  
+
+<div id="tableContainer"></div>
+
+<input class="button" type="button" value="Run Test" onclick="calculate()">
+
+<div id="resultsContainer">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - Chi-squared test for independence/homogeneity</h3>
+        <p id="random"></p>
+        <p id="10percent"></p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="formula" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p>
+        <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p>
+        <p id="dfVal"></p>
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a chi-squared curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is based on the hypotheses that were put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+    <div id="followUpSteps" class="stepcard">
+        <h3>Follow Up</h3>
+        <p id="followUpOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i>For the follow up, also try to keep it in context whenever possible.</i></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const table = document.getElementById("valuetable");
+        const rowCount = table.rows.length;
+        const columnCount = table.rows[0].cells.length;
+        const rowTotals = [];
+        const columnTotals = [];
+        const grandTotal = 0;
+        const expectedValues = [];
+        const observedValues = [];
+        const chiSquared = 0;
+        const degreesOfFreedom = (rowCount - 1) * (columnCount - 1);
+        const pValue = 0;
+        const rowLabels = [];
+        const columnLabels = [];
+
+        // Get row and column totals and push to total arrays
+        for (let i = 0; i < rowCount; i++) {
+            const row = table.rows[i];
+            let rowTotal = 0;
+            for (let j = 0; j < columnCount; j++) {
+                const cell = row.cells[j];
+                const input = cell.children[0];
+                const value = input.value;
+                if (value == "") {
+                    alert("Please fill in all values");
+                    return;
+                }
+                observedValues.push(value);
+                rowTotal += parseInt(value);
+                if (i == 0) {
+                    columnTotals.push(parseInt(value));
+                } else {
+                    columnTotals[j] += parseInt(value);
+                }
+            }
+            rowTotals.push(rowTotal);
+        }
+
+        // Get grand total
+        for (let i = 0; i < columnTotals.length; i++) {
+            grandTotal += columnTotals[i];
+        }
+
+        // Push observed values to 2d array
+
+    }
+    
+    function createTable() {
+        const rowCount = document.getElementById("rowCount").value;
+        const columnCount = document.getElementById("columnCount").value;
+        const table = document.createElement("table");
+        table.id = "valuetable";
+
+        for (let i = 0; i < rowCount; i++) {
+            const row = document.createElement("tr");
+            for (let j = 0; j < columnCount; j++) {
+                const cell = document.createElement("td");
+                const input = document.createElement("input");
+                input.type = "number";
+                input.placeholder = "Value";
+                input.className = "tableinputclear";
+                cell.appendChild(input);
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        }
+
+        const tableContainer = document.getElementById("tableContainer");
+        tableContainer.innerHTML = "<h3>Observed Values</h3>";
+        tableContainer.appendChild(table);
+
+    }
+</script>
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/"></data>
