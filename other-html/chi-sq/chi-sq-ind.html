@@ -119,17 +119,17 @@ categories: Chi-Squared Tests
         const table = document.getElementById("valuetable");
         const rowCount = table.rows.length;
         const columnCount = table.rows[0].cells.length;
-        const rowTotals = [];
-        const columnTotals = [];
-        const grandTotal = 0;
+        var rowTotals = [];
+        var columnTotals = [];
+        var grandTotal = 0;
         var observedValues = [];
         var expectedValues = [];
-        const compValues = [];
+        var compValues = [];
         var chiSquared = 0;
         const degreesOfFreedom = (rowCount - 1) * (columnCount - 1);
-        const pValue = 0;
-        const rowLabels = [];
-        const columnLabels = [];
+        var pValue = 0;
+        var rowLabels = [];
+        var columnLabels = [];
 
         // Get row and column totals and push to total arrays
         for (let i = 0; i < rowCount; i++) {
@@ -180,6 +180,7 @@ categories: Chi-Squared Tests
                 tempArray.push(component);
                 chiSquared += component;
             }
+            compValues.push(tempArray);
         }
         console.log(compValues);
 
