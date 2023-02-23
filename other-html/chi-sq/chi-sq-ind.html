@@ -184,6 +184,9 @@ categories: Chi-Squared Tests
         }
         console.log(compValues);
 
+        // Get p-value
+        pValue = 1 - jStat.chisquare.cdf(chiSquared, degreesOfFreedom);
+
     }
     
     function createTable() {
