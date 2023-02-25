@@ -71,6 +71,7 @@ categories: Chi-Squared Tests
             </td>
             <td>
                 <input class="tableinputclear" type="number" id="columnCount" name="columnCount" placeholder="# of Columns">
+            </td>   
         </tr>
     </table>
     <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
@@ -80,13 +81,14 @@ categories: Chi-Squared Tests
 
 <input class="button" type="button" value="Run Test" onclick="calculate()">
 
-<div id="resultsContainer">
-    <h2>Expected Values</h2>
+<div id="resultsContainer" style="display: none">
+    <h2>Expected and Component Values</h2>
     <table><tr><td>
         <h3>Key</h3>
         <p>Expected Value</p>
         <p style="color: #e89734">Component Value</p>
     </td></tr>
+    </table>
     <div id="expectedContainer">
         <table id="expectedTable">
         </table>
@@ -125,6 +127,7 @@ categories: Chi-Squared Tests
 </div>
 
 <script>
+
     function calculate() {
         const table = document.getElementById("valuetable");
         const rowCount = table.rows.length;
