@@ -34,10 +34,54 @@ button, .button {
     font-weight: normal;
     font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
     transition: background-color 0.25s ease-in-out 50ms;
+    width: 65%;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+#maincapybar {
+    border: 2px solid white;
+    border-radius: 35px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1));
+    width: 65%;
+    height: 80px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+#maincapybar:hover {
+    border: 2px solid white;
+    border-radius: 35px;
+    width: 95%;
+    height: 210px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1));
+    animation-direction: alternate;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s ease-in-out 0s;
+    cursor: pointer;
+}
+
+.capybarimg {
+    width: 75px;
+    height: 75px;
+    transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s;
+}
+
+#maincapybar:hover .capybarimg {
+    width: 200px;
+    height: 200px;
+    animation-direction: alternate;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s ease-in-out 0s;
 }
 
 button:hover, .button:hover {
-    background-color: #f9ac41;
+    width:80%;
+    background-color: lightblue;
+    animation-direction: alternate;
+    -webkit-transition: all 1.5s;
+    transition: all 0.4s ease-in-out 0s;
 }
 
 .card {

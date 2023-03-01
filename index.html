@@ -7,19 +7,50 @@ image: images/logo.png
   <meta name="description" content="Statistics tools and resources for AP students.">
 </head>
 
+<style>
+  #maincapybar:hover {
+    height: 500px;
+  }
+</style>
+
 <center>
-  <div style="border: 2px solid white; border-radius: 35px; background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1))">
-    <img src="{{baseurl}}/images/croppedcapy.png" width="70" height="70">
+  
+  <div id="maincapybar" onclick="reImg()">
+        <img class="capybarimg" src="{{baseurl}}/images/croppedcapy.png">
   </div>
+
   <h2> Welcome to Statibara, your place for statistics tools! </h2>
   <p><i>Project created and maintained by <a href="https://solo.to/danieltsivkovski">Daniel Tsivkovski</a></i></p>
   <h2>Explore</h2>
-  <button class="button" onclick="window.location.href='{{baseurl}}/x2/gof/'">Chi-Squared Test - Goodness of Fit</button>
-  <button class="button" onclick="window.location.href='{{baseurl}}/x2/2-way/'">Chi-Squared Test - 2-Way Test</button>
-  <button class="button" onclick="window.location.href='{{baseurl}}/onecat-single-bar/'">Frequency Bar Graph</button>
+  <button class="button bstylish" onclick="window.location.href='{{baseurl}}/x2/gof/'">Chi-Squared Test - Goodness of Fit</button>
+  <button class="button bstylish" onclick="window.location.href='{{baseurl}}/x2/2-way/'">Chi-Squared Test - 2-Way Test</button>
+  <button class="button bstylish" onclick="window.location.href='{{baseurl}}/onecat-single-bar/'">Frequency Bar Graph</button>
   <!-- <div style="border: 2px solid white; border-radius: 16px">
     <img src="{{baseurl}}/statibara/images/frontpage/flat_capy_orange.png" style="border-radius: 13px">
   </div> -->
 </center>
+
+<script>
+  function reImg() {
+    var capyimg = document.getElementsByClassName("capybarimg")[0];
+    var capybar = document.getElementById("maincapybar");
+    capyimg.style.display = "none";
+
+    const imgs = ["{{baseurl}}/images/bar/bargraph_capy.png", "{{baseurl}}/images/bar/bargraph2_capy.png", "{{baseurl}}/images/frontpage/flat_capy_orange.png", "{{baseurl}}/images/frontpage/stats_capy.png"];
+
+    var rand = Math.floor(Math.random() * imgs.length);
+
+    url = "url(" +imgs[rand] + ")";
+
+    if (capybar.style.backgroundImage == url) {
+      reImg();
+    }
+    else {
+      capybar.style.backgroundImage = "url(" +imgs[rand] + ")";
+      capybar.style.backgroundSize = "cover";
+    }
+
+  }
+</script>
 
 
