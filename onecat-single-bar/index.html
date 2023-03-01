@@ -94,10 +94,11 @@ window.onload = wrap_img;
 </style>
 
 <center>
-<div style="border: 2px solid white; border-radius: 35px; background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1))">
-    <img src="/images/croppedcapy.png" width="70" height="70">
-  </div>
+    <div id="maincapybar" onclick="location.href='/'">
+        <img class="capybarimg" src="/images/croppedcapy.png">
+    </div>
 </center>
+
 <h2 style="display: inline-block"> Frequency Bar Graph</h2>
 
 
@@ -112,13 +113,17 @@ window.onload = wrap_img;
         </td>
         </tr>
     </table>
-    <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+    <center>   
+        <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+    </center>
     <br/>
 </form>
 <div id="tableContainer"></div>
 <canvas id="barGraph" width="2" height="2"></canvas>
 <br/>
-<input class="button" type="button" value="Generate Bar Graph" onclick="generateBarGraph()">
+<center>
+    <input class="button" type="button" value="Generate Bar Graph" onclick="generateBarGraph()">
+</center>
 <script>
     function createTable() {
         // Get the number of categories from the input field

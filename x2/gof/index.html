@@ -118,9 +118,9 @@ window.onload = wrap_img;
 </style>
 
 <center>
-    <div style="border: 2px solid white; border-radius: 35px; background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1))">
-        <img src="/images/croppedcapy.png" width="70" height="70">
-      </div>
+    <div id="maincapybar" onclick="location.href='/'">
+        <img class="capybarimg" src="/images/croppedcapy.png">
+    </div>
 </center>
 
 <h2> Chi Squared Test - Goodness of Fit </h2>
@@ -135,13 +135,17 @@ window.onload = wrap_img;
             </td>
         </tr>
     </table>
-    <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+    <center>   
+        <input class="button" type="button" value="Create Table" onclick="createTable()" style="margin-bottom: 2em">
+    </center>
 </form>   
     <br/>
 
 <div id="tableContainer"></div>
 
+<center>
 <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
 
 <div id="resultsContainer" style="display: none">
     <h2>Results</h2>
