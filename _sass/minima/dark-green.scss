@@ -89,11 +89,35 @@ button:hover, .button:hover {
     border-color: $overlay-light;
 }
 
+@keyframes background-pan {
+    from {
+      background-position: 0% center;
+    }
+    to {
+        background-position: -500% center;
+    }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
 
 .site-title, .site-title:visited {
-    color: $high-emph !important;
+    // color: $high-emph !important;
+    animation: background-pan 20s linear infinite;
+    background: linear-gradient(to right, white, #d46c04, white, #07aacc, white);
+    background-size: 500%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-family: 'Merriweather', serif;
+}
+
+.gradient-dynam {
+    animation: background-pan 20s linear infinite;
+    background: linear-gradient(to right, white, #d46c04, white, #07aacc, white);
+    background-size: 500%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .site-title::before {

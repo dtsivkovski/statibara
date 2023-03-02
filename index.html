@@ -11,7 +11,7 @@ image: images/logo.png
 <style>
   #maincapybar {
    background-position: center;
-   transition: background-image 0s, width 0.5s, height 0.5s !important;
+   transition: background-image 0s none, width 0.4s ease-in-out, height 0.4s ease-in-out !important;
   }
 
   #maincapybar:hover {
@@ -26,7 +26,7 @@ image: images/logo.png
   </div>
 
   <h1 style="font-family: Merriweather; font-size: 60px"> Statibara </h1>
-  <h2 id="dynamHeader">  </h2>
+  <h1 style="margin-top: 0 !important;" >Statistics <span class="gradient-dynam" id="dynamHeader"></span></h1>
   <p><i>Project created and maintained by <a href="https://solo.to/danieltsivkovski">Daniel Tsivkovski</a></i></p>
   <h2>Explore</h2>
   <button class="button bstylish" onclick="window.location.href='{{baseurl}}/x2/gof/'">Chi-Squared Test - Goodness of Fit</button>
@@ -42,7 +42,7 @@ image: images/logo.png
   function headlineTyper() {
     var txt = "Statistics tools";
     var speed = 60;
-    var pause = 1000;
+    var pause = 2000;
     var backspeed = 30;
     const dH = document.getElementById("dynamHeader");
     var i = 0;
@@ -51,16 +51,16 @@ image: images/logo.png
     function typer1() {
       switch (j) {
         case 0:
-          txt = "Statistics tools";
+          txt = "tools";
           break;
         case 1:
-          txt = "Statistics resources";
+          txt = "resources";
           break;
         case 2:
-          txt = "Statistics guides";
+          txt = "guides";
           break;
         case 3:
-          txt = "Statistics tools";
+          txt = "tools";
           j = 0;
           break;
       }
@@ -77,13 +77,13 @@ image: images/logo.png
     }
 
     function delete1() {
-      if (i > 10) {
+      if (i > 0) {
         dH.innerHTML = dH.innerHTML.slice(0, -1);
         i--;
-        setTimeout(delete1, backspeed);
+        setTimeout(delete1, speed);
       }
       else {
-        setTimeout(typer1, pause);
+        setTimeout(typer1, speed);
       }
     }
     typer1();
