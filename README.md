@@ -7,9 +7,11 @@
 
 # [Statibara - Stats Tools](https://statibara.com)
 
-## Usage
+A project intended to provide statistics tools, guides, and resources designed around (but not limited to) the AP Statistics course curriculum. 
 
-Use the deployed site [statibara.com](https://statibara.com).
+## Usage 
+
+Use the deployed site at [statibara.com](https://statibara.com).
 
 ## Using locally 
 
