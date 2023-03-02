@@ -78,6 +78,7 @@ window.onload = wrap_img;
 <style>
   #maincapybar {
    background-position: center;
+   transition: background-image 0s, width 0.5s, height 0.5s !important;
   }
 
   #maincapybar:hover {
@@ -106,14 +107,30 @@ window.onload = wrap_img;
 <script>
 
   function headlineTyper() {
-    var txt = "Statistics tools and resources for AP students.";
+    var txt = "Statistics tools";
     var speed = 60;
     var pause = 1000;
     var backspeed = 30;
     const dH = document.getElementById("dynamHeader");
     var i = 0;
+    j = 0;
 
     function typer1() {
+      switch (j) {
+        case 0:
+          txt = "Statistics tools";
+          break;
+        case 1:
+          txt = "Statistics resources";
+          break;
+        case 2:
+          txt = "Statistics guides";
+          break;
+        case 3:
+          txt = "Statistics tools";
+          j = 0;
+          break;
+      }
 
       if (i < txt.length) {
         dH.innerHTML += txt.charAt(i);
@@ -121,12 +138,13 @@ window.onload = wrap_img;
         setTimeout(typer1, speed);
       }
       else {
+        j++;
         setTimeout(delete1, pause);
       }
     }
 
     function delete1() {
-      if (i > 0) {
+      if (i > 10) {
         dH.innerHTML = dH.innerHTML.slice(0, -1);
         i--;
         setTimeout(delete1, backspeed);
