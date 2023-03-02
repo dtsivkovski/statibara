@@ -503,7 +503,12 @@ button:hover, .button:hover { width: 80%; background-color: lightblue; animation
 
 .card { background-color: white; border-color: #294645; }
 
-.site-title, .site-title:visited { color: rgba(255, 255, 255, 0.87) !important; font-family: 'Merriweather', serif; }
+@keyframes background-pan { from { background-position: 0% center; }
+  to { background-position: -500% center; } }
+
+.site-title, .site-title:visited { animation: background-pan 20s linear infinite; background: linear-gradient(to right, white, #d46c04, white, #07aacc, white); background-size: 500%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Merriweather', serif; }
+
+.gradient-dynam { animation: background-pan 20s linear infinite; background: linear-gradient(to right, white, #d46c04, white, #07aacc, white); background-size: 500%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 .site-title::before { content: url("/images/croppedcapysmall.png"); display: inline-block; position: relative; width: 37px; height: 37px; top: 5px; }
 
