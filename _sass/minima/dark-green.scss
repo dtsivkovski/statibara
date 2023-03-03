@@ -9,6 +9,7 @@ $overlay-light: mix($dark-green, white, 86%);
 html, body, textarea, select {   
   color: $high-emph !important;
   background-color: $dark-green !important;
+  background-image: linear-gradient(to bottom, $dark-green, #021312);
 }
 
 a {
@@ -77,6 +78,7 @@ button, .button {
 }
 
 button:hover, .button:hover {
+    transform: translate(0px, -5px);
     width:80%;
     background-color: lightblue;
     animation-direction: alternate;
