@@ -20,6 +20,16 @@ a:hover {
     color:$high-emph !important;
 }
 
+.centerholder {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 button, .button {
     // background-image: linear-gradient(to right, #d46c04 20%, white , #07aacc 80%);
