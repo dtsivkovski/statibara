@@ -9,20 +9,68 @@ image: images/logo.png
 </head>
 
 <style>
+  .centerholder {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+  }
+ 
   #maincapybar {
-   background-position: center;
-   transition: background-image 0s none, width 0.4s ease-in-out, height 0.4s ease-in-out !important;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), white);
+    background-position: center;
+    transition: background-image 0.5s ease-in-out, width 0.4s ease-in-out, height 0.4s ease-in-out !important;
   }
 
   #maincapybar:hover {
-    height: 500px;
+    height: 200px;
+    transition: background-image 0.4s ease-in-out;
   }
+
+  #maincapybar:hover > .capybarimg {
+    transform: translate(-120%, 0) scale(-1,1);
+    animation-direction: alternate;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s ease-in-out 0s;
+  }
+
+  /* #maincapybar:hover > .capybarimg:hover {
+    transform: translate(-120%, 0) scale(-1,1);
+    animation-direction: alternate;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s ease-in-out 0s;
+  } */
+
+  .cardinfotext {
+    font-size: 20px;
+    font-family: Merriweather;
+    color: black;
+    border: 0px;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out, width 0.5s ease-in-out;
+  }
+
+  #maincapybar:hover > .cardinfotext {
+    font-size: 20px;
+    font-family: Merriweather;
+    color: black;
+    transform: translate(20%, -350%);
+    opacity: 1;
+    transition-delay: 0s;
+    transition: opacity 0.3s ease-in-out 0.2s, transform 0.5s ease-in-out;
+  }
+
 </style>
 
-<center>
+<div class="centerholder">
   
   <div id="maincapybar" onclick="reImg()">
         <img class="capybarimg" src="{{baseurl}}/images/croppedcapy.png">
+        <div class="cardinfotext">Welcome to Statibara!<br\>
+        </div>
   </div>
 
   <h1 style="font-family: Merriweather; font-size: 60px"> Statibara </h1>
@@ -35,7 +83,7 @@ image: images/logo.png
   <!-- <div style="border: 2px solid white; border-radius: 16px">
     <img src="{{baseurl}}/statibara/images/frontpage/flat_capy_orange.png" style="border-radius: 13px">
   </div> -->
-</center>
+</div>
 
 <script>
 
@@ -92,26 +140,26 @@ image: images/logo.png
 
   headlineTyper();
 
-  function reImg() {
-    var capyimg = document.getElementsByClassName("capybarimg")[0];
-    var capybar = document.getElementById("maincapybar");
-    capyimg.style.display = "none";
+  // function reImg() {
+  //   var capyimg = document.getElementsByClassName("capybarimg")[0];
+  //   var capybar = document.getElementById("maincapybar");
+  //   capyimg.style.display = "none";
 
-    const imgs = ["{{baseurl}}/images/bar/bargraph_capy.png", "{{baseurl}}/images/bar/bargraph2_capy.png", "{{baseurl}}/images/frontpage/flat_capy_orange.png", "{{baseurl}}/images/frontpage/stats_capy.png"];
+  //   const imgs = ["{{baseurl}}/images/bar/bargraph_capy.png", "{{baseurl}}/images/bar/bargraph2_capy.png", "{{baseurl}}/images/frontpage/flat_capy_orange.png", "{{baseurl}}/images/frontpage/stats_capy.png"];
 
-    var rand = Math.floor(Math.random() * imgs.length);
+  //   var rand = Math.floor(Math.random() * imgs.length);
 
-    url = "url(" +imgs[rand] + ")";
+  //   url = "url(" +imgs[rand] + ")";
 
-    if (capybar.style.backgroundImage == url) {
-      reImg();
-    }
-    else {
-      capybar.style.backgroundImage = "url(" +imgs[rand] + ")";
-      capybar.style.backgroundSize = "cover";
-    }
+  //   if (capybar.style.backgroundImage == url) {
+  //     reImg();
+  //   }
+  //   else {
+  //     capybar.style.backgroundImage = "url(" +imgs[rand] + ")";
+  //     capybar.style.backgroundSize = "cover";
+  //   }
 
-  }
+  // }
 </script>
 
 
