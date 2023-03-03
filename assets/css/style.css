@@ -483,7 +483,7 @@ pre code { font-size: 15px !important; }
 
 p code { font-size: 19px; }
 
-html, body, textarea, select { color: rgba(255, 255, 255, 0.87) !important; background-color: #062827 !important; }
+html, body, textarea, select { color: rgba(255, 255, 255, 0.87) !important; background-color: #062827 !important; background-image: linear-gradient(to bottom, #062827, #021312); }
 
 a { color: #64d2e8 !important; }
 
@@ -499,7 +499,7 @@ button, .button { background-color: white; border: 1px solid black; border-radiu
 
 #maincapybar:hover .capybarimg { width: 200px; height: 200px; animation-direction: alternate; -webkit-transition: all 0.5s; transition: all 0.5s ease-in-out 0s; }
 
-button:hover, .button:hover { width: 80%; background-color: lightblue; animation-direction: alternate; -webkit-transition: all 1.5s; transition: all 0.4s ease-in-out 0s; }
+button:hover, .button:hover { transform: translate(0px, -5px); width: 80%; background-color: lightblue; animation-direction: alternate; -webkit-transition: all 1.5s; transition: all 0.4s ease-in-out 0s; }
 
 .card { background-color: white; border-color: #294645; }
 
