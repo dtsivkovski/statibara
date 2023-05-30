@@ -69,7 +69,13 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <style>
+        <head>
+    <script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/javascript" id="jstat" src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<style>
     .image-container-capybar {
   position: relative;
   display: inline-block;
@@ -183,13 +189,13 @@ window.onload = wrap_img;
     </tr>
     <tr>
       <td style="text-align: center"><strong>Null Hypothesis</strong></td>
-      <td style="text-align: center"><strong>Ho:</strong> Observed = Expected</td>
+      <td style="text-align: center"><strong>Ho:</strong> Observed values equal the expected values</td>
       <td style="text-align: center"><strong>Ho:</strong> Variables are independent</td>
       <td style="text-align: center"><strong>Ho:</strong> There is no difference in the distributions</td>
     </tr>
     <tr>
       <td style="text-align: center"><strong>Alternative Hypothesis</strong></td>
-      <td style="text-align: center"><strong>Ha:</strong> Observed != Expected</td>
+      <td style="text-align: center"><strong>Ha:</strong> Observed values do not equal the expected values</td>
       <td style="text-align: center"><strong>Ha:</strong> Variables are not independent</td>
       <td style="text-align: center"><strong>Ha:</strong> There is a difference in the distributions</td>
     </tr>
@@ -218,6 +224,46 @@ window.onload = wrap_img;
     </ul>
   </li>
 </ul>
+
+<h2 id="do">Do</h2>
+
+<p>In the do step, you calculate the test statistic, degrees of freedom, and the p-value of such a test.</p>
+
+<h4 id="degrees-of-freedom-df">Degrees of Freedom (df):</h4>
+<ul>
+  <li>Goodness of Fit: df = k - 1, where k is the number of categories</li>
+  <li>Independence/Homogeneity: df = (r - 1)(c - 1), where r is the number of rows and c is the number of columns</li>
+</ul>
+
+<h4 id="test-statistic">Test Statistic:</h4>
+
+<p>To get the test statistic, first subtract the observed value minus the expected value, square it, and then divide by the expected value. Then, add all of these values together for all cells to get the test statistic.</p>
+
+<div id="testStatistic"></div>
+<script>
+    document.getElementById("testStatistic").style.fontSize = "x-large";
+    var formula = "$$\\chi^2 = \\sum \\frac{(O - E)^2}{E}$$";
+    document.getElementById("testStatistic").innerHTML = formula;
+    // typeset formula to test statistic element
+    MathJax.typesetPromise([document.getElementById("testStatistic")], formula).then(function () {}).catch(function (err) {});
+</script>
+
+<h4 id="p-value">P-Value:</h4>
+
+<p>To get the p-value, use the degrees of freedom and the test statistic in a chi-squared distribution table or a calculator.</p>
+<ul>
+  <li>Calculator: Use the chi-squared cdf function, with the test statistic as the first argument and the degrees of freedom as the second argument.</li>
+  <li>Table: The table should have the test statistic, degrees of freedom, and the p-value labeled. Use the two which you have to find the missing p-value.</li>
+</ul>
+
+<p>To see an interactive chi-squared distribution graph, you can visit <a href="https://stapplet.com/x2dist.html">Stapplet’s Chi-Squared Distribution Graph</a> that allows you to visualize what the graph looks like with different degrees of freedom.</p>
+
+<!-- Embed Stapplet Page - Not implemented right now
+<iframe src="https://stapplet.com/x2dist.html" style="background-color: white; width: 800px; height: 500px">
+
+-->
+
+<h2 id="conclude">Conclude</h2>
 
 
       </div>
