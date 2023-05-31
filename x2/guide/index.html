@@ -155,7 +155,11 @@ window.onload = wrap_img;
     </div>
 </div>
 
-<h1 id="a-guide-to-chi-squared-tests-for-inference">A Guide to Chi-Squared Tests for Inference</h1>
+<center>
+
+<h1> A Guide to Chi-Squared Tests for Inference </h1>
+
+</center>
 
 <h2 id="differences-between-the-tests">Differences Between the Tests</h2>
 
@@ -202,11 +206,16 @@ window.onload = wrap_img;
   </tbody>
 </table>
 
-<h2 id="state">State</h2>
+<hr />
+
+<h2 id="state-step">“State” Step</h2>
 
 <p>In the state step, you must include the null hypothesis, alternative hypothesis, and the alpha value. The alpha value is just like in the other tests, usually ranging from 0.01 to 0.10 (for reasonable alpha values). The hypotheses, however, are different depending on which chi-squared test you are performing, so you should refer to the table above.</p>
 
-<h2 id="plan">Plan</h2>
+<p><br /></p>
+<hr />
+
+<h2 id="plan-step">“Plan” Step</h2>
 
 <p>In the plan step, you must first state the name of the test you are performing. Then, you must check all of the conditions necessary for the test in order to proceed to the next steps.</p>
 
@@ -225,17 +234,20 @@ window.onload = wrap_img;
   </li>
 </ul>
 
-<h2 id="do">Do</h2>
+<p><br /></p>
+<hr />
+
+<h2 id="do-step">“Do” Step</h2>
 
 <p>In the do step, you calculate the test statistic, degrees of freedom, and the p-value of such a test.</p>
 
-<h4 id="degrees-of-freedom-df">Degrees of Freedom (df):</h4>
+<h3 id="degrees-of-freedom-df">Degrees of Freedom (df):</h3>
 <ul>
   <li>Goodness of Fit: df = k - 1, where k is the number of categories</li>
   <li>Independence/Homogeneity: df = (r - 1)(c - 1), where r is the number of rows and c is the number of columns</li>
 </ul>
 
-<h4 id="test-statistic">Test Statistic:</h4>
+<h3 id="test-statistic">Test Statistic:</h3>
 
 <p>To get the test statistic, first subtract the observed value minus the expected value, square it, and then divide by the expected value. Then, add all of these values together for all cells to get the test statistic.</p>
 
@@ -248,7 +260,7 @@ window.onload = wrap_img;
     MathJax.typesetPromise([document.getElementById("testStatistic")], formula).then(function () {}).catch(function (err) {});
 </script>
 
-<h4 id="p-value">P-Value:</h4>
+<h3 id="p-value">P-Value:</h3>
 
 <p>To get the p-value, use the degrees of freedom and the test statistic in a chi-squared distribution table or a calculator.</p>
 <ul>
@@ -263,8 +275,41 @@ window.onload = wrap_img;
 
 -->
 
-<h2 id="conclude">Conclude</h2>
+<p><br /></p>
+<hr />
 
+<h2 id="conclude-step">“Conclude” Step</h2>
+
+<p>To conclude the test, you must compare your p-value to your alpha much like in other tests. Reject the null if the p-value is lower than the alpha, and fail to reject it if the p-value is higher than the alpha. Make sure you state your conclusion in context.</p>
+
+<p><br /></p>
+<hr />
+
+<h2 id="follow-up-step">“Follow-Up” Step</h2>
+
+<p>If you reject the null hypothesis, you must state the cell that most significantly contributed to your chi-squared test statistic. With this, you must also state the observed value of this cell and whether it was higher/lower than the expected value. <strong>This is not necessary if you fail to reject the null hypothesis.</strong></p>
+<ul>
+  <li>Example: <i>“The cell for “Most Likely” in the “United States” sample contributed the greatest to the chi-squared statistic because the observed value of 87 was much greater than the expected value of 21.” </i></li>
+</ul>
+
+<p><br /></p>
+<hr />
+
+<center>
+
+<h1> Related Calculators</h1>
+
+Now, you can try your hand at the chi-squared tests on your own and use these calculators to check your work!
+
+<br /><br />
+
+</center>
+
+<center>
+<button class="button" onclick="window.location.href='{baseurl}/x2/gof/'">Goodness of Fit Calculator</button>
+<button class="button" onclick="window.location.href='{baseurl}/x2/2-way/'">Test for Independence Calculator</button>
+<button class="button" onclick="window.location.href='{baseurl}/x2/2-way/'">Test for Homogeneity Calculator</button>
+</center>
 
       </div>
     </main><footer class="site-footer h-card">
