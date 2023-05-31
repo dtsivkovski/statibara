@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Statibara | Statistics Tools</title>
+<title>Guides | Statibara</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Statibara" />
+<meta property="og:title" content="Guides" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Statistics Tools" />
 <meta property="og:description" content="Statistics Tools" />
-<link rel="canonical" href="https://statibara.com/search/" />
-<meta property="og:url" content="https://statibara.com/search/" />
+<link rel="canonical" href="https://statibara.com/guides/" />
+<meta property="og:url" content="https://statibara.com/guides/" />
 <meta property="og:site_name" content="Statibara" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Statibara" />
+<meta property="twitter:title" content="Guides" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/search/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Guides","url":"https://statibara.com/guides/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://statibara.com/feed.xml" title="Statibara" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -69,17 +69,93 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <!-- adapted from https://github.com/pmarsceill/just-the-docs -->
-<script type="text/javascript" src="/assets/js/search.js"></script>
-<script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+        <style>
+    .image-container-capybar {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
 
-<div class="search">
-    <div class="search-input-wrap">
-    <input type="text" class="js-search-input search-input input-block form-control" tabindex="0" placeholder="Search Statibara" aria-label="Search Statibara" autocomplete="off">
+.overlay-cb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#maincapybar:hover .overlay-cb {
+  opacity: 1;
+}
+
+#maincapybar:hover img {
+  opacity: 0.4;
+}
+
+#maincapybar {
+    border: 2px solid white;
+    border-radius: 35px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1));
+    width: 65%;
+    height: 80px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+#maincapybar:hover {
+    transform: translate(0px, 2px);
+    border: 2px solid white;
+    border-radius: 35px;
+    width: 65%;
+    height: 80px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1));
+    animation-direction: alternate;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s ease-in-out 0s;
+    cursor: pointer;
+}
+
+.capybarimg {
+    width: 75px;
+    height: 75px;
+    transition: all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s;
+}
+
+#maincapybar:hover .capybarimg {
+    width: 75px;
+    height: 75px;
+    animation-direction: alternate;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+</style>
+
+<div class="centerholder">
+    <div id="maincapybar" onclick="location.href='/'">
+        <div class="image-container-capybar">
+            <img class="capybarimg" src="/images/croppedcapy.png">
+            <div class="overlay-cb">Back to home</div>
+        </div>
     </div>
-    <br>
-    <div class="js-search-results search-results-wrap"></div>
 </div>
+
+<center>
+
+<h2>Current Guides</h2>
+
+<button class="button" onclick="window.location.href='/x2/guide/'">Guide to Chi-Squared Tests</button>
+
+</center>
 
       </div>
     </main><footer class="site-footer h-card">
