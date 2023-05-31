@@ -13,7 +13,11 @@ categories: Chi-Squared Tests
 
 {% include capybar.html %}
 
-# A Guide to Chi-Squared Tests for Inference
+<center>
+
+<h1> A Guide to Chi-Squared Tests for Inference </h1>
+
+</center>
 
 ## Differences Between the Tests
 
@@ -25,12 +29,16 @@ categories: Chi-Squared Tests
 | **Null Hypothesis** | **Ho:** Observed values equal the expected values | **Ho:** Variables are independent | **Ho:** There is no difference in the distributions |
 | **Alternative Hypothesis** | **Ha:** Observed values do not equal the expected values | **Ha:** Variables are not independent | **Ha:** There is a difference in the distributions |
 
+<hr>
 
-## State
+## "State" Step
 
 In the state step, you must include the null hypothesis, alternative hypothesis, and the alpha value. The alpha value is just like in the other tests, usually ranging from 0.01 to 0.10 (for reasonable alpha values). The hypotheses, however, are different depending on which chi-squared test you are performing, so you should refer to the table above.
 
-## Plan
+<br>
+<hr>
+
+## "Plan" Step
 
 In the plan step, you must first state the name of the test you are performing. Then, you must check all of the conditions necessary for the test in order to proceed to the next steps.
 
@@ -41,15 +49,18 @@ In the plan step, you must first state the name of the test you are performing. 
     - Goodness of Fit: The expected values are calculated by multiplying the total number of observations by the proportion of each category in the population. 
     - Independence/Homogeneity: The expected values are calculated by multiplying the row total by the column total, and dividing by the total number of observations.
 
-## Do
+<br>
+<hr>
+
+## "Do" Step
 
 In the do step, you calculate the test statistic, degrees of freedom, and the p-value of such a test.
 
-#### Degrees of Freedom (df):
+### Degrees of Freedom (df):
 - Goodness of Fit: df = k - 1, where k is the number of categories
 - Independence/Homogeneity: df = (r - 1)(c - 1), where r is the number of rows and c is the number of columns
 
-#### Test Statistic:
+### Test Statistic:
 
 To get the test statistic, first subtract the observed value minus the expected value, square it, and then divide by the expected value. Then, add all of these values together for all cells to get the test statistic.
 
@@ -62,7 +73,7 @@ To get the test statistic, first subtract the observed value minus the expected 
     MathJax.typesetPromise([document.getElementById("testStatistic")], formula).then(function () {}).catch(function (err) {});
 </script>
 
-#### P-Value:
+### P-Value:
 
 To get the p-value, use the degrees of freedom and the test statistic in a chi-squared distribution table or a calculator.
 - Calculator: Use the chi-squared cdf function, with the test statistic as the first argument and the degrees of freedom as the second argument.
@@ -75,5 +86,36 @@ To see an interactive chi-squared distribution graph, you can visit [Stapplet's 
 
 -->
 
-## Conclude
+<br>
+<hr>
 
+## "Conclude" Step
+
+To conclude the test, you must compare your p-value to your alpha much like in other tests. Reject the null if the p-value is lower than the alpha, and fail to reject it if the p-value is higher than the alpha. Make sure you state your conclusion in context.
+
+<br>
+<hr>
+
+## "Follow-Up" Step
+
+If you reject the null hypothesis, you must state the cell that most significantly contributed to your chi-squared test statistic. With this, you must also state the observed value of this cell and whether it was higher/lower than the expected value. **This is not necessary if you fail to reject the null hypothesis.**
+- Example: <i>"The cell for "Most Likely" in the "United States" sample contributed the greatest to the chi-squared statistic because the observed value of 87 was much greater than the expected value of 21." </i>
+
+<br>
+<hr>
+
+<center>
+
+<h1> Related Calculators</h1>
+
+Now, you can try your hand at the chi-squared tests on your own and use these calculators to check your work!
+
+<br/><br/>
+
+</center>
+
+<center>
+<button class="button" onclick="window.location.href='{baseurl}/x2/gof/'">Goodness of Fit Calculator</button>
+<button class="button" onclick="window.location.href='{baseurl}/x2/2-way/'">Test for Independence Calculator</button>
+<button class="button" onclick="window.location.href='{baseurl}/x2/2-way/'">Test for Homogeneity Calculator</button>
+</center>
