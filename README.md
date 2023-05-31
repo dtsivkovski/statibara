@@ -7,6 +7,8 @@
 
 # [Statibara - Stats Tools](https://statibara.com)
 
+[![image](https://github.com/dtsivkovski/statibara/assets/89223402/626707bc-0e52-45cf-be49-b5a83d69e025)](https://statibara.com)
+
 A project intended to provide statistics tools, guides, and resources designed around (but not limited to) the AP Statistics course curriculum. 
 
 ## Usage 
