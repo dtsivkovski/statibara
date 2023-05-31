@@ -57,8 +57,8 @@ In the plan step, you must first state the name of the test you are performing. 
 In the do step, you calculate the test statistic, degrees of freedom, and the p-value of such a test.
 
 ### Degrees of Freedom (df):
-- Goodness of Fit: df = k - 1, where k is the number of categories
-- Independence/Homogeneity: df = (r - 1)(c - 1), where r is the number of rows and c is the number of columns
+- Goodness of Fit: `df = k - 1`, where k is the number of categories
+- Independence/Homogeneity: `df = (r - 1)(c - 1)`, where `r` is the number of rows and `c` is the number of columns
 
 ### Test Statistic:
 
