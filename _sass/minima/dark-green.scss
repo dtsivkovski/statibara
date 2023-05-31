@@ -46,8 +46,9 @@ button, .button {
     font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
     transition: background-color 0.25s ease-in-out 50ms;
     width: 65%;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+    transition-delay: 0.1s;
 }
 
 #maincapybar {
@@ -88,12 +89,12 @@ button, .button {
 }
 
 button:hover, .button:hover {
-    transform: translate(0px, -5px);
-    width:80%;
+    transform: translate(0px, 0px);
+    width:70%;
     background-color: lightblue;
     animation-direction: alternate;
     -webkit-transition: all 1.5s;
-    transition: all 0.4s ease-in-out 0s;
+    transition: all 0.1s ease-in-out 0s;
 }
 
 .card {
