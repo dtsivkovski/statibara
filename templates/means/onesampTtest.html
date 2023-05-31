@@ -1,0 +1,136 @@
+---
+layout: base
+search_exclude: true
+permalink: /mean/onesample/test/
+categories: Means
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<style>
+
+    .tableinputclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+    }
+    
+    .tableinputclear:focus {
+        background-color: #062827;
+        outline: none;
+        color: white;
+        border: 0px solid;
+    }
+
+    .tableselectclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+        background-image: none;
+    }
+    
+    ::placeholder {
+        font-style: italic;
+        color: #a1a1a1;
+    }
+
+    .stepcard {
+        background-color: #062827;
+        color: white;
+        border: 1px solid white;
+        width: 99%;
+        border-radius: 8px;
+        padding: 1em;
+        padding-top: 0;
+        margin-bottom: 1em;
+    }
+    
+    
+</style>
+
+{% include capybar.html %}
+
+<h2> One Sample T-Test for a Mean </h2>
+
+<!-- Table for input of hypotheses, alpha value, population mean, sample mean, sample SD, and number in the sample -->
+<table>
+    <tr>
+        <th>
+            Null Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="nullHypo" name="nullHypo" placeholder="Null Hypothesis">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Alternative Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="altHypo" name="altHypo" placeholder="Alternative Hypothesis">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Direction
+        </th>
+        <td>
+            <select class="tableselectclear" id="direction" name="direction">
+                <option value="two">Two-Tailed</option>
+                <option value="left">Left-Tailed</option>
+                <option value="right">Right-Tailed</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Alpha Value (α)
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="alpha" name="alpha" placeholder="Alpha Value">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Population Mean (μ)
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="popMean" name="popMean" placeholder="Population Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Mean (x̄)
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="sampMean" name="sampMean" placeholder="Sample Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample SD (s)
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="sampSD" name="sampSD" placeholder="Sample SD">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number in Sample (n)
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="sampN" name="sampN" placeholder="Number in Sample">
+        </td>
+    </tr>
+</table>
