@@ -139,8 +139,7 @@ categories: Means
     <input class="button" type="button" value="Run Test" onclick="calculate()">
 </center>
 
-<!--  style="display: none" -->
-<div id="resultsContainer">
+<div id="resultsContainer" style="display: none">
     <h2>Results</h2>
     <div id="stateSteps" class="stepcard">
         <h3>State</h3>
@@ -218,8 +217,10 @@ categories: Means
         }
 
         // calculate degrees of freedom
-        var df = sampN - 1;
-        document.getElementById("dfVal").innerHTML = "Degrees of freedom (df) = " + df;
+        var dfVal = sampN - 1;
+        var df = "$$df = " + sampN + " - 1 = "+ dfVal + "$$";
+        document.getElementById("dfVal").innerHTML = df;
+        MathJax.typesetPromise([document.getElementById("dfVal")], df).then(function () {}).catch(function (err) {});
 
         // calculate t-statistic
         var t = (sampMean - popMean) / (sampSD / Math.sqrt(sampN));
@@ -247,10 +248,8 @@ categories: Means
 
 
 
-
-
         // calculate p-value
-        var p = jStat.studentt.cdf(calcT,df);
+        var p = jStat.studentt.cdf(calcT,dfVal);
 
 
         // put formula in calculate box
@@ -263,11 +262,26 @@ categories: Means
         // if two-tailed then we need to multiply p-value by two
         if (direction == 0) {
             pVal = "$$p = " + p.toFixed(4) + " * 2 = "+ (p * 2).toFixed(4) + "$$";
+            p = p * 2;
         }
 
         document.getElementById("pVal").innerHTML = pVal;
         MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
 
+        // make conclusion hypothesis by lowercasing the first letter of the alternative hypothesis
+        const concAltHypo = altHypo.charAt(0).toLowerCase() + altHypo.slice(1);
+        // Set conclusion
+        if (p < alpha) {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha + 
+            ", we reject the null hypothesis as there is convincing evidence that " + concAltHypo;
+        } else {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+            ", we fail to reject the null hypothesis as there is not convincing evidence that " + concAltHypo;
+        }
+        document.getElementById("concludeOutput").style.color = "#e89734";
+
+        // show results container
+        document.getElementById("resultsContainer").style.display = "block";
 
 
     }
