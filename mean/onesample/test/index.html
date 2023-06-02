@@ -208,7 +208,7 @@ window.onload = wrap_img;
 
 <!-- Table for input of hypotheses, alpha value, population mean, sample mean, sample SD, and number in the sample -->
 <table>
-    <tr>
+    <!-- <tr>
         <th>
             Null Hypothesis
         </th>
@@ -223,16 +223,16 @@ window.onload = wrap_img;
         <td>
             <input class="tableinputclear" type="text" id="altHypo" name="altHypo" placeholder="Alternative Hypothesis">
         </td>
-    </tr>
+    </tr> -->
     <tr>
         <th>
             Direction
         </th>
         <td>
             <select class="tableselectclear" id="direction" name="direction">
-                <option value="0">Two-Tailed</option>
-                <option value="-1">Left-Tailed</option>
-                <option value="1">Right-Tailed</option>
+                <option value="0">Two-Tailed (μ ≠ μ<sub>0</sub>)</option>
+                <option value="-1">Left-Tailed (μ < μ<sub>0</sub>)</option>
+                <option value="1">Right-Tailed (μ > μ<sub>0</sub>)</option>
             </select>
         </td>
     </tr>
@@ -288,6 +288,7 @@ window.onload = wrap_img;
         <h3>State</h3>
         <p id="stateHo"></p>
         <p id="stateHa"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (μ) means in context!</i></p>
         <p id="stateAlpha"></p>
     </div>
     <div id="planSteps" class="stepcard">
@@ -307,15 +308,15 @@ window.onload = wrap_img;
     <div id="concludeSteps" class="stepcard">
         <h3>Conclude</h3>
         <p id="concludeOutput"></p>
-        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is based on the hypotheses that were put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
     </div>
 </div>
 
 <script>
     function calculate() {
         // get values from table
-        var nullHypo = document.getElementById("nullHypo").value;
-        var altHypo = document.getElementById("altHypo").value;
+        // var nullHypo = document.getElementById("nullHypo").value;
+        // var altHypo = document.getElementById("altHypo").value;
         var direction = document.getElementById("direction").value;
         var alpha = document.getElementById("alpha").value;
         var popMean = document.getElementById("popMean").value;
@@ -324,7 +325,8 @@ window.onload = wrap_img;
         var sampN = document.getElementById("sampN").value;
 
         // check if any values are empty
-        if (nullHypo == "" || altHypo == "" || alpha == "" || popMean == "" || sampMean == "" || sampSD == "" || sampN == "") {
+        // nullHypo == "" || altHypo == "" || 
+        if (alpha == "" || popMean == "" || sampMean == "" || sampSD == "" || sampN == "") {
             alert("Please make sure all fields are filled in!");
             return;
         }
@@ -347,9 +349,25 @@ window.onload = wrap_img;
             return;
         }
 
+        var concDirectionWord;
+        var hypSymbol;        
+        // check direction for correct hypothesis direction
+        if (direction == 0) {
+            hypSymbol = "≠";
+            concDirectionWord = " different from ";
+        }
+        else if (direction == 1) {
+            hypSymbol = ">";
+            concDirectionWord = " greater than ";
+        }
+        else if (direction == -1) {
+            hypSymbol = "<";
+            concDirectionWord = " less than ";
+        }
+
         // put hypotheses and alpha in state box
-        document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: " + nullHypo;
-        document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: " + altHypo;
+        document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: μ = " + popMean;
+        document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: μ " + hypSymbol + " " + popMean;
         document.getElementById("stateAlpha").innerHTML = "α = " + alpha;
 
         // check large counts condition for the test
@@ -412,15 +430,26 @@ window.onload = wrap_img;
         MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
 
         // make conclusion hypothesis by lowercasing the first letter of the alternative hypothesis
-        const concAltHypo = altHypo.charAt(0).toLowerCase() + altHypo.slice(1);
-        // Set conclusion
+        // const concAltHypo = altHypo.charAt(0).toLowerCase() + altHypo.slice(1);
+        // // Set conclusion
+        // if (p < alpha) {
+        //     document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha + 
+        //     ", we reject the null hypothesis as there is convincing evidence that " + concAltHypo;
+        // } else {
+        //     document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+        //     ", we fail to reject the null hypothesis as there is not convincing evidence that " + concAltHypo;
+        // }
+
+        // make conclusion
         if (p < alpha) {
-            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha + 
-            ", we reject the null hypothesis as there is convincing evidence that " + concAltHypo;
-        } else {
-            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
-            ", we fail to reject the null hypothesis as there is not convincing evidence that " + concAltHypo;
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
+            ", we reject the null hypothesis as there is convincing evidence that the true population mean is" + concDirectionWord + popMean + ".";
         }
+        else {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+            ", we fail to reject the null hypothesis as there is not convincing evidence that the true population mean is" + concDirectionWord + popMean + ".";
+        }
+
         document.getElementById("concludeOutput").style.color = "#e89734";
 
         // show results container
