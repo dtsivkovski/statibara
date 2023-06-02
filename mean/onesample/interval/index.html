@@ -305,6 +305,9 @@ window.onload = wrap_img;
         } else {
             document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Since n < 30, the sample size is not large enough for the Central Limit Theorem to apply. However, you can examine a dotplot of the sample to see if there is no strong skew or outliers, and if so, you can still proceed with the test below.";
         }
+        
+        // write out point estimate
+        var peText = "Point estimate: x̄ = " + samplemean;
 
         // convert confidence level to percentage
         confPerc = conflevel * 100;
@@ -356,6 +359,7 @@ window.onload = wrap_img;
 
     }
 </script>
+
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/"></data>
