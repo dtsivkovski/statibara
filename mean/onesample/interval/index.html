@@ -251,7 +251,7 @@ window.onload = wrap_img;
         <h3>State</h3>
         <p id="stateCL"></p>
         <p id="statePE"></p>
-        <p style="color: rgb(175, 175, 175)">Make sure to state what your parameter (μ) means in context! </p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (μ) means in context!</i></p>
     </div>
     <div id="planSteps" class="stepcard">
         <h3 id="plantitle">Plan - interval for μ</h3>
@@ -263,6 +263,9 @@ window.onload = wrap_img;
         <h3>Calculate</h3>
         <p id="dfVal" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
         <p id="formula" style="height: 90px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <center>
+            <p style="color: rgb(175, 175, 175)"><i>To find our critical t* value, you can use the inverse t function on your calculator or use a table with critical t values. </i></p>
+        </center>
         <p id="pluggedin" style="height: 90px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
         <p id="resultInterval" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
         <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
@@ -309,6 +312,7 @@ window.onload = wrap_img;
         
         // write out point estimate
         var peText = "Point estimate: x̄ = " + samplemean;
+        document.getElementById("statePE").innerHTML = peText;
 
         // convert confidence level to percentage
         confPerc = conflevel * 100;
