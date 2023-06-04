@@ -35,11 +35,12 @@ button, .button {
     // background-image: linear-gradient(to right, #d46c04 20%, white , #07aacc 80%);
     background-color: white;
     border: 1px solid black;
-    border-radius: 6px;
+    border-radius: 20px;
     color: black;
     padding: 16px 32px;
     text-decoration: none;
     margin: 4px 2px;
+    height: 55px;
     cursor: pointer;
     width: 100%;
     font-weight: normal;
@@ -49,6 +50,15 @@ button, .button {
     transition: all 0.1s;
     -webkit-transition: all 0.1s;
     transition-delay: 0.1s;
+}
+
+button:hover, .button:hover {
+    transform: translate(0px, 0px);
+    width:70%;
+    background-color: lightblue;
+    animation-direction: alternate;
+    -webkit-transition: all 1.5s;
+    transition: all 0.1s ease-in-out 0s;
 }
 
 #maincapybar {
@@ -86,15 +96,6 @@ button, .button {
     animation-direction: alternate;
     -webkit-transition: all 0.5s;
     transition: all 0.5s ease-in-out 0s;
-}
-
-button:hover, .button:hover {
-    transform: translate(0px, 0px);
-    width:70%;
-    background-color: lightblue;
-    animation-direction: alternate;
-    -webkit-transition: all 1.5s;
-    transition: all 0.1s ease-in-out 0s;
 }
 
 .card {

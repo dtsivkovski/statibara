@@ -115,7 +115,7 @@ Now, you can try your hand at the chi-squared tests on your own and use these ca
 </center>
 
 <center>
-<button class="button" onclick="window.location.href='{baseurl}/x2/gof/'">Goodness of Fit Calculator</button>
-<button class="button" onclick="window.location.href='{baseurl}/x2/2-way/'">Test for Independence Calculator</button>
-<button class="button" onclick="window.location.href='{baseurl}/x2/2-way/'">Test for Homogeneity Calculator</button>
+<button class="button" onclick="window.location.href='{{baseurl}}/x2/gof/'" title="Calculator for Chi-Squared Goodness of Fit Test">Goodness of Fit Calculator</button>
+<button class="button" onclick="window.location.href='{{baseurl}}/x2/2-way/'" title="Calculator for Chi-Squared Two-Way Tests">Test for Independence Calculator</button>
+<button class="button" onclick="window.location.href='{{baseurl}}/x2/2-way/'" title="Calculator for Chi-Squared Two-Way Tests">Test for Homogeneity Calculator</button>
 </center>
