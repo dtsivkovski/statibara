@@ -1,0 +1,110 @@
+---
+layout: base
+search_exclude: true
+permalink: /binomial-distribution/
+categories: Binomial Distribution
+---
+
+<!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<style>
+
+    .tableinputclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+    }
+    
+    .tableinputclear:focus {
+        background-color: #062827;
+        outline: none;
+        color: white;
+        border: 0px solid;
+    }
+    
+    ::placeholder {
+        font-style: italic;
+        color: #a1a1a1;
+    }
+
+    .stepcard {
+        background-color: #062827;
+        color: white;
+        border: 1px solid white;
+        width: 99%;
+        border-radius: 8px;
+        padding: 1em;
+        padding-top: 0;
+        margin-bottom: 1em;
+    }
+    
+    
+</style>
+
+{% include capybar.html %}
+
+<h2> Binomial Distributions </h2>
+
+<div id="binsConditions" class="stepcard">
+    <h3> Conditions for a Binomial Distribution </h3>
+    <input type="checkbox" id="bcond" name="bcond" value="B">
+    <label for="bcond"> Binomial - Are there only two possible outcomes? </label><br>
+    <input type="checkbox" id="icond" name="icond" value="I">
+    <label for="icond"> Independent - Is each trial independent from the others? </label><br>
+    <input type="checkbox" id="ncond" name="ncond" value="N">
+    <label for="ncond"> Number - Is the number of trials fixed? </label><br>
+    <input type="checkbox" id="scond" name="scond" value="S">
+    <label for="scond"> Success - Is the probability of success the same for each trial? </label><br>
+</div>
+
+<div id="remainingBody" style="display: none">
+Hello
+</div>
+
+<script>
+    // check if any of the boxes are checked and if so, check if they are all checked. Then enable the hidden html div that contains the remaining body of HTML
+
+    // check if any of the boxes are checked
+    var bcond = document.getElementById("bcond");
+    var icond = document.getElementById("icond");
+    var ncond = document.getElementById("ncond");
+    var scond = document.getElementById("scond");
+    var conditions = [bcond, icond, ncond, scond];
+    const remainingBody = document.getElementById("remainingBody");
+
+    for (var condition of conditions) {
+        // add event listener to call function if checked/unchecked
+        condition.addEventListener('change', function() {
+            checkConditions();
+        });
+    }
+
+    
+    function checkConditions() {
+        // check if all of the boxes are checked
+        var allChecked = bcond.checked && icond.checked && ncond.checked && scond.checked;
+        if (allChecked) {
+            remainingBody.style.display = "block";
+        }
+        else {
+            remainingBody.style.display = "none";
+        }
+    }
+    
+
+
+
+</script>
+
