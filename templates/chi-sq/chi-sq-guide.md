@@ -26,8 +26,8 @@ categories: Chi-Squared Tests
 | **Number of Categorical Variables** | 1 | 2 | 2 |
 | **Number of Samples** | 1 | 1 | 2+ |
 | **Data for Input** | Observed + Expected | Observed Only | Observed Only |
-| **Null Hypothesis** | **Ho:** Observed values equal the expected values | **Ho:** Variables are independent | **Ho:** There is no difference in the distributions |
-| **Alternative Hypothesis** | **Ha:** Observed values do not equal the expected values | **Ha:** Variables are not independent | **Ha:** There is a difference in the distributions |
+| **Null Hypothesis** | **H<sub>0</sub>:** Observed values equal the expected values | **H<sub>0</sub>:** Variables are independent | **H<sub>0</sub>:** There is no difference in the distributions |
+| **Alternative Hypothesis** | **H<sub>a</sub>:** Observed values do not equal the expected values | **H<sub>a</sub>:** Variables are not independent | **H<sub>a</sub>:** There is a difference in the distributions |
 
 <hr>
 
