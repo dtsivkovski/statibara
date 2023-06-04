@@ -202,6 +202,7 @@ window.onload = wrap_img;
 
 <div id="binsConditions" class="stepcard">
     <h3> Conditions for a Binomial Distribution </h3>
+    <p style="color: rgb(175, 175, 175)"><i>Make sure you check all of the BINS conditions to make sure you are working with a binomial distribution. </i></p>
     <input type="checkbox" id="bcond" name="bcond" value="B">
     <label for="bcond"> Binomial - Are there only two possible outcomes? </label><br>
     <input type="checkbox" id="icond" name="icond" value="I">
@@ -213,7 +214,32 @@ window.onload = wrap_img;
 </div>
 
 <div id="remainingBody" style="display: none">
-Hello
+
+<div class="stepcard" id="pdf-test">
+    <h3>Binomial PDF Test</h3>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability of a specific number of successes in a binomial distribution. </i></p>
+    <table>
+        <tr>
+            <th>Number of Trials (n)</th>
+            <td>
+                <input type="number" id="n" name="n" placeholder="50" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Probability Value (p)</th>
+            <td>
+                <input type="number" id="p" name="p" placeholder="0.25" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Number of Successes (x)</th>
+            <td>
+                <input type="number" id="x" name="x" placeholder="10" class="tableinputclear">
+            </td>
+        </tr>
+    </table>
+</div>
+
 </div>
 
 <script>
