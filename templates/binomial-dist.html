@@ -95,6 +95,39 @@ categories: Binomial Distribution
             </td>
         </tr>
     </table>
+    <center>
+        <button class="button" type="button" value="Run Test" onclick="calculatePdf()"> Calculate </button>
+    </center>
+    <p id="pdfResult"></p>
+</div>
+
+<div class="stepcard" id="cdf-test">
+    <h3>Binomial CDF Test</h3>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability of a specific number of successes or fewer in a binomial distribution. </i></p>
+    <table>
+        <tr>
+            <th>Number of Trials (n)</th>
+            <td>
+                <input type="number" id="nC" name="n" placeholder="50" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Probability Value (p)</th>
+            <td>
+                <input type="number" id="pC" name="p" placeholder="0.25" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Number of Successes (x)</th>
+            <td>
+                <input type="number" id="xC" name="x" placeholder="10" class="tableinputclear">
+            </td>
+        </tr>
+    </table>
+    <center>
+        <button class="button" type="button" value="Run Test" onclick="calculateCdf()"> Calculate </button>
+    </center>
+    <p id="cdfResult"></p>
 </div>
 
 </div>
@@ -128,9 +161,32 @@ categories: Binomial Distribution
             remainingBody.style.display = "none";
         }
     }
-    
 
+    function calculatePdf() {
+        // get values from input
+        var n = parseFloat(document.getElementById("n").value);
+        var p = parseFloat(document.getElementById("p").value);
+        var x = parseFloat(document.getElementById("x").value);
 
+        // calculate pdf
+        var pdf = jStat.binomial.pdf(x, n, p).toFixed(4);
+
+        // display result
+        document.getElementById("pdfResult").innerHTML = "<hr> The probability of " + x + " successes is <b>" + pdf + "</b>";
+    }
+
+    function calculateCdf() {
+        // get values from input
+        var n = parseFloat(document.getElementById("nC").value);
+        var p = parseFloat(document.getElementById("pC").value);
+        var x = parseFloat(document.getElementById("xC").value);
+
+        // calculate cdf
+        var cdf = jStat.binomial.cdf(x, n, p).toFixed(4);
+
+        // display result
+        document.getElementById("cdfResult").innerHTML = "<hr> The probability of " + x + " or fewer successes is <b>" + cdf + "</b>";
+    }
 
 </script>
 
