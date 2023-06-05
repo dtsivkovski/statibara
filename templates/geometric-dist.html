@@ -1,8 +1,8 @@
 ---
 layout: base
 search_exclude: true
-permalink: /binomial-distributions/
-categories: Distributions
+permalink: /geometric-distributions/
+categories: Geometric Distribution
 ---
 
 <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -55,33 +55,25 @@ categories: Distributions
 
 {% include capybar.html %}
 
-<h2> Binomial Distributions </h2>
+<h2> Geometric Distributions </h2>
 
 <div id="binsConditions" class="stepcard">
-    <h3> Conditions for a Binomial Distribution </h3>
-    <p style="color: rgb(175, 175, 175)"><i>Make sure you check all of the BINS conditions to make sure you are working with a binomial distribution. </i></p>
+    <h3> Conditions for a Geometric Distribution </h3>
+    <p style="color: rgb(175, 175, 175)"><i>Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. </i></p>
     <input type="checkbox" id="bcond" name="bcond" value="B">
     <label for="bcond"> Binomial - Are there only two possible outcomes? </label><br>
     <input type="checkbox" id="icond" name="icond" value="I">
     <label for="icond"> Independent - Is each trial independent from the others? </label><br>
     <input type="checkbox" id="ncond" name="ncond" value="N">
     <label for="ncond"> Number - Is the number of trials fixed? </label><br>
-    <input type="checkbox" id="scond" name="scond" value="S">
-    <label for="scond"> Success - Is the probability of success the same for each trial? </label><br>
 </div>
 
 <div id="remainingBody" style="display: none">
 
 <div class="stepcard" id="pdf-test">
-    <h3>Binomial PDF Test</h3>
-    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability of a specific number of successes in a binomial distribution. </i></p>
+    <h3>Geometric PDF Test</h3>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability that the first success occurs on the <b>nth</b> trial</i></p>
     <table>
-        <tr>
-            <th>Number of Trials (n)</th>
-            <td>
-                <input type="number" id="n" name="n" placeholder="50" class="tableinputclear">
-            </td>
-        </tr>
         <tr>
             <th>Probability Value (p)</th>
             <td>
@@ -89,7 +81,7 @@ categories: Distributions
             </td>
         </tr>
         <tr>
-            <th>Number of Successes (x)</th>
+            <th>Trial Number (n)</th>
             <td>
                 <input type="number" id="x" name="x" placeholder="10" class="tableinputclear">
             </td>
@@ -103,14 +95,8 @@ categories: Distributions
 
 <div class="stepcard" id="cdf-test">
     <h3>Binomial CDF Test</h3>
-    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability of a specific number of successes or fewer in a binomial distribution. </i></p>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability that it would take <b>n</b> or fewer trials for the first success.</i></p>
     <table>
-        <tr>
-            <th>Number of Trials (n)</th>
-            <td>
-                <input type="number" id="nC" name="n" placeholder="50" class="tableinputclear">
-            </td>
-        </tr>
         <tr>
             <th>Probability Value (p)</th>
             <td>
@@ -118,7 +104,7 @@ categories: Distributions
             </td>
         </tr>
         <tr>
-            <th>Number of Successes (x)</th>
+            <th>Number of Trials (n)</th>
             <td>
                 <input type="number" id="xC" name="x" placeholder="10" class="tableinputclear">
             </td>
@@ -139,8 +125,7 @@ categories: Distributions
     var bcond = document.getElementById("bcond");
     var icond = document.getElementById("icond");
     var ncond = document.getElementById("ncond");
-    var scond = document.getElementById("scond");
-    var conditions = [bcond, icond, ncond, scond];
+    var conditions = [bcond, icond, ncond];
     const remainingBody = document.getElementById("remainingBody");
 
     for (var condition of conditions) {
@@ -153,7 +138,7 @@ categories: Distributions
     
     function checkConditions() {
         // check if all of the boxes are checked
-        var allChecked = bcond.checked && icond.checked && ncond.checked && scond.checked;
+        var allChecked = bcond.checked && icond.checked && ncond.checked;
         if (allChecked) {
             remainingBody.style.display = "block";
         }
@@ -164,51 +149,50 @@ categories: Distributions
 
     function calculatePdf() {
         // get values from input
-        var n = parseFloat(document.getElementById("n").value);
         var p = parseFloat(document.getElementById("p").value);
         var x = parseFloat(document.getElementById("x").value);
 
         // check if numbers were put in
-        if (isNaN(n) || isNaN(p) || isNaN(x)) {
-            document.getElementById("pdfResult").innerHTML = "<hr> Please enter a number in each box.";
+        if (isNaN(p) || isNaN(x)) {
+            document.getElementById("pdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the trial number is greater than 0.";
             return;
         }
-        // check values
-        if (n < 0 || p < 0 || p > 1 || x < 0 || x > n) {
-            document.getElementById("pdfResult").innerHTML = "<hr> Please enter valid values.";
+
+        // check for valid input
+        if (p < 0 || p > 1 || x < 1) {
+            document.getElementById("pdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the trial number is greater than 0.";
             return;
         }
 
         // calculate pdf
-        var pdf = jStat.binomial.pdf(x, n, p).toFixed(4);
+        var pdf = (Math.pow(1 - p, x - 1) * p).toFixed(4);
 
         // display result
-        document.getElementById("pdfResult").innerHTML = "<hr> The probability of " + x + " successes is <b>" + pdf + "</b>";
+        document.getElementById("pdfResult").innerHTML = "<hr> The probability that the first success is on trial #" + x + " is <b>" + pdf + "</b>";
     }
 
     function calculateCdf() {
         // get values from input
-        var n = parseFloat(document.getElementById("nC").value);
         var p = parseFloat(document.getElementById("pC").value);
         var x = parseFloat(document.getElementById("xC").value);
 
         // check if numbers were put in
-        if (isNaN(n) || isNaN(p) || isNaN(x)) {
-            document.getElementById("cdfResult").innerHTML = "<hr> Please enter a number in each box.";
+        if (isNaN(p) || isNaN(x)) {
+            document.getElementById("cdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the number of trials is greater than 0.";
             return;
         }
-        // check values
-        if (n < 0 || p < 0 || p > 1 || x < 0 || x > n) {
-            document.getElementById("cdfResult").innerHTML = "<hr> Please enter valid values.";
+
+        // check for valid input
+        if (p < 0 || p > 1 || x < 1) {
+            document.getElementById("cdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the number of trials is greater than 0.";
             return;
         }
 
         // calculate cdf
-        var cdf = jStat.binomial.cdf(x, n, p).toFixed(4);
+        var cdf = (1 - Math.pow(1 - p, x)).toFixed(4);
 
         // display result
-        document.getElementById("cdfResult").innerHTML = "<hr> The probability of " + x + " or fewer successes is <b>" + cdf + "</b>";
+        document.getElementById("cdfResult").innerHTML = "<hr> The probability that it would take " + x + " or fewer trials to see a success is <b>" + cdf + "</b>";
     }
 
 </script>
-
