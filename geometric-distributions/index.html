@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Calculators | Statibara</title>
+<title>Statibara | Statistics Tools</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Calculators" />
+<meta property="og:title" content="Statibara" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Statistics Tools" />
 <meta property="og:description" content="Statistics Tools" />
-<link rel="canonical" href="https://statibara.com/calculators/" />
-<meta property="og:url" content="https://statibara.com/calculators/" />
+<link rel="canonical" href="https://statibara.com/geometric-distributions/" />
+<meta property="og:url" content="https://statibara.com/geometric-distributions/" />
 <meta property="og:site_name" content="Statibara" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Calculators" />
+<meta property="twitter:title" content="Statibara" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Calculators","url":"https://statibara.com/calculators/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/geometric-distributions/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://statibara.com/feed.xml" title="Statibara" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,55 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <style>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<style>
+
+    .tableinputclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+    }
+    
+    .tableinputclear:focus {
+        background-color: #062827;
+        outline: none;
+        color: white;
+        border: 0px solid;
+    }
+    
+    ::placeholder {
+        font-style: italic;
+        color: #a1a1a1;
+    }
+
+    .stepcard {
+        background-color: #062827;
+        color: white;
+        border: 1px solid white;
+        width: 99%;
+        border-radius: 8px;
+        padding: 1em;
+        padding-top: 0;
+        margin-bottom: 1em;
+    }
+    
+    
+</style>
+
+<style>
     .image-container-capybar {
   position: relative;
   display: inline-block;
@@ -220,38 +268,147 @@ window.onload = wrap_img;
     </div>
 </div>
 
-<center>
+<h2> Geometric Distributions </h2>
 
+<div id="binsConditions" class="stepcard">
+    <h3> Conditions for a Geometric Distribution </h3>
+    <p style="color: rgb(175, 175, 175)"><i>Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. </i></p>
+    <input type="checkbox" id="bcond" name="bcond" value="B">
+    <label for="bcond"> Binomial - Are there only two possible outcomes? </label><br>
+    <input type="checkbox" id="icond" name="icond" value="I">
+    <label for="icond"> Independent - Is each trial independent from the others? </label><br>
+    <input type="checkbox" id="ncond" name="ncond" value="N">
+    <label for="ncond"> Number - Is the number of trials fixed? </label><br>
+</div>
 
-<h2>Calculators and Modeling Applets</h2>
+<div id="remainingBody" style="display: none">
 
-<h3>Unit 1 - Exploring One-Variable Data </h3>
-<button class="button" onclick="window.location.href='/onecat-single-bar/'" title="One Category Bar Graph Generator">Bar Graph Generator</button>
+<div class="stepcard" id="pdf-test">
+    <h3>Geometric PDF Test</h3>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability that the first success occurs on the <b>nth</b> trial</i></p>
+    <table>
+        <tr>
+            <th>Probability Value (p)</th>
+            <td>
+                <input type="number" id="p" name="p" placeholder="0.25" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Trial Number (n)</th>
+            <td>
+                <input type="number" id="x" name="x" placeholder="10" class="tableinputclear">
+            </td>
+        </tr>
+    </table>
+    <center>
+        <button class="button" type="button" value="Run Test" onclick="calculatePdf()"> Calculate </button>
+    </center>
+    <p id="pdfResult" style="color: #e89734"></p>
+</div>
 
-<!-- <h3>Unit 2</h3> -->
+<div class="stepcard" id="cdf-test">
+    <h3>Binomial CDF Test</h3>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability that it would take <b>n</b> or fewer trials for the first success.</i></p>
+    <table>
+        <tr>
+            <th>Probability Value (p)</th>
+            <td>
+                <input type="number" id="pC" name="p" placeholder="0.25" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Number of Trials (n)</th>
+            <td>
+                <input type="number" id="xC" name="x" placeholder="10" class="tableinputclear">
+            </td>
+        </tr>
+    </table>
+    <center>
+        <button class="button" type="button" value="Run Test" onclick="calculateCdf()"> Calculate </button>
+    </center>
+    <p id="cdfResult" style="color: #e89734"></p>
+</div>
 
-<h3>Unit 3 - Collecting Data</h3>
-<button class="button" onclick="window.location.href='/binomial-distributions/'" title="Binomial Distributions">Binomial Distributions</button>
-<button class="button" onclick="window.location.href='/geometric-distributions/'" title="Geometric Distributions">Geometric Distributions</button>
+</div>
 
+<script>
+    // check if any of the boxes are checked and if so, check if they are all checked. Then enable the hidden html div that contains the remaining body of HTML
 
-<!-- <h3>Unit 4</h3>
+    // check if any of the boxes are checked
+    var bcond = document.getElementById("bcond");
+    var icond = document.getElementById("icond");
+    var ncond = document.getElementById("ncond");
+    var conditions = [bcond, icond, ncond];
+    const remainingBody = document.getElementById("remainingBody");
 
-<h3>Unit 5</h3> -->
+    for (var condition of conditions) {
+        // add event listener to call function if checked/unchecked
+        condition.addEventListener('change', function() {
+            checkConditions();
+        });
+    }
 
-<h3>Unit 6 - Inferences for Means </h3>
-<button class="button" onclick="window.location.href='/mean/onesample/test/'" title="One-Sample t-Test">One-Sample t-Test</button>
-<button class="button" onclick="window.location.href='/mean/onesample/interval/'" title="One-Sample t-interval">One-Sample t-Interval</button>
+    
+    function checkConditions() {
+        // check if all of the boxes are checked
+        var allChecked = bcond.checked && icond.checked && ncond.checked;
+        if (allChecked) {
+            remainingBody.style.display = "block";
+        }
+        else {
+            remainingBody.style.display = "none";
+        }
+    }
 
-<!-- <h3>Unit 7</h3>  -->
+    function calculatePdf() {
+        // get values from input
+        var p = parseFloat(document.getElementById("p").value);
+        var x = parseFloat(document.getElementById("x").value);
 
-<h3>Unit 8 - Chi-Squared Inferences</h3>
-<button class="button" onclick="window.location.href='/x2/gof/'" title="Chi-Squared Test for Goodness of Fit">Chi-Squared - Goodness of Fit</button>
-<button class="button" onclick="window.location.href='/x2/2-way/'" title="2-Way Chi-Squared Test (Independence and Homogeneity)">Chi-Squared - 2-Way Test</button>
+        // check if numbers were put in
+        if (isNaN(p) || isNaN(x)) {
+            document.getElementById("pdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the trial number is greater than 0.";
+            return;
+        }
 
-<!-- <h3>Unit 9</h3> -->
+        // check for valid input
+        if (p < 0 || p > 1 || x < 1) {
+            document.getElementById("pdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the trial number is greater than 0.";
+            return;
+        }
 
-</center>
+        // calculate pdf
+        var pdf = (Math.pow(1 - p, x - 1) * p).toFixed(4);
+
+        // display result
+        document.getElementById("pdfResult").innerHTML = "<hr> The probability that the first success is on trial #" + x + " is <b>" + pdf + "</b>";
+    }
+
+    function calculateCdf() {
+        // get values from input
+        var p = parseFloat(document.getElementById("pC").value);
+        var x = parseFloat(document.getElementById("xC").value);
+
+        // check if numbers were put in
+        if (isNaN(p) || isNaN(x)) {
+            document.getElementById("cdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the number of trials is greater than 0.";
+            return;
+        }
+
+        // check for valid input
+        if (p < 0 || p > 1 || x < 1) {
+            document.getElementById("cdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the number of trials is greater than 0.";
+            return;
+        }
+
+        // calculate cdf
+        var cdf = (1 - Math.pow(1 - p, x)).toFixed(4);
+
+        // display result
+        document.getElementById("cdfResult").innerHTML = "<hr> The probability that it would take " + x + " or fewer trials to see a success is <b>" + cdf + "</b>";
+    }
+
+</script>
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/"></data>

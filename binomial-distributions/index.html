@@ -10,14 +10,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Statistics Tools" />
 <meta property="og:description" content="Statistics Tools" />
-<link rel="canonical" href="https://statibara.com/binomial-distribution/" />
-<meta property="og:url" content="https://statibara.com/binomial-distribution/" />
+<link rel="canonical" href="https://statibara.com/binomial-distributions/" />
+<meta property="og:url" content="https://statibara.com/binomial-distributions/" />
 <meta property="og:site_name" content="Statibara" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Statibara" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/binomial-distribution/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/binomial-distributions/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://statibara.com/feed.xml" title="Statibara" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -381,6 +381,17 @@ window.onload = wrap_img;
         var p = parseFloat(document.getElementById("p").value);
         var x = parseFloat(document.getElementById("x").value);
 
+        // check if numbers were put in
+        if (isNaN(n) || isNaN(p) || isNaN(x)) {
+            document.getElementById("pdfResult").innerHTML = "<hr> Please enter a number in each box.";
+            return;
+        }
+        // check values
+        if (n < 0 || p < 0 || p > 1 || x < 0 || x > n) {
+            document.getElementById("pdfResult").innerHTML = "<hr> Please enter valid values.";
+            return;
+        }
+
         // calculate pdf
         var pdf = jStat.binomial.pdf(x, n, p).toFixed(4);
 
@@ -393,6 +404,17 @@ window.onload = wrap_img;
         var n = parseFloat(document.getElementById("nC").value);
         var p = parseFloat(document.getElementById("pC").value);
         var x = parseFloat(document.getElementById("xC").value);
+
+        // check if numbers were put in
+        if (isNaN(n) || isNaN(p) || isNaN(x)) {
+            document.getElementById("cdfResult").innerHTML = "<hr> Please enter a number in each box.";
+            return;
+        }
+        // check values
+        if (n < 0 || p < 0 || p > 1 || x < 0 || x > n) {
+            document.getElementById("cdfResult").innerHTML = "<hr> Please enter valid values.";
+            return;
+        }
 
         // calculate cdf
         var cdf = jStat.binomial.cdf(x, n, p).toFixed(4);
