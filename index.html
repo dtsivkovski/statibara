@@ -143,17 +143,19 @@ window.onload = wrap_img;
     border: 2px solid white;
     border-radius: 10px;
     transition: all 0.3s;
+    background-image: linear-gradient(to bottom right, rgba(255,255,255,0), rgba(255,255,255,0));
   }
 
   div.gallery:hover {
     transition: all 0.3s;
     border-radius: 20px;
+    background-image: linear-gradient(to bottom right, white, #07aacc);
   }
 
-  div.gallery:hover img {
+  div.gallery:hover img{
     transition: all 0.3s;
-    opacity: 0.2;
     border-radius: 20px;
+    opacity: 0.3;
   }
 
   div.gallery img {
@@ -214,10 +216,18 @@ window.onload = wrap_img;
 
   .centered-img-text {
     font-family: Merriweather; font-size: 20px;
+    color: white;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: 0.3s all;
+  }
+
+  div.gallery:hover .centered-img-text {
+    color: #062827;
+    transition: 0.3s all;
+    
   }
 
   .imgtextcontainer {
