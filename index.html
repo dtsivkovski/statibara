@@ -137,18 +137,92 @@ window.onload = wrap_img;
     transition: opacity 0.6s ease-in-out 0.2s, transform 0.2s ease-in-out, width 0.1s ease-in-out;
   }
 
-  @keyframes blobrotate {
-    from {
-      rotate: 0deg;
-    }
+  div.gallery {
+    max-height: 325px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
 
-    50% {
-      scale: 1 1;
-    }
+  div.gallery:hover {
+    border: 1px solid #777;
+    transition: all 0.3s;
+    border-radius: 20px;
+  }
 
-    to {
-      rotate: 360deg;
+  div.gallery:hover img {
+    transition: all 0.3s;
+    opacity: 0.2;
+    border-radius: 20px;
+  }
+
+  div.gallery img {
+    max-height: 325px;
+    transition: all 0.3s;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    opacity: 0.5;
+    position: relative;
+    object-fit: cover;
+  }
+
+  div.desc {
+    padding: 15px;
+    text-align: center;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+    max-height: 325px;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .responsive {
+      width: 49.99999%;
+      margin: 6px 0;
     }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .responsive {
+      width: 100%;
+    }
+  }
+
+  .clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .centered-img-text {
+    font-family: Merriweather; font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .imgtextcontainer {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+
+  .responsivityholder {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
 </style>
@@ -158,10 +232,41 @@ window.onload = wrap_img;
   <h1 style="font-family: Merriweather; font-size: 60px"> Statibara </h1>
   <h1 style="margin-top: 0 !important;" >Statistics<span class="gradient-dynam" id="dynamHeader"></span></h1>
   <p><i><a href="https://github.com/dtsivkovski/statibara#readme" title="Statibara Website Github Page">An open-source project</a> created and maintained by <a href="https://solo.to/danieltsivkovski" title="Get in touch!">Daniel Tsivkovski</a></i></p>
-  <h2>Welcome to Statibara!</h2>
+  <h2>Featured Pages</h2>
+</div>
+<div class="responsivityholder">
+  <div class="responsive">
+    <div class="gallery">
+      <a href="/calculators/" class="imgtextcontainer" title="Calculators">
+        <img src="/images/aigen/cinem_calc.jfif" alt="Image of a Calculator" width="600" height="400">
+        <div class="centered-img-text">Calculators</div>
+      </a>
+    </div>
+  </div>
+  <div class="responsive">
+    <div class="gallery">
+      <a href="/guides/" class="imgtextcontainer" title="Guides">
+        <img src="/images/aigen/cinem_textbook.jfif" alt="Image of a Textbook" width="600" height="400">
+        <div class="centered-img-text">Guides</div>
+      </a>
+    </div>
+  </div>
+  <div class="responsive">
+    <div class="gallery">
+      <a href="/resources/" class="imgtextcontainer" title="More Resources">
+        <img src="/images/aigen/cinem_nodes.jfif" alt="Image of Interconnected Nodes" width="600" height="400">
+        <div class="centered-img-text">Resources</div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="centerholder">
+  
+  <h2>New Pages</h2>
+  <!-- <h2>Welcome to Statibara!</h2>
   <button class="button bstylish" onclick="window.location.href='/calculators/'" title="Calculators">Calculators</button>
   <button class="button bstylish" onclick="window.location.href='/guides/'" title="Guides">Guides</button>
-  <button class="button bstylish" onclick="window.location.href='/resources/'" title="More Resources">More Resources</button>
+  <button class="button bstylish" onclick="window.location.href='/resources/'" title="More Resources">More Resources</button> -->
 
 
   <!-- <button class="button bstylish" onclick="window.location.href='/x2/gof/'">Chi-Squared Test - Goodness of Fit</button>
@@ -170,7 +275,6 @@ window.onload = wrap_img;
   <!-- <div style="border: 2px solid white; border-radius: 16px">
     <img src="/statibara/images/frontpage/flat_capy_orange.png" style="border-radius: 13px">
   </div> -->
-  <h2>Featured Pages</h2>
   <div id="maincapybar">
     <img class="capybarimg" src="/images/croppedcapy.png">
     <div class="cardinfotext">What's new?<br\></div>
