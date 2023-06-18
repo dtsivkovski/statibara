@@ -64,8 +64,8 @@ categories: Geometric Distribution
     <label for="bcond"> Binomial - Are there only two possible outcomes? </label><br>
     <input type="checkbox" id="icond" name="icond" value="I">
     <label for="icond"> Independent - Is each trial independent from the others? </label><br>
-    <input type="checkbox" id="ncond" name="ncond" value="N">
-    <label for="ncond"> Number - Is the number of trials fixed? </label><br>
+    <input type="checkbox" id="scond" name="scond" value="S">
+    <label for="scond"> Success - Is the probability of success the same for each trial? </label><br>
 </div>
 
 <div id="remainingBody" style="display: none">
@@ -124,8 +124,8 @@ categories: Geometric Distribution
     // check if any of the boxes are checked
     var bcond = document.getElementById("bcond");
     var icond = document.getElementById("icond");
-    var ncond = document.getElementById("ncond");
-    var conditions = [bcond, icond, ncond];
+    var scond = document.getElementById("scond");
+    var conditions = [bcond, icond, scond];
     const remainingBody = document.getElementById("remainingBody");
 
     for (var condition of conditions) {
@@ -138,7 +138,7 @@ categories: Geometric Distribution
     
     function checkConditions() {
         // check if all of the boxes are checked
-        var allChecked = bcond.checked && icond.checked && ncond.checked;
+        var allChecked = bcond.checked && icond.checked && scond.checked;
         if (allChecked) {
             remainingBody.style.display = "block";
         }
