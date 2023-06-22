@@ -1,0 +1,222 @@
+---
+layout: base
+search_exclude: true
+permalink: /proportion/onesample/test/
+categories: Proportions
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<style>
+
+    .tableinputclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+    }
+    
+    .tableinputclear:focus {
+        background-color: #062827;
+        outline: none;
+        color: white;
+        border: 0px solid;
+    }
+
+    .tableselectclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+        background-image: none;
+    }
+    
+    ::placeholder {
+        font-style: italic;
+        color: #a1a1a1;
+    }
+
+    .stepcard {
+        background-color: #062827;
+        color: white;
+        border: 1px solid white;
+        width: 99%;
+        border-radius: 8px;
+        padding: 1em;
+        padding-top: 0;
+        margin-bottom: 1em;
+    }
+    
+    
+</style>
+
+{% include capybar.html %}
+
+<h2> One Sample Z-Test for a Proportion </h2>
+
+<table>
+    <tr>
+        <th>
+            Direction
+        </th>
+        <td>
+            <select class="tableselectclear" id="direction" name="direction">
+                <option value="0">Two-Tailed (p ≠ p<sub>0</sub>)</option>
+                <option value="-1">Left-Tailed (p < p<sub>0</sub>)</option>
+                <option value="1">Right-Tailed (p > p<sub>0</sub>)</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Significance Level (α)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="alpha" name="alpha" placeholder="Alpha Value">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Population Proportion (p)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="p" name="p" placeholder="Population Proportion">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Size (n)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n" name="n" placeholder="Sample Size">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number of Successes (x)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="x" name="x" placeholder="Number of Successes">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (p) means in context!</i></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - One-sample t-test for μ</h3>
+        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
+        <p id="10percent"><u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?</p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="pHat"></p>
+        <p id="formula" style="height: 150px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a normal curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        // get values from inputs
+        var direction = document.getElementById("direction").value;
+        var alpha = document.getElementById("alpha").value;
+        var popProp = document.getElementById("p").value;
+        var sampN = document.getElementById("n").value;
+        var sampX = document.getElementById("x").value;
+
+        // check if any values are empty
+        // nullHypo == "" || altHypo == "" || 
+        if (alpha == "" || popProp == "" || sampN == "" || sampX == "") {
+            alert("Please make sure all fields are filled in!");
+            return;
+        }
+
+        // check if alpha is between zero and one
+        if (alpha <= 0 || alpha >= 1) {
+            alert("Please make sure your significance level (α) is between zero and one!");
+            return;
+        }
+
+        // check if sample size is greater than zero
+        if (sampN <= 0) {
+            alert("Please make sure your sample size (n) is greater than zero!");
+            return;
+        }
+
+        // check if pop proportion is between zero and one
+        if (popProp <= 0 || popProp >= 1) {
+            alert("Please make sure your population proportion (p) is between zero and one!");
+            return;
+        }
+
+        var concDirectionWord;
+        var hypSymbol;        
+        // check direction for correct hypothesis direction
+        if (direction == 0) {
+            hypSymbol = "≠";
+            concDirectionWord = " different from ";
+        }
+        else if (direction == 1) {
+            hypSymbol = ">";
+            concDirectionWord = " greater than ";
+        }
+        else if (direction == -1) {
+            hypSymbol = "<";
+            concDirectionWord = " less than ";
+        }
+
+        // put hypotheses and alpha in state box
+        document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: p = " + popProp;
+        document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: p " + hypSymbol + " " + popProp;
+        document.getElementById("stateAlpha").innerHTML = "α = " + alpha;
+
+        // establish number of failures
+        var sampF = sampN - sampX;
+        var largeCounts = true;
+        if (sampF < 10 || sampX < 10) {
+            document.getElementById("resultsContainer").style.display = "block";
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures must each be greater than 10. You may not proceed with the test. (Successes = " + sampX + ", Failures = " + sampF + ")";
+            document.getElementById("calculateSteps").style.display = "none";
+            document.getElementById("concludeSteps").style.display = "none";
+            return;
+        }
+        else {
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures must each be greater than 10. (Successes = " + sampX + ", Failures = " + sampF + "). Therefore, the condition is met and you may proceed with the test.";
+        }
+
+        // calculate p-hat
+        var pHat = sampX / sampN;
+        document.getElementById("pHat").innerHTML = "<u>Sample proportion</u>: p̂ = " + sampX + "/" + sampN + " = " + pHat;
+        
+
+    }
+</script>
