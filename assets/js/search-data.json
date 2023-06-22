@@ -29,9 +29,6 @@
   
 
   
-  
-
-  
 
   
   
@@ -42,7 +39,6 @@
   
 
   
-  
 
   
   
@@ -51,7 +47,13 @@
   
 
   
-      "page21": {
+  
+
+  
+  
+
+  
+      "page22": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://statibara.com/robots.txt",
