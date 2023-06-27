@@ -39,6 +39,11 @@ categories: Proportions
         width: 99%;
         background-image: none;
     }
+
+    .tableselectclear option:hover {
+        background-color: #115b56;
+        color: white;
+    }
     
     ::placeholder {
         font-style: italic;
@@ -124,7 +129,7 @@ categories: Proportions
         <p id="stateAlpha"></p>
     </div>
     <div id="planSteps" class="stepcard">
-        <h3>Plan - One-sample t-test for μ</h3>
+        <h3>Plan - One-sample z-test for p</h3>
         <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
         <p id="10percent"><u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?</p>
         <p id="largecounts"></p>
@@ -203,6 +208,7 @@ categories: Proportions
         var sampF = sampN - sampX;
         var largeCounts = true;
         if (sampF < 10 || sampX < 10) {
+            // case if large counts not met
             document.getElementById("resultsContainer").style.display = "block";
             document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures must each be greater than 10. You may not proceed with the test. (Successes = " + sampX + ", Failures = " + sampF + ")";
             document.getElementById("calculateSteps").style.display = "none";
@@ -210,12 +216,73 @@ categories: Proportions
             return;
         }
         else {
-            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures must each be greater than 10. (Successes = " + sampX + ", Failures = " + sampF + "). Therefore, the condition is met and you may proceed with the test.";
+            document.getElementById("resultsContainer").style.display = "block";
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures are each greater than or equal to 10. (Successes = " + sampX + ", Failures = " + sampF + "). <br/> Therefore, the condition is met and you may proceed with the test.";
+            document.getElementById("calculateSteps").style.display = "block";
+            document.getElementById("concludeSteps").style.display = "block";
         }
 
         // calculate p-hat
         var pHat = sampX / sampN;
-        document.getElementById("pHat").innerHTML = "<u>Sample proportion</u>: p̂ = " + sampX + "/" + sampN + " = " + pHat;
+        var pHatStatement = "$$\\hat{p} = \\frac{" + sampX + "}{" + sampN + "} = " + pHat.toFixed(4) + "$$";
+        document.getElementById("pHat").innerHTML = pHatStatement;
+        MathJax.typesetPromise([document.getElementById("pHat")], pHatStatement).then(function () {}).catch(function (err) {});
+
+        // calculate entire z statistic
+        var zStat = (pHat - popProp) / Math.sqrt((popProp * (1 - popProp)) / sampN);
+        var zStatStatement = "$$z = \\frac{\\hat{p} - p}{\\sqrt{\\frac{p(1 - p)}{n}}} = \\frac{" + pHat.toFixed(4) + " - " + popProp + "}{\\sqrt{\\frac{" + popProp + "(1 - " + popProp + ")}{" + sampN + "}}} = " + zStat.toFixed(4) + "$$";
+        document.getElementById("formula").innerHTML = zStatStatement;
+        MathJax.typesetPromise([document.getElementById("formula")], zStatStatement).then(function () {}).catch(function (err) {});
+
+        var calcZ = zStat;
+
+        // check if z is positive or negative and check if left/right tailed to set calcT
+        if (direction == 0) {
+            calcZ = - Math.abs(zStat);
+        } else if (direction == -1) {
+            if (zStat > 0) {
+                calcZ = Math.abs(zStat);
+            }
+            else {
+                calcZ = - Math.abs(zStat);
+            }
+        }
+        else if (direction == 1) {
+            if (t < 0) {
+                calcZ = Math.abs(zStat);
+            }
+            else {
+                calcZ = - Math.abs(zStat);
+            }
+        }
+
+        // calculate p-value
+        var p = jStat.normal.cdf(calcZ, 0, 1);
+
+        // put p-value in calculate box
+        var pVal = "$$p = " + p.toFixed(4) + "$$";
+        // if two-tailed then we need to multiply p-value by two
+        if (direction == 0) {
+            pVal = "$$p = " + p.toFixed(4) + " * 2 = "+ (p * 2).toFixed(4) + "$$";
+            p = p * 2;
+        }
+
+        document.getElementById("pVal").innerHTML = pVal;
+        MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
+
+        if (p < alpha) {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
+            ", we reject the null hypothesis as there is convincing evidence that the true population proportion is" + concDirectionWord + popProp + ".";
+        }
+        else {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+            ", we fail to reject the null hypothesis as there is not convincing evidence that the true population proportion is" + concDirectionWord + popProp + ".";
+        }
+
+        document.getElementById("concludeOutput").style.color = "#e89734";
+
+        // show results container
+        document.getElementById("resultsContainer").style.display = "block";
         
 
     }
