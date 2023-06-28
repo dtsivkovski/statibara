@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Statibara | Statistics Tools</title>
+<title>Random Number | Statibara</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Statibara" />
+<meta property="og:title" content="Random Number" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Statistics Tools" />
 <meta property="og:description" content="Statistics Tools" />
-<link rel="canonical" href="https://statibara.com/mean/onesample/interval/" />
-<meta property="og:url" content="https://statibara.com/mean/onesample/interval/" />
+<link rel="canonical" href="https://statibara.com/random/" />
+<meta property="og:url" content="https://statibara.com/random/" />
 <meta property="og:site_name" content="Statibara" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Statibara" />
+<meta property="twitter:title" content="Random Number" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/mean/onesample/interval/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Random Number","url":"https://statibara.com/random/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://statibara.com/feed.xml" title="Statibara" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -81,48 +81,24 @@ window.onload = wrap_img;
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-
 <style>
+    
 
-    .tableinputclear {
-        background-color: #062827;
-        color: white;
-        border: 0px;
-        width: 99%;
-    }
-    
-    .tableinputclear:focus {
-        background-color: #062827;
-        outline: none;
-        color: white;
-        border: 0px solid;
-    }
+.rnginputclear {
+    background-color: #062827;
+    color: white;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 5px;
+}
 
-    .tableselectclear {
-        background-color: #062827;
-        color: white;
-        border: 0px;
-        width: 99%;
-        background-image: none;
-    }
-    
-    ::placeholder {
-        font-style: italic;
-        color: #a1a1a1;
-    }
+.rnginputclear:focus {
+    background-color: #062827;
+    outline: none;
+    color: white;
+    border: 1px solid white;
+}
 
-    .stepcard {
-        background-color: #062827;
-        color: white;
-        border: 1px solid white;
-        width: 99%;
-        border-radius: 8px;
-        padding: 1em;
-        padding-top: 0;
-        margin-bottom: 1em;
-    }
-    
-    
 </style>
 
 <style>
@@ -274,167 +250,129 @@ window.onload = wrap_img;
     </div>
 </div>
 
-<h2> One Sample T-Interval for a Mean </h2>
+<center>
+<h2> Random Number Generator </h2>
+<br/>
 
-<table>
+<input type="number" id="min" name="min" placeholder="Min Value" class="rnginputclear" style="margin-right: 5px; width: 100px">
+to
+<input type="number" id="max" name="max" placeholder="Max Value" class="rnginputclear" style="margin-left: 5px; width: 100px">
+<br/><br/>
+<input type="number" id="num" name="num" placeholder="How many? (Default = 1)" class="rnginputclear" style="margin-top: 5px">
+<br/><br/>
+<label for="unique" style="color: white; font-size: 16px">Unique Values Only?  </label>
+<input type="checkbox" id="unique" name="unique" value="noRepeats" style="margin-right: 5px; width: 15px; height: 15px">
+
+
+<br/><br/>
+    <button onclick="runRng()" class="button">Generate</button>
+<br/>
+
+<h3 id="resultsTitle" style="visibility: hidden;"> Results Table </h3>
+
+<table id="resultsTable" style="visibility: hidden">
     <tr>
-        <th>
-            Confidence Level
+        <th>Run #</th>
+        <th>Generated Values 
+            <i onclick="copyToClipboard()" style="cursor: pointer; color: #07aacc; margin-right: 5px; margin-left: 5px" class="fa-solid fa-copy fa-large" title="Copy all values to clipboard"></i>
+            <i onclick="clearTable()" style="cursor: pointer; color: #dd0f0f" class="fa-solid fa-trash fa-large" title="Clear table"></i>
         </th>
-        <td>
-            <input type="number" id="conflevel" placeholder="0.95" class="tableinputclear">
-        </td>
     </tr>
-    <tr>
-        <th>
-            Sample Mean (x̄)
-        </th>
-        <td>
-            <input type="number" id="samplemean" placeholder="Sample Mean" class="tableinputclear">
-        </td>
-    </tr>
-    <tr>
-        <th>
-            Sample Standard Deviation (Sx)
-        </th>
-        <td>
-            <input type="number" id="samplesd" placeholder="Sample Standard Deviation" class="tableinputclear">
-        </td>
-    </tr>
-    <tr>
-        <th>
-            Sample Size (n)
-        </th>
-        <td>
-            <input type="number" id="samplesize" placeholder="Sample Size" class="tableinputclear">
-        </td>
-    </tr>
+    <div id="resultsRows">
+        
+    </div>
 </table>
 
-<center>
-    <input class="button" type="button" value="Run Test" onclick="calculate()">
 </center>
 
-<div id="resultsContainer" style="display: none">
-    <h2>Results</h2>
-    <div id="stateSteps" class="stepcard">
-        <h3>State</h3>
-        <p id="stateCL"></p>
-        <p id="statePE"></p>
-        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (μ) means in context!</i></p>
-    </div>
-    <div id="planSteps" class="stepcard">
-        <h3 id="plantitle">Plan - interval for μ</h3>
-        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
-        <p id="10percent"><u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?</p>
-        <p id="largecounts"></p>
-    </div>
-    <div id="calculateSteps" class="stepcard">
-        <h3>Calculate</h3>
-        <p id="dfVal" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
-        <p id="formula" style="height: 90px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
-        <center>
-            <p style="color: rgb(175, 175, 175)"><i>To find our critical t* value, you can use the inverse t function on your calculator or use a table with critical t values. </i></p>
-        </center>
-        <p id="pluggedin" style="height: 90px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
-        <p id="resultInterval" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
-        <!-- <canvas id="intervalVisual" height="100px" width="400px" style="height: 100px; max-height:120px; overflow: auto; width: 100%"></canvas> -->
-        <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
-        <!-- <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p> -->
-    </div>
-    <div id="concludeSteps" class="stepcard">
-        <h3>Conclude</h3>
-        <p id="concludeOutput"></p>
-        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that you should always write your conclusion in the context of the problem.</i></p>
-    </div>
-</div>
-
 <script>
-    function calculate() {
-        // get variables from inputs
-        var conflevel = parseFloat(document.getElementById("conflevel").value);
-        var samplemean = parseFloat(document.getElementById("samplemean").value);
-        var samplesd = parseFloat(document.getElementById("samplesd").value);
-        var samplesize = parseFloat(document.getElementById("samplesize").value);
+    const resultsTable = document.getElementById("resultsTable");
+    const resultsRows = document.getElementById("resultsRows");
 
-        // check if inputs are valid
-        if (isNaN(conflevel) || isNaN(samplemean) || isNaN(samplesd) || isNaN(samplesize)) {
-            alert("Please enter valid numbers for all inputs.");
-            return;
-        }
+    var unique = false;
 
-        // check if confidence level is between 0 and 1
-        if (conflevel <= 0 || conflevel >= 1) {
-            alert("Please enter a confidence level between 0 and 1.");
-            return;
-        }
-
-        // check if sample size is greater than 0
-        if (samplesize <= 0) {
-            alert("Please enter a sample size greater than 0.");
-            return;
-        }
-        // check large counts condition for the test
-        if (samplesize >= 30) {
-            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Since n ≥ 30, the sample size is large enough for the Central Limit Theorem to apply.";
+    // function to run several times depending on value
+    function runRng() {
+        resultsTable.style.visibility = "visible";
+        document.getElementById("resultsTitle").visibility = "visible";
+        if (document.getElementById("num").value == "") {
+            var num = 1;
         } else {
-            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Since n < 30, the sample size is not large enough for the Central Limit Theorem to apply. However, you can examine a dotplot of the sample to see if there is no strong skew or outliers, and if so, you can still proceed with the test below.";
+            var num = document.getElementById("num").value;
         }
-        
-        // write out point estimate
-        var peText = "Point estimate: x̄ = " + samplemean;
-        document.getElementById("statePE").innerHTML = peText;
 
-        // convert confidence level to percentage
-        confPerc = conflevel * 100;
-        confPerc.toFixed(0);
-        var stateCL = "Confidence Level: " + confPerc + "%";
-        document.getElementById("stateCL").innerHTML = stateCL;
+        // if unique is checked, then set unique to true
+        if (document.getElementById("unique").checked) {
+            unique = true;
+        } else {
+            unique = false;
+        }
 
-        // change plan title to fit confidence level
-        var plantitle = "Plan - " + confPerc + "% confidence interval for μ";
-        document.getElementById("plantitle").innerHTML = plantitle;
+        for (var i = 0; i < num; i++) {
+            rng();
+        }
+    }
 
-        // calculate degrees of freedom
-        var df = samplesize - 1;
-        var dfVal = "$$df = " + samplesize + " - 1 = "+ df + "$$"
-        document.getElementById("dfVal").innerHTML = dfVal;
-        MathJax.typesetPromise([document.getElementById("dfVal")], dfVal).then(function () {}).catch(function (err) {});
+    // actual function to generate the random number and add to table
+    function rng() {
+        var min = document.getElementById("min").value;
+        var max = document.getElementById("max").value;
 
-        // calculate t-star
-        var tstar = Math.abs(jStat.studentt.inv((1 - conflevel) / 2, df));
-        // calculate margin of error
-        var moe = (tstar * (samplesd / Math.sqrt(samplesize)));
+        console.log("Min: " + min + " Max: " + max);
 
-        // calculate lower and upper bounds
-        var lower = samplemean - moe;
-        var upper = samplemean + moe;
-        tstar = tstar.toFixed(4);
-        moe = moe.toFixed(4);
-        lower = lower.toFixed(4);
-        upper = upper.toFixed(4);
+        var random = Math.random() * (max - min + 1);
+        console.log(random);
+        var random = Math.floor(random) + parseInt(min);
+        console.log(random);
 
-        // create formula string and plugged in values and final value
-        var formula = "$$\\text{Confidence Interval } = \\bar{x} \\pm t^*\\frac{s}{\\sqrt{n}}$$";
-        var pluggedin = "$$\\text{CI} = " + samplemean + " \\pm " + tstar + "\\frac{" + samplesd + "}{\\sqrt{" + samplesize + "}}$$";
-        var final = "$$\\text{CI} = " + lower + " \\text{ to } " + upper + "$$";
+        // if NaN then return
+        if (isNaN(random)) {
+            return;
+        }
 
-        // display formula and plugged in values
-        document.getElementById("formula").innerHTML = formula;
-        document.getElementById("pluggedin").innerHTML = pluggedin;
-        document.getElementById("resultInterval").innerHTML = final;
-        MathJax.typesetPromise([document.getElementById("formula"), document.getElementById("pluggedin"), document.getElementById("resultInterval")], formula, pluggedin, final).then(function () {}).catch(function (err) {});
+        // if unique is checked, then check if the value is already in the table
+        if (unique) {
+            for (var i = 1; i < resultsTable.rows.length; i++) {
+                if (resultsTable.rows[i].cells[1].innerHTML == random) {
+                    console.log("Duplicate found");
+                    rng();
+                    return;
+                }
+            }
+        }
 
-        // write conclusion
-        var conclusion = "We are " + confPerc + "% confident that the true mean is captured by the interval from " + lower + " to " + upper + ".";
-        document.getElementById("concludeOutput").innerHTML = conclusion;
-        document.getElementById("concludeOutput").style.color = "#e89734";
+        var random = random.toFixed(0);
+        console.log(random);
 
-        // show results container
-        document.getElementById("resultsContainer").style.display = "block";
+        var row = resultsTable.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+
+        cell1.innerHTML = resultsTable.rows.length - 1;
+        cell2.innerHTML = random;
 
     }
+
+    // copies all values to clipboard for use elsewhere
+    function copyToClipboard() {
+        var copyText = "";
+        for (var i = 1; i < resultsTable.rows.length; i++) {
+            copyText += resultsTable.rows[i].cells[1].innerHTML + "\n";
+        }
+        console.log(copyText);
+        navigator.clipboard.writeText(copyText);
+    }
+
+    // clears the table
+    function clearTable() {
+        resultsTable.style.visibility = "hidden";
+        document.getElementById("resultsTitle").visibility = "hidden";
+        for (var i = resultsTable.rows.length - 1; i > 0; i--) {
+            resultsTable.deleteRow(i);
+        }
+    }
 </script>
+
 
       </div>
     </main><footer class="site-footer h-card">
