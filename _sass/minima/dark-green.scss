@@ -33,7 +33,7 @@ a:hover {
 
 button, .button {
     // background-image: linear-gradient(to right, #d46c04 20%, white , #07aacc 80%);
-    background-color: $dark-green;
+    background-color: #093b3a;
     border: 1px solid white;
     border-radius: 20px;
     color: white;
@@ -55,9 +55,9 @@ button, .button {
 button:hover, .button:hover {
     transform: translate(0px, 0px);
     width:70%;
-    background-color: #0d3f3c;
+    background-color: #115854;
     animation-direction: alternate;
-    -webkit-transition: all 1.5s;
+    -webkit-transition: all 0.1s;
     transition: all 0.1s ease-in-out 0s;
 }
 
