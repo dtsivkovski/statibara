@@ -1,0 +1,162 @@
+---
+layout: base
+search_exclude: true
+permalink: /random/
+title: Random Number
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<style>
+    
+
+.rnginputclear {
+    background-color: #062827;
+    color: white;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.rnginputclear:focus {
+    background-color: #062827;
+    outline: none;
+    color: white;
+    border: 1px solid white;
+}
+
+</style>
+
+{% include capybar.html %}
+
+<center>
+<h2> Random Number Generator </h2>
+<br/>
+
+<input type="number" id="min" name="min" placeholder="Min Value" class="rnginputclear" style="margin-right: 5px; width: 100px">
+to
+<input type="number" id="max" name="max" placeholder="Max Value" class="rnginputclear" style="margin-left: 5px; width: 100px">
+<br/><br/>
+<input type="number" id="num" name="num" placeholder="How many? (Default = 1)" class="rnginputclear" style="margin-top: 5px">
+<br/><br/>
+<label for="unique" style="color: white; font-size: 16px">Unique Values Only?  </label>
+<input type="checkbox" id="unique" name="unique" value="noRepeats" style="margin-right: 5px; width: 15px; height: 15px">
+
+
+<br/><br/>
+    <button onclick="runRng()" class="button">Generate</button>
+<br/>
+
+<h3 id="resultsTitle" style="visibility: hidden;"> Results Table </h3>
+
+<table id="resultsTable" style="visibility: hidden">
+    <tr>
+        <th>Run #</th>
+        <th>Generated Values 
+            <i onclick="copyToClipboard()" style="cursor: pointer; color: #07aacc; margin-right: 5px; margin-left: 5px" class="fa-solid fa-copy fa-large" title="Copy all values to clipboard"></i>
+            <i onclick="clearTable()" style="cursor: pointer; color: #dd0f0f" class="fa-solid fa-trash fa-large" title="Clear table"></i>
+        </th>
+    </tr>
+    <div id="resultsRows">
+        
+    </div>
+</table>
+
+</center>
+
+<script>
+    const resultsTable = document.getElementById("resultsTable");
+    const resultsRows = document.getElementById("resultsRows");
+
+    var unique = false;
+
+    // function to run several times depending on value
+    function runRng() {
+        resultsTable.style.visibility = "visible";
+        document.getElementById("resultsTitle").visibility = "visible";
+        if (document.getElementById("num").value == "") {
+            var num = 1;
+        } else {
+            var num = document.getElementById("num").value;
+        }
+
+        // if unique is checked, then set unique to true
+        if (document.getElementById("unique").checked) {
+            unique = true;
+        } else {
+            unique = false;
+        }
+
+        for (var i = 0; i < num; i++) {
+            rng();
+        }
+    }
+
+    // actual function to generate the random number and add to table
+    function rng() {
+        var min = document.getElementById("min").value;
+        var max = document.getElementById("max").value;
+
+        console.log("Min: " + min + " Max: " + max);
+
+        var random = Math.random() * (max - min + 1);
+        console.log(random);
+        var random = Math.floor(random) + parseInt(min);
+        console.log(random);
+
+        // if NaN then return
+        if (isNaN(random)) {
+            return;
+        }
+
+        // if unique is checked, then check if the value is already in the table
+        if (unique) {
+            for (var i = 1; i < resultsTable.rows.length; i++) {
+                if (resultsTable.rows[i].cells[1].innerHTML == random) {
+                    console.log("Duplicate found");
+                    rng();
+                    return;
+                }
+            }
+        }
+
+        var random = random.toFixed(0);
+        console.log(random);
+
+        var row = resultsTable.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+
+        cell1.innerHTML = resultsTable.rows.length - 1;
+        cell2.innerHTML = random;
+
+    }
+
+    // copies all values to clipboard for use elsewhere
+    function copyToClipboard() {
+        var copyText = "";
+        for (var i = 1; i < resultsTable.rows.length; i++) {
+            copyText += resultsTable.rows[i].cells[1].innerHTML + "\n";
+        }
+        console.log(copyText);
+        navigator.clipboard.writeText(copyText);
+    }
+
+    // clears the table
+    function clearTable() {
+        resultsTable.style.visibility = "hidden";
+        document.getElementById("resultsTitle").visibility = "hidden";
+        for (var i = resultsTable.rows.length - 1; i > 0; i--) {
+            resultsTable.deleteRow(i);
+        }
+    }
+</script>
+
