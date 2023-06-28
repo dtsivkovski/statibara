@@ -491,9 +491,9 @@ a:hover { color: rgba(255, 255, 255, 0.87) !important; }
 
 .centerholder { display: flex; justify-content: center; text-align: center; align-content: center; flex-wrap: wrap; flex-direction: column; align-items: center; }
 
-button, .button { background-color: #062827; border: 1px solid white; border-radius: 20px; color: white; padding: 16px 32px; text-decoration: none; margin: 4px 2px; height: 55px; cursor: pointer; width: 100%; font-weight: normal; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; transition: background-color 0.25s ease-in-out 50ms; width: 65%; transition: all 0.1s; -webkit-transition: all 0.1s; transition-delay: 0.1s; }
+button, .button { background-color: #093b3a; border: 1px solid white; border-radius: 20px; color: white; padding: 16px 32px; text-decoration: none; margin: 4px 2px; height: 55px; cursor: pointer; width: 100%; font-weight: normal; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; transition: background-color 0.25s ease-in-out 50ms; width: 65%; transition: all 0.1s; -webkit-transition: all 0.1s; transition-delay: 0.1s; }
 
-button:hover, .button:hover { transform: translate(0px, 0px); width: 70%; background-color: #0d3f3c; animation-direction: alternate; -webkit-transition: all 1.5s; transition: all 0.1s ease-in-out 0s; }
+button:hover, .button:hover { transform: translate(0px, 0px); width: 70%; background-color: #115854; animation-direction: alternate; -webkit-transition: all 0.1s; transition: all 0.1s ease-in-out 0s; }
 
 #maincapybar { border: 2px solid white; border-radius: 35px; background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white); width: 65%; height: 80px; transition: all 0.5s; -webkit-transition: all 0.5s; }
 
