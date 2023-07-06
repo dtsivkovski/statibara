@@ -27,12 +27,30 @@
   
 
   
+      "page12": {
+          "title": "",
+          "content": ". Back to home One Sample Z-Test for a Proportion . Direction Two-Tailed (p ≠ p0) Left-Tailed (p &lt; p0) Right-Tailed (p &gt; p0) | . Significance Level (α) | . Population Proportion (p) | . Sample Size (n) | . Number of Successes (x) | . Results . State . . . Make sure to state what your parameter (p) means in context! . . Plan - One-sample z-test for p . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . . . Make sure to draw a normal curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
+          "url": "https://statibara.com/proportion/onesample/test/",
+          "relUrl": "/proportion/onesample/test/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page13": {
+          "title": "Random Number",
+          "content": ". Back to home Random Number Generator . to Unique Values Only? Generate Results Table . Run # Generated Values .",
+          "url": "https://statibara.com/random/",
+          "relUrl": "/random/",
+          "date": ""
+      }
+      
+  
 
   
 
   
-
-  
   
 
   
@@ -55,7 +73,7 @@
   
 
   
-      "page23": {
+      ,"page23": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://statibara.com/robots.txt",
