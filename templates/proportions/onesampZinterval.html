@@ -1,0 +1,178 @@
+---
+layout: base
+permalink: /proportion/onesample/interval/
+categories: Proportions
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+{% include capybar.html %}
+
+<h2> One Sample Z-Interval for a Proportion </h2>
+
+<table>
+    <tr>
+        <th>
+            Confidence Level
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="confidence" name="confidence" placeholder="0.95">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Proportion (p̂)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sampleprop" name="sampleprop" placeholder="Sample Proportion">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Size (n)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="samplesize" name="samplesize" placeholder="Sample Size">
+        </td>
+    </tr>
+
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateCL"></p>
+        <p id="statePE"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (p) means in context!</i></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3 id="plantitle">Plan - One-sample z-interval for p</h3>
+        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
+        <p id="10percent"><u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?</p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="formula" style="height: 110px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <center>
+            <p style="color: rgb(175, 175, 175)"><i>To find our critical z* value, you can use the inverse normal function on your calculator or use a table with critical values. </i></p>
+        </center>
+        <p id="pluggedin" style="height: 100px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="resultInterval" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        // get variables from inputs
+        var conflevel = parseFloat(document.getElementById("confidence").value);
+        var sampleprop = parseFloat(document.getElementById("sampleprop").value);
+        var samplesize = parseFloat(document.getElementById("samplesize").value);
+
+        // check if inputs are valid
+        if (isNaN(conflevel) || isNaN(sampleprop) || isNaN(samplesize)) {
+            alert("Please enter valid numbers for all inputs.");
+            return;
+        }
+
+        // check if confidence level is between 0 and 1
+        if (conflevel <= 0 || conflevel >= 1) {
+            alert("Please enter a confidence level between 0 and 1.");
+            return;
+        }
+
+        // check if sample size is greater than 0
+        if (samplesize <= 0) {
+            alert("Please enter a sample size greater than 0.");
+            return;
+        }
+
+        // get number of successes and failures for large counts condition
+        var successes = Math.round(sampleprop * samplesize);
+        var failures = samplesize - successes;
+
+        // check if large counts condition is met
+        if (successes < 10 || failures < 10) {
+            // case if large counts not met
+            document.getElementById("resultsContainer").style.display = "block";
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures must each be greater than 10. You may not proceed with the test. (Successes = " + successes + ", Failures = " + failures + ")";
+            document.getElementById("calculateSteps").style.display = "none";
+            document.getElementById("concludeSteps").style.display = "none";
+            return;
+        }
+        else {
+            document.getElementById("resultsContainer").style.display = "block";
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Successes and failures are each greater than or equal to 10. (Successes = " + successes + ", Failures = " + failures + "). <br/> Therefore, the condition is met and you may proceed with the test.";
+            document.getElementById("calculateSteps").style.display = "block";
+            document.getElementById("concludeSteps").style.display = "block";
+        }
+        
+        // write out point estimate
+        var peText = "Point estimate: p̂ = " + sampleprop.toFixed(4);
+        document.getElementById("statePE").innerHTML = peText;
+
+        // convert confidence level to percentage
+        confPerc = conflevel * 100;
+        confPerc.toFixed(0);
+        var stateCL = "Confidence Level: " + confPerc + "%";
+        document.getElementById("stateCL").innerHTML = stateCL;
+
+        // change plan title to fit confidence level
+        var plantitle = "Plan - " + confPerc + "% confidence interval for p";
+        document.getElementById("plantitle").innerHTML = plantitle;
+
+        // calculate z-star
+        var zstar = jStat.normal.inv((1 + conflevel) / 2, 0, 1);
+
+        // calculate margin of error
+        var moe = zstar * Math.sqrt((sampleprop * (1 - sampleprop)) / samplesize);
+
+        // calculate lower and upper bounds
+        var lower = sampleprop - moe;
+        var upper = sampleprop + moe;
+        zstar = zstar.toFixed(4);
+        moe = moe.toFixed(4);
+        lower = lower.toFixed(4);
+        upper = upper.toFixed(4);
+
+        // create formula string and plugged in values and final values, use phat in formula
+        var formula = "$$\\text{CI} = \\text{point estimate} \\pm z^* \\sqrt{\\frac{\\hat{p} (1 - \\hat{p})}{n}}$$";
+        var pluggedin = "$$\\text{CI} = " + sampleprop + " \\pm " + zstar + "\\sqrt{\\frac{" + sampleprop + " (1 - " + sampleprop + ")}{" + samplesize + "}}$$";
+        var final = "$$\\text{CI} = " + lower + " \\text{ to } " + upper + "$$";
+
+        // display formula and plugged in values
+        document.getElementById("formula").innerHTML = formula;
+        document.getElementById("pluggedin").innerHTML = pluggedin;
+        document.getElementById("resultInterval").innerHTML = final;
+        MathJax.typesetPromise([document.getElementById("formula"), document.getElementById("pluggedin"), document.getElementById("resultInterval")], formula, pluggedin, final).then(function () {}).catch(function (err) {});
+
+        // write conclusion
+        var conclusion = "We are " + confPerc + "% confident that the true population is captured by the interval from " + lower + " to " + upper + ".";
+        document.getElementById("concludeOutput").innerHTML = conclusion;
+        document.getElementById("concludeOutput").style.color = "#e89734";
+
+        // show results container
+        document.getElementById("resultsContainer").style.display = "block";
+
+    }
+</script>
