@@ -384,7 +384,7 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link, h4:hover .a
 
 .search-results-list-item { padding-bottom: 1rem; }
 
-.search-results-list-item .search-result-title { font-size: 16px; color: #d9230f; }
+.search-results-list-item .search-result-title { font-size: 16px; color: #0fbbd9; }
 
 .search-result-rel-url { color: silver; }
 
@@ -396,13 +396,19 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link, h4:hover .a
 
 .search-result-rel-date { color: #6d788a; font-size: 14px; }
 
-.search-result-preview { color: #777; font-size: 16px; margin-top: .02rem !important; margin-bottom: .02rem !important; }
+.search-result-preview { color: #e9e9e9; font-size: 16px; margin-top: .02rem !important; margin-bottom: .02rem !important; }
 
-.search-result-highlight { color: #2e0137; font-weight: bold; }
+.search-result-highlight { color: #ff7300; font-weight: bold; }
 
 table { white-space: normal; max-width: 100%; font-size: 100%; border: none; }
 
 table th { text-align: center !important; }
+
+.js-search-input { text-align: center; background-color: white; width: 400px; font-size: 16px; color: black; border: 1px solid white; padding: 10px; border-radius: 10px; transition: width 0.1s ease-in-out; }
+
+.js-search-input:focus { width: 500px; border: 1px solid white; }
+
+.search-results-list-item::marker { color: rgba(0, 0, 0, 0); }
 
 ::-webkit-scrollbar { width: 14px; height: 18px; }
 
@@ -493,7 +499,7 @@ a:hover { color: rgba(255, 255, 255, 0.87) !important; }
 
 button, .button { background-color: #093b3a; border: 1px solid white; border-radius: 20px; color: white; padding: 16px 32px; text-decoration: none; margin: 4px 2px; height: 55px; cursor: pointer; width: 100%; font-weight: normal; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; transition: background-color 0.25s ease-in-out 50ms; width: 65%; transition: all 0.1s; -webkit-transition: all 0.1s; transition-delay: 0.1s; }
 
-button:hover, .button:hover { transform: translate(0px, 0px); width: 70%; background-color: #115854; animation-direction: alternate; -webkit-transition: all 0.1s; transition: all 0.1s ease-in-out 0s; }
+button:hover, .button:hover { transform: translate(0px, 0px); width: 70%; background-color: #041d1c; animation-direction: alternate; -webkit-transition: all 0.1s; transition: all 0.1s ease-in-out 0s; }
 
 #maincapybar { border: 2px solid white; border-radius: 35px; background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white); width: 65%; height: 80px; transition: all 0.5s; -webkit-transition: all 0.5s; }
 

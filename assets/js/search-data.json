@@ -5,31 +5,94 @@
   
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-      "page12": {
+      "page1": {
           "title": "",
-          "content": ". Back to home One Sample Z-Interval for a Proportion . Confidence Level | . Sample Proportion (p̂) | . Sample Size (n) | . Results . State . . . Make sure to state what your parameter (p) means in context! . Plan - One-sample z-interval for p . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . To find our critical z* value, you can use the inverse normal function on your calculator or use a table with critical values. . . . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
+          "content": ". Binomial Distributions . Conditions for a Binomial Distribution . Make sure you check all of the BINS conditions to make sure you are working with a binomial distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Number - Is the number of trials fixed? Success - Is the probability of success the same for each trial? Binomial PDF Test . Use this test to find the probability of a specific number of successes in a binomial distribution. . Number of Trials (n) | . Probability Value (p) | . Number of Successes (x) | . Calculate . Binomial CDF Test . Use this test to find the probability of a specific number of successes or fewer in a binomial distribution. . Number of Trials (n) | . Probability Value (p) | . Number of Successes (x) | . Calculate .",
+          "url": "https://statibara.com/binomial-distributions/",
+          "relUrl": "/binomial-distributions/",
+          "date": ""
+      }
+      
+  
+
+  
+
+  
+      ,"page3": {
+          "title": "",
+          "content": ". Chi Squared Test - 2-Way Test . Row and column values are excluding category titles and total rows/columns. . | | . Expected and Component Values . Key . Expected Value . Component Value . | . Results . State . . . . Plan - Chi-squared test for independence/homogeneity . . . . Calculate . . . . . Make sure to draw a chi-squared curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is based on the hypotheses that were put into the table, but will not always reflect what a proper conclusion should look like in context. . Follow Up . . For the follow up, also try to keep it in context whenever possible. .",
+          "url": "https://statibara.com/x2/2-way/",
+          "relUrl": "/x2/2-way/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page4": {
+          "title": "",
+          "content": ". Chi Squared Test - Goodness of Fit . . | . &lt;br/&gt; . Results . State . . . . Plan - Chi-squared test for goodness of fit . . . . Calculate . . . . . Make sure to draw a chi-squared curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is based on the hypotheses that were put into the table, but will not always reflect what a proper conclusion should look like in context. . Follow Up . . For the follow up, also try to keep it in context whenever possible. .",
+          "url": "https://statibara.com/x2/gof/",
+          "relUrl": "/x2/gof/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page5": {
+          "title": "",
+          "content": ". A Guide to Chi-Squared Tests for Inference . Differences Between the Tests . Category Goodness of Fit Test for Independence Test for Homogeneity . Number of Categorical Variables | 1 | 2 | 2 | . Number of Samples | 1 | 1 | 2+ | . Data for Input | Observed + Expected | Observed Only | Observed Only | . Null Hypothesis | H0: Observed values equal the expected values | H0: Variables are independent | H0: There is no difference in the distributions | . Alternative Hypothesis | Ha: Observed values do not equal the expected values | Ha: Variables are not independent | Ha: There is a difference in the distributions | . . “State” Step . In the state step, you must include the null hypothesis, alternative hypothesis, and the alpha value. The alpha value is just like in the other tests, usually ranging from 0.01 to 0.10 (for reasonable alpha values). The hypotheses, however, are different depending on which chi-squared test you are performing, so you should refer to the table above. . . . “Plan” Step . In the plan step, you must first state the name of the test you are performing. Then, you must check all of the conditions necessary for the test in order to proceed to the next steps. . Random: The data must be collected randomly, whether through a random sample or random assignment. Note: If it is random assignment, the test immediately becomes a chi-squared test for homogeneity because that is considered as two samples. | . | Independence (10%): Each sample/group must be less than 10% of the entire population that it is being taken from. This is to ensure that the samples are independent of each other. | Normal: Each expected value must be at least 5. Goodness of Fit: The expected values are calculated by multiplying the total number of observations by the proportion of each category in the population. | Independence/Homogeneity: The expected values are calculated by multiplying the row total by the column total, and dividing by the total number of observations. | . | . . . “Do” Step . In the do step, you calculate the test statistic, degrees of freedom, and the p-value of such a test. . Degrees of Freedom (df): . Goodness of Fit: df = k - 1, where k is the number of categories | Independence/Homogeneity: df = (r - 1)(c - 1), where r is the number of rows and c is the number of columns | . Test Statistic: . To get the test statistic, first subtract the observed value minus the expected value, square it, and then divide by the expected value. Then, add all of these values together for all cells to get the test statistic. . P-Value: . To get the p-value, use the degrees of freedom and the test statistic in a chi-squared distribution table or a calculator. . Calculator: Use the chi-squared cdf function, with the test statistic as the first argument and the degrees of freedom as the second argument. | Table: The table should have the test statistic, degrees of freedom, and the p-value labeled. Use the two which you have to find the missing p-value. | . To see an interactive chi-squared distribution graph, you can visit Stapplet’s Chi-Squared Distribution Graph that allows you to visualize what the graph looks like with different degrees of freedom. . . . “Conclude” Step . To conclude the test, you must compare your p-value to your alpha much like in other tests. Reject the null if the p-value is lower than the alpha, and fail to reject it if the p-value is higher than the alpha. Make sure you state your conclusion in context. . . . “Follow-Up” Step . If you reject the null hypothesis, you must state the cell that most significantly contributed to your chi-squared test statistic. With this, you must also state the observed value of this cell and whether it was higher/lower than the expected value. This is not necessary if you fail to reject the null hypothesis. . Example: “The cell for “Most Likely” in the “United States” sample contributed the greatest to the chi-squared statistic because the observed value of 87 was much greater than the expected value of 21.” | . . . Related Calculators . Now, you can try your hand at the chi-squared tests on your own and use these calculators to check your work! Goodness of Fit Calculator Test for Independence Calculator Test for Homogeneity Calculator",
+          "url": "https://statibara.com/x2/guide/",
+          "relUrl": "/x2/guide/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page6": {
+          "title": "",
+          "content": ". Geometric Distributions . Conditions for a Geometric Distribution . Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Success - Is the probability of success the same for each trial? Geometric PDF Test . Use this test to find the probability that the first success occurs on the nth trial . Probability Value (p) | . Trial Number (n) | . Calculate . Binomial CDF Test . Use this test to find the probability that it would take n or fewer trials for the first success. . Probability Value (p) | . Number of Trials (n) | . Calculate .",
+          "url": "https://statibara.com/geometric-distributions/",
+          "relUrl": "/geometric-distributions/",
+          "date": ""
+      }
+      
+  
+
+  
+
+  
+
+  
+
+  
+      ,"page10": {
+          "title": "",
+          "content": ". One Sample T-Interval for a Mean . Confidence Level | . Sample Mean (x̄) | . Sample Standard Deviation (Sx) | . Sample Size (n) | . Results . State . . . Make sure to state what your parameter (μ) means in context! . Plan - interval for μ . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . . To find our critical t* value, you can use the inverse t function on your calculator or use a table with critical t values. . . . Conclude . . Please keep in mind that you should always write your conclusion in the context of the problem. .",
+          "url": "https://statibara.com/mean/onesample/interval/",
+          "relUrl": "/mean/onesample/interval/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page11": {
+          "title": "",
+          "content": ". One Sample T-Test for a Mean . Direction Two-Tailed (μ ≠ μ0) Left-Tailed (μ &lt; μ0) Right-Tailed (μ &gt; μ0) | . Significance Level (α) | . Population Mean (μ) | . Sample Mean (x̄) | . Sample SD (s) | . Number in Sample (n) | . Results . State . . . Make sure to state what your parameter (μ) means in context! . . Plan - One-sample t-test for μ . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . . . Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
+          "url": "https://statibara.com/mean/onesample/test/",
+          "relUrl": "/mean/onesample/test/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page12": {
+          "title": "",
+          "content": ". One Sample Z-Interval for a Proportion . Confidence Level | . Sample Proportion (p̂) | . Sample Size (n) | . Results . State . . . Make sure to state what your parameter (p) means in context! . Plan - One-sample z-interval for p . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . To find our critical z* value, you can use the inverse normal function on your calculator or use a table with critical values. . . . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
           "url": "https://statibara.com/proportion/onesample/interval/",
           "relUrl": "/proportion/onesample/interval/",
           "date": ""
@@ -40,7 +103,7 @@
   
       ,"page13": {
           "title": "",
-          "content": ". Back to home One Sample Z-Test for a Proportion . Direction Two-Tailed (p ≠ p0) Left-Tailed (p &lt; p0) Right-Tailed (p &gt; p0) | . Significance Level (α) | . Population Proportion (p) | . Sample Size (n) | . Number of Successes (x) | . Results . State . . . Make sure to state what your parameter (p) means in context! . . Plan - One-sample z-test for p . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . . . Make sure to draw a normal curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
+          "content": ". One Sample Z-Test for a Proportion . Direction Two-Tailed (p ≠ p0) Left-Tailed (p &lt; p0) Right-Tailed (p &gt; p0) | . Significance Level (α) | . Population Proportion (p) | . Sample Size (n) | . Number of Successes (x) | . Results . State . . . Make sure to state what your parameter (p) means in context! . . Plan - One-sample z-test for p . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . . . Make sure to draw a normal curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
           "url": "https://statibara.com/proportion/onesample/test/",
           "relUrl": "/proportion/onesample/test/",
           "date": ""
@@ -51,7 +114,7 @@
   
       ,"page14": {
           "title": "Random Number",
-          "content": ". Back to home Random Number Generator . to Unique Values Only? Generate Results Table . Run # Generated Values .",
+          "content": ". Random Number Generator . to Unique Values Only? Generate Results Table . Run # Generated Values .",
           "url": "https://statibara.com/random/",
           "relUrl": "/random/",
           "date": ""
@@ -65,8 +128,6 @@
   
 
   
-
-  
   
 
   
@@ -84,7 +145,7 @@
   
 
   
-      ,"page24": {
+      ,"page23": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://statibara.com/robots.txt",
