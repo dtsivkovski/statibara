@@ -1,6 +1,5 @@
 ---
 layout: base
-search_exclude: true
 permalink: /x2/guide/
 categories: Chi-Squared Tests
 ---
@@ -11,7 +10,7 @@ categories: Chi-Squared Tests
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-{% include capybar.html %}
+
 
 <center>
 

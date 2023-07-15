@@ -119,6 +119,13 @@ image: images/logo.png
       width: 49.99999%;
       margin: 6px 0;
     }
+
+    .js-search-input {
+      width: 300px;
+    }
+    .js-search-input:focus {
+      width: 300px;
+    }
   }
 
   @media only screen and (max-width: 500px) {
@@ -181,7 +188,10 @@ image: images/logo.png
   <h1 style="font-family: Merriweather; font-size: 60px"> Statibara </h1>
   <h1 style="margin-top: 0 !important;" >Statistics<span class="gradient-dynam" id="dynamHeader"></span></h1>
   <p><i><a href="https://github.com/dtsivkovski/statibara#readme" title="Statibara Website Github Page">An open-source project</a> created and maintained by <a href="https://solo.to/danieltsivkovski" title="Get in touch!">Daniel Tsivkovski</a></i></p>
-  <h2>Featured Pages</h2>
+
+  {% include search.html %}
+
+  <h2 style="margin-top: 6px !important">Featured Pages</h2>
 </div>
 <div class="responsivityholder">
   <div class="responsive">

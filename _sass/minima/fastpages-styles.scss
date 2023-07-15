@@ -173,7 +173,7 @@ h6:hover .anchor-link {
 .search-results-list-item {padding-bottom: 1rem;}
 .search-results-list-item .search-result-title {
   font-size: 16px;
-  color: #d9230f;
+  color: #0fbbd9;
 }
 .search-result-rel-url {color: silver;}
 .search-results-list-item a {display: block; color: #777;}
@@ -186,13 +186,13 @@ h6:hover .anchor-link {
 }
 
 .search-result-preview {
-  color: #777;
+  color: #e9e9e9;
   font-size: 16px;
   margin-top:.02rem !important;
   margin-bottom:.02rem !important;
 }
 .search-result-highlight {
-  color: #2e0137;
+  color: #ff7300;
   font-weight:bold;
 }
 
@@ -204,6 +204,27 @@ table {
   th{
     text-align: center! important;
   }
+}
+
+.js-search-input {
+  text-align: center;
+  background-color: white;
+  width: 400px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: 1px solid white;
+  padding: 10px;
+  border-radius: 10px;
+  transition: width 0.1s ease-in-out;
+}
+
+.js-search-input:focus {
+  width: 500px;
+  border: 1px solid white;
+}
+
+.search-results-list-item::marker {
+  color: rgba(0, 0, 0, 0);
 }
 
 // customize scrollbars
