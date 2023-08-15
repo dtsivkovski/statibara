@@ -212,15 +212,25 @@ table {
   width: 400px;
   font-size: 16px;
   color: rgb(0, 0, 0);
-  border: 1px solid white;
   padding: 10px;
   border-radius: 10px;
-  transition: width 0.1s ease-in-out;
+  transition: width 0.1s ease-in-out, border-radius 0.3s ease-in-out;
 }
 
 .js-search-input:focus {
   width: 500px;
-  border: 1px solid white;
+  border-radius: 20px;
+  background-image: linear-gradient(to right, #d46c049c, white, #07abccad)
+}
+
+.js-search-input:focus:hover {
+  cursor: text;
+}
+
+.js-search-input:hover {
+  cursor: pointer;
+  border-radius: 20px;
+  background-image: linear-gradient(to right, #d46c049c, white, #07abccad)
 }
 
 .search-results-list-item::marker {
