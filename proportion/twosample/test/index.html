@@ -164,6 +164,7 @@ window.onload = wrap_img;
     <div id="calculateSteps" class="stepcard">
         <h3>Calculate</h3>
         <p id="pHat"></p>
+        <p id="pHatC"></p>
         <p id="formula" style="height: 150px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
         <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
         <p id="pVal"></p>
@@ -257,17 +258,22 @@ window.onload = wrap_img;
         // calculate p-hats
         var p1 = x1/n1;
         var p2 = x2/n2;
-        var pc = (x1 + x2) / (n1 + n2);
-        var p1Statement = "$$\\hat{p}_1 = \\frac{" + x1 + "}{" + n1 + "} = " + p1.toFixed(4) + "$$";
-        var p2Statement = "$$\\hat{p}_2 = \\frac{" + x2 + "}{" + n2 + "} = " + p2.toFixed(4) + "$$";
-        var pcStatement = "$$\\hat{p}_c = \\frac{" + x1 + " + " + x2 + "}{" + n1 + " + " + n2 + "} = " + pc.toFixed(4) + "$$";
-        document.getElementById("pHat").innerHTML = p1Statement + ", " + p2Statement + ", " + pcStatement;
+        var xc = parseInt(x1) + parseInt(x2);
+        var nc = parseInt(n1) + parseInt(n2);
+        var pc = xc / nc;
+        console.log(xc, nc, pc)
+        var pHatStatement = "$$\\hat{p}_1 = \\frac{" + x1 + "}{" + n1 + "} = " + p1.toFixed(4) + 
+                        "\\hspace{15mm}  \\hat{p}_2 = \\frac{" + x2 + "}{" + n2 + "} = " + p2.toFixed(4) + "$$"
+        var pHatCStatement = "$$\\hat{p}_c = \\frac{" + x1 + " + " + x2 + "}{" + n1 + " + " + n2 + "} = " + pc.toFixed(4) + "$$";
+        document.getElementById("pHat").innerHTML = pHatStatement;
         MathJax.typesetPromise([document.getElementById("pHat")], pHatStatement).then(function () {}).catch(function (err) {});
+        document.getElementById("pHatC").innerHTML = pHatCStatement;
+        MathJax.typesetPromise([document.getElementById("pHatC")], pHatCStatement).then(function () {}).catch(function (err) {});
 
         // calculate entire z statistic
         var zStat = (p1 - p2) / Math.sqrt((pc * (1 - pc)) / (n1 + n2));
-        var zStatStatement = "$$z = \\frac{(\\hat{p}_1 - \\hat{p}_2) - (p_1 - p_2)}{\\sqrt{\\frac{\\hat{p}_c(1 - \\hat{p}_c)}{n_1}} + \\frac{\\hat{p}_c(1 - \\hat{p}_c)}{n_2}}} = \\frac{()" 
-                                + p1.toFixed(4) + " - " + p2.toFixed(4) + ") - 0}{\\sqrt{\\frac{" + pc.toFixed(4) + "(1 - " +  pc.toFixed(4) + "}{" + n1 + "}} + \\frac{" + pc.toFixed(4) + "(1 - " +  pc.toFixed(4) + "}{" + n2 + "}}} = " + zStat.toFixed(4) + "$$";
+        var zStatStatement = "$$z = \\frac{(\\hat{p}_1 - \\hat{p}_2) - (p_1 - p_2)}{\\sqrt{\\frac{\\hat{p}_c(1 - \\hat{p}_c)}{n_1}} + \\frac{\\hat{p}_c(1 - \\hat{p}_c)}{n_2}} = \\frac{(" 
+                                + p1.toFixed(4) + " - " + p2.toFixed(4) + ") - 0}{\\sqrt{\\frac{" + pc.toFixed(4) + "(1 - " +  pc.toFixed(4) + ")}{" + n1 + "}} + \\frac{" + pc.toFixed(4) + "(1 - " +  pc.toFixed(4) + ")}{" + n2 + "}} = " + zStat.toFixed(4) + "$$";
         document.getElementById("formula").innerHTML = zStatStatement;
         MathJax.typesetPromise([document.getElementById("formula")], zStatStatement).then(function () {}).catch(function (err) {});
 
@@ -309,11 +315,11 @@ window.onload = wrap_img;
 
         if (p < alpha) {
             document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
-            ", we reject the null hypothesis as there is convincing evidence that the true population proportion is" + concDirectionWord + popProp + ".";
+            ", we reject the null hypothesis as there is convincing evidence that p<sub>1</sub> is" + concDirectionWord + " p<sub>2</sub>.";
         }
         else {
             document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
-            ", we fail to reject the null hypothesis as there is not convincing evidence that the true population proportion is" + concDirectionWord + popProp + ".";
+            ", we fail to reject the null hypothesis as there is not convincing evidence that p<sub>1</sub> is" + concDirectionWord + " p<sub>2</sub>.";
         }
 
         document.getElementById("concludeOutput").style.color = "#e89734";
