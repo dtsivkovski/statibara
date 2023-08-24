@@ -1,0 +1,100 @@
+---
+layout: base
+permalink: /proportion/twosample/interval/
+categories: Proportions
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+
+
+<h2> Two Sample (2-Prop) Z-Test for a Difference in Proportions </h2>
+
+<table>
+    <tr>
+        <th>
+            Confidence Level
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="confidence" name="confidence" placeholder="0.95">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Size of Proportion 1 (n<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n1" name="n1" placeholder="Sample Size">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number of Successes of Proportion 1 (x<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="x1" name="x1" placeholder="Number of Successes">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Size of Proportion 2 (n<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n2" name="n2" placeholder="Sample Size">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number of Successes of Proportion 2 (x<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="x2" name="x2" placeholder="Number of Successes">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateCL"></p>
+        <p id="statePE"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameters (p<sub>1</sub> and p<sub>2</sub>) mean in context!</i></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3 id="plantitle">Plan - One-sample z-interval for p</h3>
+        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
+        <p id="10percent"><u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?</p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="pHat"></p>
+        <p id="pHatC"></p>
+        <p id="formula" style="height: 110px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <center>
+            <p style="color: rgb(175, 175, 175)"><i>To find our critical z* value, you can use the inverse normal function on your calculator or use a table with critical values. </i></p>
+        </center>
+        <p id="pluggedin" style="height: 100px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="resultInterval" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+</div>
