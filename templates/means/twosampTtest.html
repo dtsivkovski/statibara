@@ -1,0 +1,289 @@
+---
+layout: base
+permalink: /mean/twosample/test/
+categories: Means
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+
+
+<h2> One Sample T-Test for a Mean </h2>
+
+<!-- Table for input of hypotheses, alpha value, population mean, sample mean, sample SD, and number in the sample -->
+<table>
+    <!-- <tr>
+        <th>
+            Null Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="nullHypo" name="nullHypo" placeholder="Null Hypothesis">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Alternative Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="altHypo" name="altHypo" placeholder="Alternative Hypothesis">
+        </td>
+    </tr> -->
+    <tr>
+        <th>
+            Direction
+        </th>
+        <td>
+            <select class="tableselectclear" id="direction" name="direction">
+                <option value="0">Two-Tailed (μ ≠ μ<sub>0</sub>)</option>
+                <option value="-1">Left-Tailed (μ < μ<sub>0</sub>)</option>
+                <option value="1">Right-Tailed (μ > μ<sub>0</sub>)</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Significance Level (α)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="alpha" name="alpha" placeholder="Alpha Value">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Mean 1 (x̄<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="xb1" name="sampMean" placeholder="Sample Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample SD 1 (s<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sx1" name="sampSD" placeholder="Sample SD">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number in Sample 1 (n<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n1" name="sampN" placeholder="Number in Sample">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Mean 2 (x̄<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="xb2" name="sampMean" placeholder="Sample Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample SD 2 (s<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sx2" name="sampSD" placeholder="Sample SD">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number in Sample 2 (n<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n2" name="sampN" placeholder="Number in Sample">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameters (μ<sub>1</sub> and μ<sub>2</sub>) means in context!</i></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - Two-sample t-test for μ<sub>1</sub> - μ<sub>2</sub></h3>
+        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
+        <p id="10percent"><u>10% rule</u>: Must be determined by you. Are both of your sample size smaller than 10% of the population?</p>
+        <p id="clt"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="formula" style="height: 150px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
+        <p id="conservative_dfVal" style="color: rgb(190, 190, 190)"></p>
+        <p id="dfVal" style="height: 150px; font-size: large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>* The df<sub>c</sub> value is the conservative degrees of freedom, which is acceptable on an AP exam. However, the calculation for p uses the true df value.</i></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+</div>
+
+<script>
+
+function calculate() {
+    // get values from inputs
+    var direction = document.getElementById("direction").value;
+    var alpha = document.getElementById("alpha").value;
+    var n1 = document.getElementById("n1").value;
+    var x1 = document.getElementById("xb1").value;
+    var n2 = document.getElementById("n2").value;
+    var x2 = document.getElementById("xb2").value;
+    var sx1 = document.getElementById("sx1").value;
+    var sx2 = document.getElementById("sx2").value;
+
+
+    // check if any values are empty
+    // nullHypo == "" || altHypo == "" || 
+    if (alpha == "" || n1 == "" || x1 == "" || n2 == "" || x2 == "" || sx1 == "" || sx2 == "") {
+        alert("Please make sure all fields are filled in!");
+        return;
+    }
+
+    // check if alpha is between zero and one
+    if (alpha <= 0 || alpha >= 1) {
+        alert("Please make sure your significance level (α) is between zero and one!");
+        return;
+    }
+
+    // check if sample size is greater than zero
+    if (n1 <= 0 || n2 <= 0) {
+        alert("Please make sure your sample size (n) is greater than zero!");
+        return;
+    }
+
+    var concDirectionWord;
+    var hypSymbol;        
+    // check direction for correct hypothesis direction
+    if (direction == 0) {
+        hypSymbol = "≠";
+        concDirectionWord = " different from ";
+    }
+    else if (direction == 1) {
+        hypSymbol = ">";
+        concDirectionWord = " greater than ";
+    }
+    else if (direction == -1) {
+        hypSymbol = "<";
+        concDirectionWord = " less than ";
+    }
+
+    // put hypotheses and alpha in state box
+    document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: μ<sub>1</sub> = μ<sub>2</sub>";
+    document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: μ<sub>1</sub> " + hypSymbol + " μ<sub>2</sub>";
+    document.getElementById("stateAlpha").innerHTML = "α = " + alpha;
+
+
+    // check sample size
+    if (n1 < 30 || n2 < 30) {
+        // case if central limit theorem not met
+        document.getElementById("resultsContainer").style.display = "block";
+        document.getElementById("clt").innerHTML = "<u>Central Limit Theorem</u>: One or both of the sample sizes are not greater than or equal to 30, which means the Central Limit Theorem is not met. However, you can examine a dotplot of the sample to see if there is no strong skew or outliers, and if so, you can still proceed with the test below.";
+    }
+    else {
+        document.getElementById("resultsContainer").style.display = "block";
+        document.getElementById("clt").innerHTML = "<u>Central Limit Theorem</u>: Since n<sub>1</sub> ≥ 30 and n<sub>2</sub> ≥ 30, both sample sizes are large enough for the Central Limit Theorem to apply.";
+        document.getElementById("calculateSteps").style.display = "block";
+        document.getElementById("concludeSteps").style.display = "block";
+    }
+
+
+
+    // calculate conservative df value and put in conservative df box
+    var df = parseFloat(n1) + parseFloat(n2) - 2;
+    var dfText = "$$df_c = n_1 + n_2 - 2 = " + n1 + " + " + n2 + " - 2 = " + df + "$$";
+    document.getElementById("conservative_dfVal").innerHTML = dfText;
+    MathJax.typesetPromise([document.getElementById("conservative_dfVal")], dfText).then(function () {}).catch(function (err) {});
+
+    // calculate true df value and put in df box
+    var dfTrue = Math.pow((Math.pow(sx1, 2) / n1 + Math.pow(sx2, 2) / n2), 2) / (Math.pow((Math.pow(sx1, 2) / n1), 2) / (n1 - 1) + Math.pow((Math.pow(sx2, 2) / n2), 2) / (n2 - 1));
+    var dfTrueF = dfTrue.toFixed(4);
+    var dfTrueText = "$$df = \\frac{\\left(\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}\\right)^2}{\\frac{\\left(\\frac{s_1^2}{n_1}\\right)^2}{n_1 - 1} + \\frac{\\left(\\frac{s_2^2}{n_2}\\right)^2}{n_2 - 1}} = \\frac{\\left(\\frac{" + sx1 + "^2}{" + n1 + "} + \\frac{" + sx2 + "^2}{" + n2 + "}\\right)^2}{\\frac{\\left(\\frac{" + sx1 + "^2}{" + n1 + "}\\right)^2}{" + n1 + " - 1} + \\frac{\\left(\\frac{" + sx2 + "^2}{" + n2 + "}\\right)^2}{" + n2 + " - 1}} = " + dfTrueF + "$$";
+    document.getElementById("dfVal").innerHTML = dfTrueText;
+    MathJax.typesetPromise([document.getElementById("dfVal")], dfTrueText).then(function () {}).catch(function (err) {});
+
+
+    // calculate t stat and put in formula box
+    var tStat = (x1 - x2) / Math.sqrt(Math.pow(sx1, 2) / n1 + Math.pow(sx2, 2) / n2);
+    var tStatStatement = "$$t = \\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}} = \\frac{" + x1 + " - " + x2 + "}{\\sqrt{\\frac{" + sx1 + "^2}{" + n1 + "} + \\frac{" + sx2 + "^2}{" + n2 + "}}} = " + tStat.toFixed(4) + "$$";
+    document.getElementById("formula").innerHTML = tStatStatement;
+    MathJax.typesetPromise([document.getElementById("formula")], tStatStatement).then(function () {}).catch(function (err) {});
+
+    var calcT = tStat;
+
+    // check if z is positive or negative and check if left/right tailed to set calcT
+    if (direction == 0) {
+        calcT = - Math.abs(tStat);
+    } else if (direction == -1) {
+        if (tStat > 0) {
+            calcT = Math.abs(tStat);
+        }
+        else {
+            calcT = - Math.abs(tStat);
+        }
+    }
+    else if (direction == 1) {
+        if (tStat < 0) {
+            calcT = Math.abs(tStat);
+        }
+        else {
+            calcT = - Math.abs(tStat);
+        }
+    }
+
+    // calculate p-value
+    var p = jStat.studentt.cdf(calcT, dfTrue);
+
+    // put p-value in calculate box
+    var pVal = "$$p = " + p.toFixed(4) + "$$";
+    // if two-tailed then we need to multiply p-value by two
+    if (direction == 0) {
+        pVal = "$$p = " + p.toFixed(4) + " * 2 = "+ (p * 2).toFixed(4) + "$$";
+        p = p * 2;
+    }
+
+    document.getElementById("pVal").innerHTML = pVal;
+    MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
+
+    if (p < alpha) {
+        document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
+        ", we reject the null hypothesis as there is convincing evidence that μ<sub>1</sub> is" + concDirectionWord + " μ<sub>2</sub>.";
+    }
+    else {
+        document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+        ", we fail to reject the null hypothesis as there is not convincing evidence that μ<sub>1</sub> is" + concDirectionWord + " μ<sub>2</sub>.";
+    }
+
+    document.getElementById("concludeOutput").style.color = "#e89734";
+
+    // show results container
+    document.getElementById("resultsContainer").style.display = "block";
+    
+}
+
+</script>
