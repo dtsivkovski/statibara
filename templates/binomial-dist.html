@@ -104,6 +104,7 @@ categories: Distributions
     <h3>Binomial CDF Test</h3>
     <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability of a specific number of successes or fewer in a binomial distribution. </i></p>
     <table>
+        <!-- Set up lower and upper bound for binomial CDF test-->
         <tr>
             <th>Number of Trials (n)</th>
             <td>
@@ -117,9 +118,15 @@ categories: Distributions
             </td>
         </tr>
         <tr>
-            <th>Number of Successes (x)</th>
+            <th>Lower Bound</th>
             <td>
-                <input type="number" id="xC" name="x" placeholder="10" class="tableinputclear">
+                <input type="number" id="xlC" name="xl" placeholder="10" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Upper Bound</th>
+            <td>
+                <input type="number" id="xuC" name="xl" placeholder="30" class="tableinputclear">
             </td>
         </tr>
     </table>
@@ -189,24 +196,27 @@ categories: Distributions
         // get values from input
         var n = parseFloat(document.getElementById("nC").value);
         var p = parseFloat(document.getElementById("pC").value);
-        var x = parseFloat(document.getElementById("xC").value);
+        var xl = parseFloat(document.getElementById("xlC").value);
+        var xu = parseFloat(document.getElementById("xuC").value);
 
         // check if numbers were put in
-        if (isNaN(n) || isNaN(p) || isNaN(x)) {
+        if (isNaN(n) || isNaN(p) || isNaN(xl) || isNaN(xu)) {
             document.getElementById("cdfResult").innerHTML = "<hr> Please enter a number in each box.";
             return;
         }
         // check values
-        if (n < 0 || p < 0 || p > 1 || x < 0 || x > n) {
+        if (n < 0 || p < 0 || p > 1 || xl < 0 || xl > n || xu < 0 || xu > n || xl > xu) {
             document.getElementById("cdfResult").innerHTML = "<hr> Please enter valid values.";
             return;
         }
 
-        // calculate cdf
-        var cdf = jStat.binomial.cdf(x, n, p).toFixed(4);
+        // calculate both cdf values and subtract to get the probability of a range
+        var cdfupper = jStat.binomial.cdf(xu, n, p).toFixed(4);
+        var cdflower = jStat.binomial.cdf(xl - 1, n, p).toFixed(4);
+        var cdf = (cdfupper - cdflower).toFixed(4);
 
         // display result
-        document.getElementById("cdfResult").innerHTML = "<hr> The probability of " + x + " or fewer successes is <b>" + cdf + "</b>";
+        document.getElementById("cdfResult").innerHTML = "<hr> The probability of " + xl + " to " + xu + " successes is <b>" + cdf + "</b>";
     }
 
 </script>

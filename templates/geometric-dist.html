@@ -94,7 +94,7 @@ categories: Geometric Distribution
 
 <div class="stepcard" id="cdf-test">
     <h3>Binomial CDF Test</h3>
-    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability that it would take <b>n</b> or fewer trials for the first success.</i></p>
+    <p style="color: rgb(175, 175, 175)"><i>Use this test to find the probability that it would take a range of trials for the first success.</i></p>
     <table>
         <tr>
             <th>Probability Value (p)</th>
@@ -103,9 +103,15 @@ categories: Geometric Distribution
             </td>
         </tr>
         <tr>
-            <th>Number of Trials (n)</th>
+            <th>Lower Bound</th>
             <td>
-                <input type="number" id="xC" name="x" placeholder="10" class="tableinputclear">
+                <input type="number" id="xlC" name="xl" placeholder="10" class="tableinputclear">
+            </td>
+        </tr>
+        <tr>
+            <th>Upper Bound</th>
+            <td>
+                <input type="number" id="xuC" name="xu" placeholder="10" class="tableinputclear">
             </td>
         </tr>
     </table>
@@ -173,25 +179,28 @@ categories: Geometric Distribution
     function calculateCdf() {
         // get values from input
         var p = parseFloat(document.getElementById("pC").value);
-        var x = parseFloat(document.getElementById("xC").value);
+        var xl = parseFloat(document.getElementById("xlC").value);
+        var xu = parseFloat(document.getElementById("xuC").value);
 
         // check if numbers were put in
-        if (isNaN(p) || isNaN(x)) {
+        if (isNaN(p) || isNaN(x) || isNaN(xu)) {
             document.getElementById("cdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the number of trials is greater than 0.";
             return;
         }
 
         // check for valid input
-        if (p < 0 || p > 1 || x < 1) {
+        if (p < 0 || p > 1 || xl < 1 || xu < xl) {
             document.getElementById("cdfResult").innerHTML = "<hr> <b>Invalid input.</b> Make sure that the probability is between 0 and 1 and that the number of trials is greater than 0.";
             return;
         }
 
-        // calculate cdf
-        var cdf = (1 - Math.pow(1 - p, x)).toFixed(4);
+        // calculate both cdfs and subtract to get the probability of a range
+        var cdfLower = (Math.pow(1 - p, xl - 1)).toFixed(4);
+        var cdfUpper = (Math.pow(1 - p, xu)).toFixed(4);
+        var cdf = (cdfUpper - cdfLower).toFixed(4);
 
         // display result
-        document.getElementById("cdfResult").innerHTML = "<hr> The probability that it would take " + x + " or fewer trials to see a success is <b>" + cdf + "</b>";
+        document.getElementById("cdfResult").innerHTML = "<hr> The probability that it would take " + xl + " to " + xu + " trials to see a success is <b>" + cdf + "</b>";
     }
 
 </script>
