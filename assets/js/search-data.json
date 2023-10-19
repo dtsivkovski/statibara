@@ -53,7 +53,7 @@
   
       ,"page6": {
           "title": "",
-          "content": ". Geometric Distributions . Conditions for a Geometric Distribution . Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Success - Is the probability of success the same for each trial? Geometric PDF Test . Use this test to find the probability that the first success occurs on the nth trial . Probability Value (p) | . Trial Number (n) | . Calculate . Binomial CDF Test . Use this test to find the probability that it would take a range of trials for the first success. . Probability Value (p) | . Lower Bound | . Upper Bound | . Calculate .",
+          "content": ". Geometric Distributions . Conditions for a Geometric Distribution . Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Success - Is the probability of success the same for each trial? Geometric PDF Test . Use this test to find the probability that the first success occurs on the nth trial . Probability Value (p) | . Trial Number (n) | . Calculate . Geometric CDF Test . Use this test to find the probability that it would take a range of trials for the first success. . Probability Value (p) | . Lower Bound | . Upper Bound | . Calculate .",
           "url": "https://statibara.com/geometric-distributions/",
           "relUrl": "/geometric-distributions/",
           "date": ""
