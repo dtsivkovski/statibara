@@ -262,7 +262,7 @@ window.onload = wrap_img;
         }
 
         // calculate both cdfs and subtract to get the probability of a range
-        var cdfLower = 1 - (Math.pow(1 - p, xl));
+        var cdfLower = 1 - (Math.pow(1 - p, xl - 1));
         var cdfUpper = 1 - (Math.pow(1 - p, xu));
         var cdf = (cdfUpper - cdfLower).toFixed(4);
 
