@@ -262,8 +262,8 @@ window.onload = wrap_img;
         }
 
         // calculate both cdfs and subtract to get the probability of a range
-        var cdfLower = (Math.pow(1 - p, xl - 1)).toFixed(4);
-        var cdfUpper = (Math.pow(1 - p, xu)).toFixed(4);
+        var cdfLower = 1 - (Math.pow(1 - p, xl));
+        var cdfUpper = 1 - (Math.pow(1 - p, xu));
         var cdf = (cdfUpper - cdfLower).toFixed(4);
 
         // display result
@@ -271,6 +271,7 @@ window.onload = wrap_img;
     }
 
 </script>
+
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/"></data>
