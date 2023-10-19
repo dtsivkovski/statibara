@@ -7,7 +7,7 @@
   
       "page1": {
           "title": "",
-          "content": ". Binomial Distributions . Conditions for a Binomial Distribution . Make sure you check all of the BINS conditions to make sure you are working with a binomial distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Number - Is the number of trials fixed? Success - Is the probability of success the same for each trial? Binomial PDF Test . Use this test to find the probability of a specific number of successes in a binomial distribution. . Number of Trials (n) | . Probability Value (p) | . Number of Successes (x) | . Calculate . Binomial CDF Test . Use this test to find the probability of a specific number of successes or fewer in a binomial distribution. . Number of Trials (n) | . Probability Value (p) | . Number of Successes (x) | . Calculate .",
+          "content": ". Binomial Distributions . Conditions for a Binomial Distribution . Make sure you check all of the BINS conditions to make sure you are working with a binomial distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Number - Is the number of trials fixed? Success - Is the probability of success the same for each trial? Binomial PDF Test . Use this test to find the probability of a specific number of successes in a binomial distribution. . Number of Trials (n) | . Probability Value (p) | . Number of Successes (x) | . Calculate . Binomial CDF Test . Use this test to find the probability of a specific number of successes or fewer in a binomial distribution. . Number of Trials (n) | . Probability Value (p) | . Lower Bound | . Upper Bound | . Calculate .",
           "url": "https://statibara.com/binomial-distributions/",
           "relUrl": "/binomial-distributions/",
           "date": ""
@@ -53,7 +53,7 @@
   
       ,"page6": {
           "title": "",
-          "content": ". Geometric Distributions . Conditions for a Geometric Distribution . Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Success - Is the probability of success the same for each trial? Geometric PDF Test . Use this test to find the probability that the first success occurs on the nth trial . Probability Value (p) | . Trial Number (n) | . Calculate . Binomial CDF Test . Use this test to find the probability that it would take n or fewer trials for the first success. . Probability Value (p) | . Number of Trials (n) | . Calculate .",
+          "content": ". Geometric Distributions . Conditions for a Geometric Distribution . Make sure you check all of the BIN conditions to make sure you are working with a geometric distribution. . Binomial - Are there only two possible outcomes? Independent - Is each trial independent from the others? Success - Is the probability of success the same for each trial? Geometric PDF Test . Use this test to find the probability that the first success occurs on the nth trial . Probability Value (p) | . Trial Number (n) | . Calculate . Binomial CDF Test . Use this test to find the probability that it would take a range of trials for the first success. . Probability Value (p) | . Lower Bound | . Upper Bound | . Calculate .",
           "url": "https://statibara.com/geometric-distributions/",
           "relUrl": "/geometric-distributions/",
           "date": ""
