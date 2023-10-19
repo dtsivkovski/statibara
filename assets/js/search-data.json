@@ -135,6 +135,17 @@
   
       ,"page19": {
           "title": "",
+          "content": ". One Sample T-Test for a Mean . Direction Two-Tailed (μ ≠ μ0) Left-Tailed (μ &lt; μ0) Right-Tailed (μ &gt; μ0) | . Significance Level (α) | . Sample Mean 1 (x̄1) | . Sample SD 1 (s1) | . Number in Sample 1 (n1) | . Sample Mean 2 (x̄2) | . Sample SD 2 (s2) | . Number in Sample 2 (n2) | . Results . State . . . Make sure to state what your parameters (μ1 and μ2) means in context! . . Plan - Two-sample t-test for μ1 - μ2 . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Are both of your sample size smaller than 10% of the population? . . Calculate . . . . . * The dfc value is the conservative degrees of freedom, which is acceptable on an AP exam. However, the calculation for p uses the true df value. . Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
+          "url": "https://statibara.com/mean/twosample/test/",
+          "relUrl": "/mean/twosample/test/",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page20": {
+          "title": "",
           "content": ". Two Sample (2-Prop) Z-Test for a Difference in Proportions . Confidence Level | . Number of Successes of Proportion 1 (x1) | . Sample Size of Proportion 1 (n1) | . Number of Successes of Proportion 2 (x2) | . Sample Size of Proportion 2 (n2) | . Results . State . . . Make sure to state what your parameters (p1 and p2) mean in context! . Plan - One-sample z-interval for p . Random sample: Must be determined by you. Is this a random sample or random assignment in an experiment? . 10% rule: Must be determined by you. Is your sample size smaller than 10% of the population? . . Calculate . . . To find our critical z* value, you can use the inverse normal function on your calculator or use a table with critical values. . . . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
           "url": "https://statibara.com/proportion/twosample/interval/",
           "relUrl": "/proportion/twosample/interval/",
@@ -144,7 +155,7 @@
   
 
   
-      ,"page20": {
+      ,"page21": {
           "title": "",
           "content": ". Two Sample (2-Prop) Z-Test for a Difference in Proportions . Direction Two-Tailed (p1 ≠ p2) Left-Tailed (p1 &lt; p2) Right-Tailed (p1 &gt; p2) | . Significance Level (α) | . Number of Successes of Proportion 1 (x1) | . Sample Size of Proportion 1 (n1) | . Number of Successes of Proportion 2 (x2) | . Sample Size of Proportion 2 (n2) | . Results . State . . . Make sure to state what your parameters (p1 and p2) mean in context! . . Plan - Two-sample z-test for p1 - p2 . Random sample: Must be determined by you. Are these both random samples or random assignment to two groups in an experiment? . 10% rule: Must be determined by you. Are both of your sample sizes smaller than 10% of the population(s) they were taken from? . . Calculate . . . . . Make sure to draw a normal curve, label it, and shade in the appropriate p-value. . Conclude . . Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context. .",
           "url": "https://statibara.com/proportion/twosample/test/",
@@ -167,7 +178,7 @@
   
 
   
-      ,"page25": {
+      ,"page26": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://statibara.com/robots.txt",
