@@ -1,0 +1,243 @@
+---
+layout: base
+permalink: /mean/twosample/interval/
+categories: Means
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+
+
+<h2> Two Sample T-Interval for a Difference in Means </h2>
+
+<!-- Table for input of hypotheses, alpha value, population mean, sample mean, sample SD, and number in the sample -->
+<table>
+    <!-- <tr>
+        <th>
+            Null Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="nullHypo" name="nullHypo" placeholder="Null Hypothesis">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Alternative Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="altHypo" name="altHypo" placeholder="Alternative Hypothesis">
+        </td>
+    </tr> -->
+    <tr>
+        <th>
+            Confidence Level
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="confidence" name="confidence" placeholder="0.95">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Mean 1 (x̄<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="xb1" name="sampMean" placeholder="Sample Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample SD 1 (s<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sx1" name="sampSD" placeholder="Sample SD">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number in Sample 1 (n<sub>1</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n1" name="sampN" placeholder="Number in Sample">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Mean 2 (x̄<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="xb2" name="sampMean" placeholder="Sample Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample SD 2 (s<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sx2" name="sampSD" placeholder="Sample SD">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number in Sample 2 (n<sub>2</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n2" name="sampN" placeholder="Number in Sample">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateCL"></p>
+        <p id="statePE"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameters (μ<sub>1</sub> and μ<sub>2</sub>) means in context!</i></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - Two-sample t-test for μ<sub>1</sub> - μ<sub>2</sub></h3>
+        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
+        <p id="10percent"><u>10% rule</u>: Must be determined by you. Are both of your sample size smaller than 10% of the population?</p>
+        <p id="clt"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="conservative_dfVal" style="color: rgb(190, 190, 190)"></p>
+        <p id="dfVal" style="height: 150px; font-size: large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <p id="formula" style="height: 150px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <center>
+            <p style="color: rgb(175, 175, 175)"><i>To find our critical t* value, you can use the inverse t function on your calculator or use a table with critical t values. </i></p>
+        </center>
+        <p id="pluggedin" style="height: 90px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="resultInterval" style="height: 80px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p style="color: rgb(175, 175, 175)"><i>* The df<sub>c</sub> value is the conservative degrees of freedom, which is acceptable on an AP exam. However, this calculation for the interval uses the true df value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that you should always write your conclusion in the context of the problem.</i></p>
+    </div>
+</div>
+
+<script>
+
+function calculate() {
+    // get values from inputs
+    var conflevel = parseFloat(document.getElementById("confidence").value);
+    var n1 = document.getElementById("n1").value;
+    var x1 = document.getElementById("xb1").value;
+    var n2 = document.getElementById("n2").value;
+    var x2 = document.getElementById("xb2").value;
+    var sx1 = document.getElementById("sx1").value;
+    var sx2 = document.getElementById("sx2").value;
+
+
+    // check if any values are empty
+    // nullHypo == "" || altHypo == "" || 
+    if (conflevel == "" || n1 == "" || x1 == "" || n2 == "" || x2 == "" || sx1 == "" || sx2 == "") {
+        alert("Please make sure all fields are filled in!");
+        return;
+    }
+
+    // check if confidence level is between 0 and 1
+    if (conflevel <= 0 || conflevel >= 1) {
+        alert("Please enter a confidence level between 0 and 1.");
+        return;
+    }
+
+    // check if sample size is greater than zero
+    if (n1 <= 0 || n2 <= 0) {
+        alert("Please make sure your sample size (n) is greater than zero!");
+        return;
+    }
+
+    // check large counts condition for the test
+    if (n1 >= 30 || n2 >= 30) {
+        // case if large counts not met
+        document.getElementById("clt").innerHTML = "<u>Central Limit Theorem</u>: Since at least one of the sample sizes is greater than or equal to 30, we can assume that the sampling distribution of the sample mean is approximately normal. You may proceed with finding the interval below.";
+    } else {
+        // case if large counts met
+        document.getElementById("clt").innerHTML = "<u>Central Limit Theorem</u>: Since both of the sample sizes are less than 30, we cannot assume that the sampling distribution of the sample mean is approximately normal. However, you can examine dotplots of the two samples to see if there is no strong skew or outliers for each dotplot, and if so, you can still proceed with finding the interval below.";
+    }
+
+    // calculate point estimate
+    var pe = x1 - x2;
+    var peText = "$$ \\text{Point estimate: } x̄_1 - x̄_2 = " + x1 + " - " + x2 + " = " + pe + " $$";
+    document.getElementById("statePE").innerHTML = peText;
+    MathJax.typesetPromise([document.getElementById("statePE")], peText).then(function () {}).catch(function (err) {});
+
+    // convert confidence level to percentage
+    confPerc = conflevel * 100;
+    confPerc.toFixed(0);
+    var stateCL = "Confidence Level: " + confPerc + "%";
+    document.getElementById("stateCL").innerHTML = stateCL;
+
+    // change plan title to fit conifdence level
+    var plantitle = "Plan - " + confPerc + "% confidence interval for μ<sub>1</sub> - μ<sub>2</sub>";
+
+    // calculate conservative df value and put it in coservative df box
+    var dfc = Math.min(n1 - 1, n2 - 1);
+    var dfcVal = "$$ df_c = \\text{lower of} n_1 \\text{or} n_2 \\text{minus 1} = " + dfc + " $$";
+    document.getElementById("conservative_dfVal").innerHTML = dfcVal;
+    MathJax.typesetPromise([document.getElementById("conservative_dfVal")], dfcVal).then(function () {}).catch(function (err) {});
+
+    // calculate df value and put it in df box
+    var df = Math.pow((Math.pow(sx1, 2) / n1) + (Math.pow(sx2, 2) / n2), 2) / ((Math.pow((Math.pow(sx1, 2) / n1), 2) / (n1 - 1)) + (Math.pow((Math.pow(sx2, 2) / n2), 2) / (n2 - 1)));
+    df = df.toFixed(4);
+    var dfVal = "$$ df = \\frac{(\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2})^2}{(\\frac{(\\frac{s_1^2}{n_1})^2}{n_1 - 1}) + (\\frac{(\\frac{s_2^2}{n_2})^2}{n_2 - 1})} = \\frac{(" + sx1 + "^2/" + n1 + " + " + sx2 + "^2/" + n2 + ")^2}{(\\frac{(" + sx1 + "^2/" + n1 + ")^2}{" + n1 + " - 1}) + (\\frac{(" + sx2 + "^2/" + n2 + ")^2}{" + n2 + " - 1})} = " + df + " $$";
+    document.getElementById("dfVal").innerHTML = dfVal;
+    MathJax.typesetPromise([document.getElementById("dfVal")], dfVal).then(function () {}).catch(function (err) {});
+
+    // calculate t-star
+    var tstar = Math.abs(jStat.studentt.inv((1 - conflevel) / 2, df));
+
+    // calculate margin of error
+    var moe = tstar * Math.sqrt((Math.pow(sx1, 2) / n1) + (Math.pow(sx2, 2) / n2));
+
+    // calculate lower and upper bounds
+    var lower = pe - moe;
+    var upper = pe + moe;
+    tstar = tstar.toFixed(4);
+    moe = moe.toFixed(4);
+    lower = lower.toFixed(4);
+    upper = upper.toFixed(4);
+
+    // write out results
+    var formula = "$$ \\text{CI} =  \\overline{x}_1 - \\overline{x}_2 \\pm t^* \\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}} $$";
+    var pluggedin = "$$ \\text{CI} = " + x1 + " - " + x2 + " \\pm " + tstar + "\\sqrt{\\frac{" + sx1 + "^2}{" + n1 + "} + \\frac{" + sx2 + "^2}{" + n2 + "}} $$";
+    var final = "$$ \\text{CI} = " + lower + " \\text{ to } " + upper + " $$";
+
+    // DISPLAY FORMULA AND PLUGGED IN VALUES
+    document.getElementById("formula").innerHTML = formula;
+    MathJax.typesetPromise([document.getElementById("formula")], formula).then(function () {}).catch(function (err) {});
+    document.getElementById("pluggedin").innerHTML = pluggedin;
+    MathJax.typesetPromise([document.getElementById("pluggedin")], pluggedin).then(function () {}).catch(function (err) {});
+    document.getElementById("resultInterval").innerHTML = final;
+    MathJax.typesetPromise([document.getElementById("resultInterval")], final).then(function () {}).catch(function (err) {});
+
+    // write conclusion
+    var conclusion = "We are " + confPerc + "% confident that the true population is captured by the interval from " + lower + " to " + upper + ".";
+    document.getElementById("concludeOutput").innerHTML = conclusion;
+    document.getElementById("concludeOutput").style.color = "#e89734";
+
+    // show results container
+    document.getElementById("resultsContainer").style.display = "block";
+    
+}
+
+</script>
