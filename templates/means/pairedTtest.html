@@ -1,0 +1,316 @@
+---
+layout: base
+permalink: /mean/pairedt/test/
+categories: Means
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<style>
+
+    .tableinputclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+    }
+    
+    .tableinputclear:focus {
+        background-color: #062827;
+        outline: none;
+        color: white;
+        border: 0px solid;
+    }
+
+    .tableselectclear {
+        background-color: #062827;
+        color: white;
+        border: 0px;
+        width: 99%;
+        background-image: none;
+    }
+    
+    ::placeholder {
+        font-style: italic;
+        color: #a1a1a1;
+    }
+
+    .stepcard {
+        background-color: #062827;
+        color: white;
+        border: 1px solid white;
+        width: 99%;
+        border-radius: 8px;
+        padding: 1em;
+        padding-top: 0;
+        margin-bottom: 1em;
+    }
+    
+    
+</style>
+
+
+
+<h2> One Sample T-Test for a Mean Difference </h2>
+
+<!-- Table for input of hypotheses, alpha value, population mean, sample mean, sample SD, and number in the sample -->
+<table>
+    <!-- <tr>
+        <th>
+            Null Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="nullHypo" name="nullHypo" placeholder="Null Hypothesis">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Alternative Hypothesis
+        </th>
+        <td>
+            <input class="tableinputclear" type="text" id="altHypo" name="altHypo" placeholder="Alternative Hypothesis">
+        </td>
+    </tr> -->
+    <tr>
+        <th>
+            Direction
+        </th>
+        <td>
+            <select class="tableselectclear" id="direction" name="direction">
+                <option value="0">Two-Tailed (μ ≠ μ<sub>0</sub>)</option>
+                <option value="-1">Left-Tailed (μ < μ<sub>0</sub>)</option>
+                <option value="1">Right-Tailed (μ > μ<sub>0</sub>)</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Significance Level (α)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="alpha" name="alpha" placeholder="Alpha Value">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Excpected Mean Difference (μ<sub>diff</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="popMean" name="popMean" placeholder="Population Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Mean (x̄)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sampMean" name="sampMean" placeholder="Sample Mean">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample SD (s)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sampSD" name="sampSD" placeholder="Sample SD">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Number of Pairs (n)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sampN" name="sampN" placeholder="Number in Sample">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (μ<sub>diff</sub>) means in context!</i></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - One-sample (paired) t-test for μ<sub>diff</sub> </h3>
+        <p id="random"><u>Random sample</u>: Must be determined by you. Is this a random sample or random assignment in an experiment?</p>
+        <p id="10percent"><u>10% rule</u>: Must be determined by you. Is your sample size smaller than 10% of the population?</p>
+        <p id="largecounts"></p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="formula" style="height: 150px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
+        <p id="dfVal"></p>
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please keep in mind that this conclusion is a generic conclusion based on the values put into the table, but will not always reflect what a proper conclusion should look like in context.</i></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        // get values from table
+        // var nullHypo = document.getElementById("nullHypo").value;
+        // var altHypo = document.getElementById("altHypo").value;
+        var direction = document.getElementById("direction").value;
+        var alpha = document.getElementById("alpha").value;
+        var popMean = document.getElementById("popMean").value;
+        var sampMean = document.getElementById("sampMean").value;
+        var sampSD = document.getElementById("sampSD").value;
+        var sampN = document.getElementById("sampN").value;
+
+        // check if any values are empty
+        // nullHypo == "" || altHypo == "" || 
+        if (alpha == "" || popMean == "" || sampMean == "" || sampSD == "" || sampN == "") {
+            alert("Please make sure all fields are filled in!");
+            return;
+        }
+
+        // check if alpha is between zero and one
+        if (alpha <= 0 || alpha >= 1) {
+            alert("Please make sure your significance level (α) is between zero and one!");
+            return;
+        }
+
+        // check if sample size is greater than zero
+        if (sampN <= 0) {
+            alert("Please make sure your sample size (n) is greater than zero!");
+            return;
+        }
+
+        // check if sample SD is greater than zero
+        if (sampSD <= 0) {
+            alert("Please make sure your sample standard deviation (s) is greater than zero!");
+            return;
+        }
+
+        var concDirectionWord;
+        var hypSymbol;        
+        // check direction for correct hypothesis direction
+        if (direction == 0) {
+            hypSymbol = "≠";
+            concDirectionWord = " different from ";
+        }
+        else if (direction == 1) {
+            hypSymbol = ">";
+            concDirectionWord = " greater than ";
+        }
+        else if (direction == -1) {
+            hypSymbol = "<";
+            concDirectionWord = " less than ";
+        }
+
+        // put hypotheses and alpha in state box
+        document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: μ<sub>diff</sub> = " + popMean;
+        document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: μ<sub>diff</sub> " + hypSymbol + " " + popMean;
+        document.getElementById("stateAlpha").innerHTML = "α = " + alpha;
+
+        // check large counts condition for the test
+        if (sampN >= 30) {
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Since n ≥ 30, the sample size is large enough for the Central Limit Theorem to apply.";
+        } else {
+            document.getElementById("largecounts").innerHTML = "<u>Large counts</u>: Since n < 30, the sample size is not large enough for the Central Limit Theorem to apply. However, you can examine a dotplot of the sample to see if there is no strong skew or outliers, and if so, you can still proceed with the test below.";
+        }
+
+        // calculate degrees of freedom
+        var dfVal = sampN - 1;
+        var df = "$$df = " + sampN + " - 1 = "+ dfVal + "$$";
+        document.getElementById("dfVal").innerHTML = df;
+        MathJax.typesetPromise([document.getElementById("dfVal")], df).then(function () {}).catch(function (err) {});
+
+        // calculate t-statistic
+        var t = (sampMean - popMean) / (sampSD / Math.sqrt(sampN));
+        var calcT = t;
+        
+        // check if t is positive or negative and check if left/right tailed to set calcT
+        if (direction == 0) {
+            calcT = - Math.abs(t);
+        } else if (direction == -1) {
+            if (t > 0) {
+                calcT = Math.abs(t);
+            }
+            else {
+                calcT = - Math.abs(t);
+            }
+        }
+        else if (direction == 1) {
+            if (t < 0) {
+                calcT = Math.abs(t);
+            }
+            else {
+                calcT = - Math.abs(t);
+            }
+        }
+
+
+
+        // calculate p-value
+        var p = jStat.studentt.cdf(calcT,dfVal);
+
+
+        // put formula in calculate box
+        var formula = "$$t = \\frac{\\bar{x}_{diff} - \\mu_{diff}}{\\frac{s}{\\sqrt{n}}} = \\frac{" + sampMean + " - " + popMean + "}{\\frac{" + sampSD + "}{\\sqrt{" + sampN + "}}} = " + t.toFixed(4) + "$$";
+        document.getElementById("formula").innerHTML = formula;
+        MathJax.typesetPromise([document.getElementById("formula")], formula).then(function () {}).catch(function (err) {});
+
+        // put p-value in calculate box
+        var pVal = "$$p = " + p.toFixed(4) + "$$";
+        // if two-tailed then we need to multiply p-value by two
+        if (direction == 0) {
+            pVal = "$$p = " + p.toFixed(4) + " * 2 = "+ (p * 2).toFixed(4) + "$$";
+            p = p * 2;
+        }
+
+        document.getElementById("pVal").innerHTML = pVal;
+        MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
+
+        // make conclusion hypothesis by lowercasing the first letter of the alternative hypothesis
+        // const concAltHypo = altHypo.charAt(0).toLowerCase() + altHypo.slice(1);
+        // // Set conclusion
+        // if (p < alpha) {
+        //     document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha + 
+        //     ", we reject the null hypothesis as there is convincing evidence that " + concAltHypo;
+        // } else {
+        //     document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+        //     ", we fail to reject the null hypothesis as there is not convincing evidence that " + concAltHypo;
+        // }
+
+        // make conclusion
+        if (p < alpha) {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
+            ", we reject the null hypothesis as there is convincing evidence that the true mean difference is" + concDirectionWord + popMean + ".";
+        }
+        else {
+            document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+            ", we fail to reject the null hypothesis as there is not convincing evidence that the true mean difference is" + concDirectionWord + popMean + ".";
+        }
+
+        document.getElementById("concludeOutput").style.color = "#e89734";
+
+        // show results container
+        document.getElementById("resultsContainer").style.display = "block";
+
+
+    }
+</script>
