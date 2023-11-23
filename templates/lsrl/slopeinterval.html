@@ -1,0 +1,169 @@
+---
+layout: base
+permalink: /slope/interval/
+categories: Slope
+---
+
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<h2> One Sample t Interval for β</h2>
+
+<table>
+    <tr>
+        <th>
+            Confidence Level
+        </th>
+        <td>
+            <input type="number" id="conflevel" placeholder="0.95" class="tableinputclear">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Slope Test Statistic (b)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="beta" name="beta" placeholder="Slope">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Standard Error of Slope (SE<sub>b</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sebeta" name="sebeta" placeholder="Standard Error of Slope">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Size (n)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n" name="n" placeholder="Sample Size">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateCL"></p>
+        <p id="statePE"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (β) means in context!</i></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <p id="linearCheck"><u>Linear:</u> Address your residual plot. Does the plot show a random scatter of points? </p>
+        <p id="independenceCheck"><u>Independence</u>: Is your sample size less than 10% of the population? (skip if sampling without replacement) </p>
+        <p id="normalCheck"><u>Normal</u>: Address your residual plot. Is the population of residuals normally distributed? (no strong skew or outliers) </p>
+        <p id="equalsdCheck"><u>Equal SD</u>: Address your residual plot. Is there roughly the same variability at each x value? </p>
+        <p id="randomCheck"><u>Random</u>: Does your sample use random sampling or assignment? </p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="dfVal" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="formula" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <center>
+            <p style="color: rgb(175, 175, 175)"><i>To find our critical t* value, you can use the inverse t function on your calculator or use a table with critical t values. </i></p>
+        </center>
+        <p id="pluggedin" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="resultInterval" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <!-- <canvas id="intervalVisual" height="100px" width="400px" style="height: 100px; max-height:120px; overflow: auto; width: 100%"></canvas> -->
+        <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
+        <!-- <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p> -->
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please remember to put your conclusion and all parameters in context! </i></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        // get variables from inputs
+        var conflevel = parseFloat(document.getElementById("conflevel").value);
+        var beta = parseFloat(document.getElementById("beta").value);
+        var sebeta = parseFloat(document.getElementById("sebeta").value);
+        var n = parseFloat(document.getElementById("n").value);
+
+        // check if inputs are valid
+        if (isNaN(conflevel) || isNaN(beta) || isNaN(sebeta) || isNaN(n)) {
+            alert("Please enter valid numbers for all inputs.");
+            return;
+        }
+
+        // check if confidence level is between 0 and 1
+        if (conflevel <= 0 || conflevel >= 1) {
+            alert("Please enter a confidence level between 0 and 1.");
+            return;
+        }
+
+        // check if sample size is greater than 0
+        if (n <= 0) {
+            alert("Please enter a sample size greater than 0.");
+            return;
+        }
+        
+        // write out point estimate
+        var peText = "Point estimate: b = " + beta;
+        document.getElementById("statePE").innerHTML = peText;
+
+        // convert confidence level to percentage
+        confPerc = conflevel * 100;
+        confPerc.toFixed(0);
+        var stateCL = "Confidence Level: " + confPerc + "%";
+        document.getElementById("stateCL").innerHTML = stateCL;
+
+        // calculate degrees of freedom
+        var df = n - 2;
+        var dfVal = "$$df = " + n + " - 2 = "+ df + "$$"
+        document.getElementById("dfVal").innerHTML = dfVal;
+        MathJax.typesetPromise([document.getElementById("dfVal")], dfVal).then(function () {}).catch(function (err) {});
+
+        // calculate t-star
+        var tstar = Math.abs(jStat.studentt.inv((1 - conflevel) / 2, df));
+        // calculate margin of error
+        var moe = (tstar * sebeta);
+
+        // calculate lower and upper bounds
+        var lower = beta - moe;
+        var upper = beta + moe;
+        tstar = tstar.toFixed(4);
+        moe = moe.toFixed(4);
+        lower = lower.toFixed(4);
+        upper = upper.toFixed(4);
+
+        // create formula string and plugged in values and final value
+        var formula = "$$\\text{Confidence Interval } = b \\pm t^* \\cdot SE_b$$";
+        var pluggedin = "$$\\text{CI} = " + beta + " \\pm " + tstar + " \\cdot " + sebeta + "$$";
+        var final = "$$\\text{CI} = " + lower + " \\text{ to } " + upper + "$$";
+
+        // display formula and plugged in values
+        document.getElementById("formula").innerHTML = formula;
+        document.getElementById("pluggedin").innerHTML = pluggedin;
+        document.getElementById("resultInterval").innerHTML = final;
+        MathJax.typesetPromise([document.getElementById("formula"), document.getElementById("pluggedin"), document.getElementById("resultInterval")], formula, pluggedin, final).then(function () {}).catch(function (err) {});
+
+        // write conclusion
+        var conclusion = "We are " + confPerc + "% confident that the true slope of the population LSRL is captured by the interval from " + lower + " to " + upper + ".";
+        document.getElementById("concludeOutput").innerHTML = conclusion;
+        document.getElementById("concludeOutput").style.color = "#e89734";
+
+        // show results container
+        document.getElementById("resultsContainer").style.display = "block";
+
+}
+</script>
