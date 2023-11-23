@@ -1,0 +1,228 @@
+---
+layout: base
+permalink: /slope/test
+categories: Slope
+---
+
+<head>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script type="text/javascript" id="jstat" async src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<h2>One-Sample T Test for β</h2>
+
+<table>
+    <tr>
+        <th>
+            Direction
+        </th>
+        <td>
+            <select class="tableselectclear" id="direction" name="direction">
+                <option value="0">Two-Tailed (β ≠ β<sub>0</sub>)</option>
+                <option value="-1">Left-Tailed (β < β<sub>0</sub>)</option>
+                <option value="1">Right-Tailed (β > β<sub>0</sub>)</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Significance Level (α)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="alpha" name="alpha" placeholder="Alpha Value">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Slope Test Statistic (b)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="beta" name="beta" placeholder="Slope">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Standard Error of Slope (SE<sub>b</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="sebeta" name="sebeta" placeholder="Standard Error of Slope">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Sample Size (n)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="n" name="n" placeholder="Sample Size">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Slope Null Hypothesis (β<sub>0</sub>)
+        </th>
+        <td>
+            <input class="tableinputclear" type="number" id="beta0" name="beta0" placeholder="0">
+        </td>
+    </tr>
+</table>
+
+<center>
+    <input class="button" type="button" value="Run Test" onclick="calculate()">
+</center>
+
+<div id="resultsContainer" style="display: none">
+    <h2>Results</h2>
+    <div id="stateSteps" class="stepcard">
+        <h3>State</h3>
+        <p id="stateHo"></p>
+        <p id="stateHa"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (β) means in context!</i></p>
+        <p id="stateAlpha"></p>
+    </div>
+    <div id="planSteps" class="stepcard">
+        <h3>Plan - One-sample t-test for β</h3>
+        <p id="linearCheck"><u>Linear:</u> Address your residual plot. Does the plot show a random scatter of points? </p>
+        <p id="independenceCheck"><u>Independence</u>: Is your sample size less than 10% of the population? (skip if sampling without replacement) </p>
+        <p id="normalCheck"><u>Normal</u>: Address your residual plot. Is the population of residuals normally distributed? (no strong skew or outliers) </p>
+        <p id="equalsdCheck"><u>Equal SD</u>: Address your residual plot. Is there roughly the same variability at each x value? </p>
+        <p id="randomCheck"><u>Random</u>: Does your sample use random sampling or assignment? </p>
+    </div>
+    <div id="calculateSteps" class="stepcard">
+        <h3>Calculate</h3>
+        <p id="formula" style="height: 130px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
+        <p id="dfVal"></p>
+        <p id="pVal"></p>
+        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p>
+    </div>
+    <div id="concludeSteps" class="stepcard">
+        <h3>Conclude</h3>
+        <p id="concludeOutput"></p>
+        <p style="color: rgb(175, 175, 175)"><i> Please remember to put your conclusion and all parameters in context! </i></p>
+    </div>
+</div>
+
+<script>
+
+function calculate() {
+    var direction = parseInt(document.getElementById("direction").value);
+    var alpha = parseFloat(document.getElementById("alpha").value);
+    var beta = parseFloat(document.getElementById("beta").value);
+    var sebeta = parseFloat(document.getElementById("sebeta").value);
+    var n = parseFloat(document.getElementById("n").value);
+    var beta0 = parseFloat(document.getElementById("beta0").value);
+
+    // check if any values are empty
+    // nullHypo == "" || altHypo == "" || 
+    if (alpha == NaN || beta == NaN || sebeta == NaN || n == NaN || beta0 == NaN) {
+        alert("Please make sure all fields are filled in!");
+        return;
+    }
+
+    // check if alpha is between zero and one
+    if (alpha <= 0 || alpha >= 1) {
+        alert("Please make sure your significance level (α) is between zero and one!");
+        return;
+    }
+
+    // check if sample size is greater than zero
+    if (n <= 0) {
+        alert("Please make sure your sample size (n) is greater than zero!");
+        return;
+    }
+
+    // check if sample SD is greater than zero
+    if (sebeta <= 0) {
+        alert("Please make sure your sample standard deviation (s) is greater than zero!");
+        return;
+    }
+
+    var concDirectionWord;
+    var hypSymbol;        
+    // check direction for correct hypothesis direction
+    if (direction == 0) {
+        hypSymbol = "≠";
+        concDirectionWord = " different from ";
+    }
+    else if (direction == 1) {
+        hypSymbol = ">";
+        concDirectionWord = " greater than ";
+    }
+    else if (direction == -1) {
+        hypSymbol = "<";
+        concDirectionWord = " less than ";
+    }
+
+    document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: β = " + beta0;
+    document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: β " + hypSymbol + " " + beta0;
+    document.getElementById("stateAlpha").innerHTML = "α = " + alpha;
+
+    // calculate t-statistic
+    var t = (beta - beta0) / (sebeta);
+    var calcT = t;
+    
+    // check if t is positive or negative and check if left/right tailed to set calcT
+    if (direction == 0) {
+        calcT = - Math.abs(t);
+    } else if (direction == -1) {
+        if (t > 0) {
+            calcT = Math.abs(t);
+        }
+        else {
+            calcT = - Math.abs(t);
+        }
+    }
+    else if (direction == 1) {
+        if (t < 0) {
+            calcT = Math.abs(t);
+        }
+        else {
+            calcT = - Math.abs(t);
+        }
+    }
+
+    var formula = "$$t = \\frac{b - β_0}{SE_b} = \\frac{" + beta + " - " + beta0 + "}{" + sebeta + "} = " + t.toFixed(4) + "$$";
+    document.getElementById("formula").innerHTML = formula;
+    MathJax.typesetPromise([document.getElementById("formula")], formula).then(function () {}).catch(function (err) {});
+
+    var dfVal = "$$df = n - 2 = " + (n - 2) + "$$";
+    document.getElementById("dfVal").innerHTML = dfVal;
+    MathJax.typesetPromise([document.getElementById("dfVal")], dfVal).then(function () {}).catch(function (err) {});
+
+    // calculate p-value
+    var p = jStat.studentt.cdf(calcT,(n-2));
+
+    // put p-value in calculate box
+    var pVal = "$$p = " + p.toFixed(4) + "$$";
+    // if two-tailed then we need to multiply p-value by two
+    if (direction == 0) {
+        pVal = "$$p = " + p.toFixed(4) + " * 2 = "+ (p * 2).toFixed(4) + "$$";
+        p = p * 2;
+    }
+    document.getElementById("pVal").innerHTML = pVal;
+    MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
+
+    // make conclusion
+    if (p < alpha) {
+        document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
+        ", we reject the null hypothesis as there is convincing evidence that the true slope of the population LSRL is" + concDirectionWord + beta0 + ".";
+    }
+    else {
+        document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
+        ", we fail to reject the null hypothesis as there is not convincing evidence that the true slope of the population LSRL is" + concDirectionWord + beta0 + ".";
+    }
+
+    document.getElementById("concludeOutput").style.color = "#e89734";
+
+    // show results container
+    document.getElementById("resultsContainer").style.display = "block";
+
+}
+
+
+</script>
