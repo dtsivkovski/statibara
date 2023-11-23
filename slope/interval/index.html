@@ -10,14 +10,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Statistics Tools" />
 <meta property="og:description" content="Statistics Tools" />
-<link rel="canonical" href="https://statibara.com/slope/test" />
-<meta property="og:url" content="https://statibara.com/slope/test" />
+<link rel="canonical" href="https://statibara.com/slope/interval/" />
+<meta property="og:url" content="https://statibara.com/slope/interval/" />
 <meta property="og:site_name" content="Statibara" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Statibara" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/slope/test"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Statistics Tools","headline":"Statibara","url":"https://statibara.com/slope/interval/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://statibara.com/feed.xml" title="Statibara" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -81,27 +81,15 @@ window.onload = wrap_img;
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<h2>One-Sample t Test for β</h2>
+<h2> One Sample t Interval for β</h2>
 
 <table>
     <tr>
         <th>
-            Direction
+            Confidence Level
         </th>
         <td>
-            <select class="tableselectclear" id="direction" name="direction">
-                <option value="0">Two-Tailed (β ≠ β<sub>0</sub>)</option>
-                <option value="-1">Left-Tailed (β < β<sub>0</sub>)</option>
-                <option value="1">Right-Tailed (β > β<sub>0</sub>)</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            Significance Level (α)
-        </th>
-        <td>
-            <input class="tableinputclear" type="number" id="alpha" name="alpha" placeholder="Alpha Value">
+            <input type="number" id="conflevel" placeholder="0.95" class="tableinputclear">
         </td>
     </tr>
     <tr>
@@ -128,14 +116,6 @@ window.onload = wrap_img;
             <input class="tableinputclear" type="number" id="n" name="n" placeholder="Sample Size">
         </td>
     </tr>
-    <tr>
-        <th>
-            Slope Null Hypothesis (β<sub>0</sub>)
-        </th>
-        <td>
-            <input class="tableinputclear" type="number" id="beta0" name="beta0" placeholder="0">
-        </td>
-    </tr>
 </table>
 
 <center>
@@ -146,13 +126,11 @@ window.onload = wrap_img;
     <h2>Results</h2>
     <div id="stateSteps" class="stepcard">
         <h3>State</h3>
-        <p id="stateHo"></p>
-        <p id="stateHa"></p>
+        <p id="stateCL"></p>
+        <p id="statePE"></p>
         <p style="color: rgb(175, 175, 175)"><i>Make sure to state what your parameter (β) means in context!</i></p>
-        <p id="stateAlpha"></p>
     </div>
     <div id="planSteps" class="stepcard">
-        <h3>Plan - One-sample t-test for β</h3>
         <p id="linearCheck"><u>Linear:</u> Address your residual plot. Does the plot show a random scatter of points? </p>
         <p id="independenceCheck"><u>Independence</u>: Is your sample size less than 10% of the population? (skip if sampling without replacement) </p>
         <p id="normalCheck"><u>Normal</u>: Address your residual plot. Is the population of residuals normally distributed? (no strong skew or outliers) </p>
@@ -161,11 +139,16 @@ window.onload = wrap_img;
     </div>
     <div id="calculateSteps" class="stepcard">
         <h3>Calculate</h3>
-        <p id="formula" style="height: 130px; font-size: x-large; max-height: 150px; overflow: auto; width: 100%"></p>
+        <p id="dfVal" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="formula" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <center>
+            <p style="color: rgb(175, 175, 175)"><i>To find our critical t* value, you can use the inverse t function on your calculator or use a table with critical t values. </i></p>
+        </center>
+        <p id="pluggedin" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <p id="resultInterval" style="height: 70px; font-size: large; max-height: 130px; overflow: auto; width: 100%"></p>
+        <!-- <canvas id="intervalVisual" height="100px" width="400px" style="height: 100px; max-height:120px; overflow: auto; width: 100%"></canvas> -->
         <!-- <p id="calculateOutput" style="height: 90px; max-height: 100px; overflow: auto; width: 100%"></p> -->
-        <p id="dfVal"></p>
-        <p id="pVal"></p>
-        <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p>
+        <!-- <p style="color: rgb(175, 175, 175)"><i>Make sure to draw a t-distribution curve, label it, and shade in the appropriate p-value.</i></p> -->
     </div>
     <div id="concludeSteps" class="stepcard">
         <h3>Conclude</h3>
@@ -175,123 +158,80 @@ window.onload = wrap_img;
 </div>
 
 <script>
+    function calculate() {
+        // get variables from inputs
+        var conflevel = parseFloat(document.getElementById("conflevel").value);
+        var beta = parseFloat(document.getElementById("beta").value);
+        var sebeta = parseFloat(document.getElementById("sebeta").value);
+        var n = parseFloat(document.getElementById("n").value);
 
-function calculate() {
-    var direction = parseInt(document.getElementById("direction").value);
-    var alpha = parseFloat(document.getElementById("alpha").value);
-    var beta = parseFloat(document.getElementById("beta").value);
-    var sebeta = parseFloat(document.getElementById("sebeta").value);
-    var n = parseFloat(document.getElementById("n").value);
-    var beta0 = parseFloat(document.getElementById("beta0").value);
-
-    // check if any values are empty
-    // nullHypo == "" || altHypo == "" || 
-    if (alpha == NaN || beta == NaN || sebeta == NaN || n == NaN || beta0 == NaN) {
-        alert("Please make sure all fields are filled in!");
-        return;
-    }
-
-    // check if alpha is between zero and one
-    if (alpha <= 0 || alpha >= 1) {
-        alert("Please make sure your significance level (α) is between zero and one!");
-        return;
-    }
-
-    // check if sample size is greater than zero
-    if (n <= 0) {
-        alert("Please make sure your sample size (n) is greater than zero!");
-        return;
-    }
-
-    // check if sample SD is greater than zero
-    if (sebeta <= 0) {
-        alert("Please make sure your sample standard deviation (s) is greater than zero!");
-        return;
-    }
-
-    var concDirectionWord;
-    var hypSymbol;        
-    // check direction for correct hypothesis direction
-    if (direction == 0) {
-        hypSymbol = "≠";
-        concDirectionWord = " different from ";
-    }
-    else if (direction == 1) {
-        hypSymbol = ">";
-        concDirectionWord = " greater than ";
-    }
-    else if (direction == -1) {
-        hypSymbol = "<";
-        concDirectionWord = " less than ";
-    }
-
-    document.getElementById("stateHo").innerHTML = "H<sub>0</sub>: β = " + beta0;
-    document.getElementById("stateHa").innerHTML = "H<sub>a</sub>: β " + hypSymbol + " " + beta0;
-    document.getElementById("stateAlpha").innerHTML = "α = " + alpha;
-
-    // calculate t-statistic
-    var t = (beta - beta0) / (sebeta);
-    var calcT = t;
-    
-    // check if t is positive or negative and check if left/right tailed to set calcT
-    if (direction == 0) {
-        calcT = - Math.abs(t);
-    } else if (direction == -1) {
-        if (t > 0) {
-            calcT = Math.abs(t);
+        // check if inputs are valid
+        if (isNaN(conflevel) || isNaN(beta) || isNaN(sebeta) || isNaN(n)) {
+            alert("Please enter valid numbers for all inputs.");
+            return;
         }
-        else {
-            calcT = - Math.abs(t);
+
+        // check if confidence level is between 0 and 1
+        if (conflevel <= 0 || conflevel >= 1) {
+            alert("Please enter a confidence level between 0 and 1.");
+            return;
         }
-    }
-    else if (direction == 1) {
-        if (t < 0) {
-            calcT = Math.abs(t);
+
+        // check if sample size is greater than 0
+        if (n <= 0) {
+            alert("Please enter a sample size greater than 0.");
+            return;
         }
-        else {
-            calcT = - Math.abs(t);
-        }
-    }
+        
+        // write out point estimate
+        var peText = "Point estimate: b = " + beta;
+        document.getElementById("statePE").innerHTML = peText;
 
-    var formula = "$$t = \\frac{b - β_0}{SE_b} = \\frac{" + beta + " - " + beta0 + "}{" + sebeta + "} = " + t.toFixed(4) + "$$";
-    document.getElementById("formula").innerHTML = formula;
-    MathJax.typesetPromise([document.getElementById("formula")], formula).then(function () {}).catch(function (err) {});
+        // convert confidence level to percentage
+        confPerc = conflevel * 100;
+        confPerc.toFixed(0);
+        var stateCL = "Confidence Level: " + confPerc + "%";
+        document.getElementById("stateCL").innerHTML = stateCL;
 
-    var dfVal = "$$df = n - 2 = " + (n - 2) + "$$";
-    document.getElementById("dfVal").innerHTML = dfVal;
-    MathJax.typesetPromise([document.getElementById("dfVal")], dfVal).then(function () {}).catch(function (err) {});
+        // calculate degrees of freedom
+        var df = n - 2;
+        var dfVal = "$$df = " + n + " - 2 = "+ df + "$$"
+        document.getElementById("dfVal").innerHTML = dfVal;
+        MathJax.typesetPromise([document.getElementById("dfVal")], dfVal).then(function () {}).catch(function (err) {});
 
-    // calculate p-value
-    var p = jStat.studentt.cdf(calcT,(n-2));
+        // calculate t-star
+        var tstar = Math.abs(jStat.studentt.inv((1 - conflevel) / 2, df));
+        // calculate margin of error
+        var moe = (tstar * sebeta);
 
-    // put p-value in calculate box
-    var pVal = "$$p = " + p.toFixed(4) + "$$";
-    // if two-tailed then we need to multiply p-value by two
-    if (direction == 0) {
-        pVal = "$$p = " + p.toFixed(4) + " * 2 = "+ (p * 2).toFixed(4) + "$$";
-        p = p * 2;
-    }
-    document.getElementById("pVal").innerHTML = pVal;
-    MathJax.typesetPromise([document.getElementById("pVal")], pVal).then(function () {}).catch(function (err) {});
+        // calculate lower and upper bounds
+        var lower = beta - moe;
+        var upper = beta + moe;
+        tstar = tstar.toFixed(4);
+        moe = moe.toFixed(4);
+        lower = lower.toFixed(4);
+        upper = upper.toFixed(4);
 
-    // make conclusion
-    if (p < alpha) {
-        document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is less than our alpha value " + alpha +
-        ", we reject the null hypothesis as there is convincing evidence that the true slope of the population LSRL is" + concDirectionWord + beta0 + ".";
-    }
-    else {
-        document.getElementById("concludeOutput").innerHTML = "Because our p-value " + p.toFixed(4) + " is greater than our alpha value " + alpha +
-        ", we fail to reject the null hypothesis as there is not convincing evidence that the true slope of the population LSRL is" + concDirectionWord + beta0 + ".";
-    }
+        // create formula string and plugged in values and final value
+        var formula = "$$\\text{Confidence Interval } = b \\pm t^* \\cdot SE_b$$";
+        var pluggedin = "$$\\text{CI} = " + beta + " \\pm " + tstar + " \\cdot " + sebeta + "$$";
+        var final = "$$\\text{CI} = " + lower + " \\text{ to } " + upper + "$$";
 
-    document.getElementById("concludeOutput").style.color = "#e89734";
+        // display formula and plugged in values
+        document.getElementById("formula").innerHTML = formula;
+        document.getElementById("pluggedin").innerHTML = pluggedin;
+        document.getElementById("resultInterval").innerHTML = final;
+        MathJax.typesetPromise([document.getElementById("formula"), document.getElementById("pluggedin"), document.getElementById("resultInterval")], formula, pluggedin, final).then(function () {}).catch(function (err) {});
 
-    // show results container
-    document.getElementById("resultsContainer").style.display = "block";
+        // write conclusion
+        var conclusion = "We are " + confPerc + "% confident that the true slope of the population LSRL is captured by the interval from " + lower + " to " + upper + ".";
+        document.getElementById("concludeOutput").innerHTML = conclusion;
+        document.getElementById("concludeOutput").style.color = "#e89734";
+
+        // show results container
+        document.getElementById("resultsContainer").style.display = "block";
 
 }
-
-
 </script>
       </div>
     </main><footer class="site-footer h-card">
