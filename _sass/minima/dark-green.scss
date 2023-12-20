@@ -42,11 +42,10 @@ button, .button {
     margin: 4px 2px;
     height: 55px;
     cursor: pointer;
-    width: 100%;
     font-weight: normal;
     font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
     transition: background-color 0.25s ease-in-out 50ms;
-    width: 65%;
+    width: 80%;
     transition: all 0.1s;
     -webkit-transition: all 0.1s;
     transition-delay: 0.1s;
@@ -54,7 +53,7 @@ button, .button {
 
 button:hover, .button:hover {
     transform: translate(0px, 0px);
-    width:70%;
+    width:90%;
     background-color: #041d1c;
     animation-direction: alternate;
     -webkit-transition: all 0.1s;

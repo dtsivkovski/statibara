@@ -219,8 +219,6 @@ table {
 
 .js-search-input:focus {
   width: 500px;
-  border-radius: 20px;
-  background-image: linear-gradient(to right, #d46c049c, white, #07abccad)
 }
 
 .js-search-input:focus:hover {
@@ -229,8 +227,6 @@ table {
 
 .js-search-input:hover {
   cursor: pointer;
-  border-radius: 20px;
-  background-image: linear-gradient(to right, #d46c049c, white, #07abccad)
 }
 
 .search-results-list-item::marker {
